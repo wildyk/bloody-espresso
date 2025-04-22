@@ -2406,12 +2406,6 @@
   }
 
   @media (hover: hover) {
-    .hover\:bg-green-800:hover {
-      background-color: var(--color-green-800);
-    }
-  }
-
-  @media (hover: hover) {
     .hover\:bg-red-700:hover {
       background-color: var(--color-red-700);
     }

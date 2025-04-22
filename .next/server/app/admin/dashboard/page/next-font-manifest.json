@@ -2,10 +2,10 @@
   "pages": {},
   "app": {
     "[project]/src/app/admin/dashboard/page": [
-      "static/media/uU9PCBUR8oakM2BQ3xTR396EilM-s.p.e917d5d7.woff2",
       "static/media/ZGjXol5JTp0g5bxZWCpbVRFeCDo-s.p.8bdc7aff.woff2",
       "static/media/4UaBrEBBsBhlBjvfkSLhx6jj4JN0-s.p.0af16262.woff2",
-      "static/media/4UacrEBBsBhlBjvfkQjt71kZfyBzPgNG9hU4_6qjkySFrt19-s.p.4fa2fc3a.woff2"
+      "static/media/4UacrEBBsBhlBjvfkQjt71kZfyBzPgNG9hU4_6qjkySFrt19-s.p.4fa2fc3a.woff2",
+      "static/media/uU9PCBUR8oakM2BQ3xTR396EilM-s.p.e917d5d7.woff2"
     ]
   },
   "appUsingSizeAdjust": true,

@@ -39,7 +39,7 @@ export default function TransaksiPage() {
       try {
         const res = await fetch("/api/transaksi");
         const data = await res.json();
-        console.log("Data transaksi dari API:", data); 
+        console.log("Data transaksi dari API:", data);
   
         if (Array.isArray(data)) {
           setTransactions(
@@ -61,7 +61,7 @@ export default function TransaksiPage() {
     };
     fetchTransactions();
   }, []);
-  ;
+  
 
   const exportToExcel = () => {
     const data = transactions.map(tx => ({
