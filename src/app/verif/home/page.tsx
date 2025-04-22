@@ -57,7 +57,8 @@ export default function Page() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
+  const [profileOpen, setProfileOpen] = useState(false); // <-- Tambahin ini
+  
   const handleAddToCart = (item: MenuItem) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find(
@@ -83,10 +84,6 @@ export default function Page() {
     localStorage.removeItem("token"); // contoh
     router.push("/auth/login");
   };
-
-  function setProfileOpen(arg0: boolean): void {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white relative overflow-y-auto">
@@ -147,14 +144,14 @@ export default function Page() {
             </div>
             <div className="relative flex flex-col items-center cursor-pointer">
               <div
-                onClick={() => setProfileOpen(!setProfileOpen)}
+                onClick={() => setProfileOpen(!profileOpen)}
                 className="flex flex-col items-center"
               >
                 <UserRound size={40} />
                 <span className="text-xl">Profile</span>
               </div>
 
-              {setProfileOpen && (
+              {profileOpen && (
                 <div className="absolute top-full mt-2 bg-gray-800 rounded-lg shadow-lg w-40 z-20">
                   <ul className="py-2 text-white text-lg">
                     <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
