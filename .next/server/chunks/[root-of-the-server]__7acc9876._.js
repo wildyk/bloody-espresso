@@ -59,29 +59,30 @@ module.exports = mod;
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.s({
-    "POST": (()=>POST)
+    "GET": (()=>GET)
 });
 (()=>{
-    const e = new Error("Cannot find module '@/lib/types/pg'");
+    const e = new Error("Cannot find module '../../../lib/db'");
     e.code = 'MODULE_NOT_FOUND';
     throw e;
 })();
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/server.js [app-route] (ecmascript)");
 ;
 ;
-async function POST(req) {
+async function GET() {
     const client = await pool.connect();
     try {
-        const result = await client.query('SELECT NOW()');
+        const result = await client.query('SELECT * FROM riwayat_transaksi ORDER BY created_at DESC');
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            time: result.rows[0]
-        }); // Gunakan NextResponse, bukan Response
+            data: result.rows
+        });
     } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'Gagal mengambil data';
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: err.message
+            error: errorMessage
         }, {
             status: 500
-        }); // Tangkap error dengan NextResponse
+        });
     } finally{
         client.release();
     }

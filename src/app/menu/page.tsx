@@ -101,14 +101,39 @@ export default function Page() {
   }
   
 
-  const handlePayment = () => {
+  const handlePayment = async () => {
+    if (cart.length === 0) return;
+
     setIsPaying(true);
-    setTimeout(() => {
-      alert("Pembayaran berhasil! Terima kasih sudah memesan ☕");
-      setCart([]);
-      setIsCartOpen(false);
+
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          total_price: total,
+          items: cart.map((item) => ({
+            name: item.name,
+            quantity: item.qty || 1,
+            price: item.price,
+          })),
+        }),
+      });
+
+      if (response.ok) {
+        alert("Pembayaran berhasil! Transaksi disimpan ke database Neon ☕");
+        setCart([]);
+        setIsCartOpen(false);
+      } else {
+        const err = await response.json();
+        alert(`Gagal: ${err.error}`);
+      }
+    } catch (error) {
+      alert("Terjadi kesalahan saat memproses pembayaran.");
+      console.error(error);
+    } finally {
       setIsPaying(false);
-    }, 1000);
+    }
   };
 
   return (
