@@ -1,11 +1,12 @@
 "use client";
 
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { alegreya, nosifer } from "@/app/ui/fonts";
 import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, UserRound } from "lucide-react";
 import { Instagram, Facebook, Twitter } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface MenuItem {
   name: string;
@@ -20,18 +21,20 @@ export default function Page() {
   const [cart, setCart] = useState<MenuItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
+  const [profileOpen, setProfileOpen] = useState(false); 
+  const router = useRouter();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch("/api/menu"); 
+      const res = await fetch("/api/menu");
       const data = await res.json();
       console.log("Data dari API:", data);
       setMenuItems(data);
     };
-  
+
     fetchData();
   }, []);
-  
 
   const handleAddToCart = (item: MenuItem) => {
     setCart((prevCart) => {
@@ -89,11 +92,11 @@ export default function Page() {
       console.error("Gagal kirim transaksi:", error);
     }
   };
-  
+
   const handlePayment = async () => {
     setIsPaying(true);
     try {
-      await submitTransaction(); 
+      await submitTransaction();
       alert("Pembayaran berhasil! Terima kasih sudah memesan ☕");
       setCart([]);
       setIsCartOpen(false);
@@ -103,12 +106,14 @@ export default function Page() {
       setIsPaying(false);
     }
   };
-  
-
-  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token"); 
+    router.push("/auth/login");
   };
   return (
     <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white relative">
@@ -151,8 +156,9 @@ export default function Page() {
 
           {/* Kontak */}
           <li className="relative mr-16 cursor-pointer hover:text-[#E3CDA2]">
-            <Link href="/kontak">Kontak</Link>
+            <Link href="/verif/kontak">Kontak</Link>
           </li>
+
           <li className="relative mr-10 cursor-pointer hover:text-[#E3CDA2]">
             <Link href="/verif/menu">Menu</Link>
           </li>
@@ -165,9 +171,38 @@ export default function Page() {
               <ShoppingCart size={40} />
               <span className="text-xl">Keranjang</span>
             </div>
-            <div className="flex flex-col items-center">
-              <UserRound size={40} />
-              <span className="text-xl">Profile</span>
+            <div className="relative flex flex-col items-center cursor-pointer">
+              <div
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="flex flex-col items-center"
+              >
+                <UserRound size={40} />
+                <span className="text-xl">Profile</span>
+              </div>
+
+              {profileOpen && (
+                <div className="absolute top-full mt-2 bg-gray-800 rounded-lg shadow-lg w-40 z-20">
+                  <ul className="py-2 text-white text-lg">
+                    <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
+                      <Link
+                        href="/verif/akun"
+                        onClick={() => setProfileOpen(false)}
+                      >
+                        Akun Saya
+                      </Link>
+                    </li>
+                    <li
+                      className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
+                      onClick={() => {
+                        handleLogout();
+                        setProfileOpen(false);
+                      }}
+                    >
+                      Logout
+                    </li>
+                  </ul>
+                </div>
+              )}
             </div>
           </li>
         </ul>
@@ -185,44 +220,44 @@ export default function Page() {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-10">
-  {Array.isArray(menuItems) ? (
-    menuItems.map((item, index) => (
-
-            <div
-              key={index}
-              className="bg-[#FFF4E6] text-center rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105 duration-300"
-            >
-              <Image
-                src={item.image}
-                alt={item.name}
-                width={400}
-                height={250}
-                className="w-full h-80 object-cover object-top"
-              />
-              <div className={`${alegreya.className} p-6`}>
-                <h3 className="text-[#603809] text-2xl font-extrabold">
-                  {item.name}
-                </h3>
-                <p className="text-[#603809] text-xl mt-2">
-                  {item.description}
-                </p>
-                <p className="text-[#603809] text-2xl font-bold mt-2">
-                  Rp. {item.price.toLocaleString("id-ID")}
-                </p>
-                <button
-                  className="mt-6 bg-[#A8715C] text-lg text-[#1E1E1E] px-14 py-4 rounded-full font-bold shadow-[0px_10px_30px_-5px_rgba(255,209,102,0.8)] hover:bg-yellow-800 transition cursor-pointer"
-                  onClick={() => handleAddToCart(item)}
-                >
-                  ORDER
-                </button>
+          {Array.isArray(menuItems) ? (
+            menuItems.map((item, index) => (
+              <div
+                key={index}
+                className="bg-[#FFF4E6] text-center rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105 duration-300"
+              >
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={400}
+                  height={250}
+                  className="w-full h-80 object-cover object-top"
+                />
+                <div className={`${alegreya.className} p-6`}>
+                  <h3 className="text-[#603809] text-2xl font-extrabold">
+                    {item.name}
+                  </h3>
+                  <p className="text-[#603809] text-xl mt-2">
+                    {item.description}
+                  </p>
+                  <p className="text-[#603809] text-2xl font-bold mt-2">
+                    Rp. {item.price.toLocaleString("id-ID")}
+                  </p>
+                  <button
+                    className="mt-6 bg-[#A8715C] text-lg text-[#1E1E1E] px-14 py-4 rounded-full font-bold shadow-[0px_10px_30px_-5px_rgba(255,209,102,0.8)] hover:bg-yellow-800 transition cursor-pointer"
+                    onClick={() => handleAddToCart(item)}
+                  >
+                    ORDER
+                  </button>
+                </div>
               </div>
-            </div>
-    ))
-  ) : (
-    <p className="col-span-4 text-center text-lg text-white">Loading menu...</p>
-  )}
-</div>
-
+            ))
+          ) : (
+            <p className="col-span-4 text-center text-lg text-white">
+              Loading menu...
+            </p>
+          )}
+        </div>
       </section>
 
       {isCartOpen && (

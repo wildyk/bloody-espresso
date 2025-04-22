@@ -12,7 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Instagram, Facebook, Twitter } from "lucide-react";
 import { ShoppingCart, UserRound } from "lucide-react";
-import router from "next/router";
+import { useRouter } from "next/navigation";
 
 interface MenuItem {
   name: string;
@@ -28,7 +28,7 @@ export default function Page() {
       role: "Pelajar",
       text: "Aku hanya mampir untuk secangkir kopi, tapi sekarangkan aku merasa seperti sedang mengikuti... apakah itu suara tangis, atau hanya suasana yang bikin merinding?",
       rating: 5,
-      avatar: "/image.png",
+      avatar: "/image1.png",
     },
     {
       name: "Siti Nurhaliza",
@@ -57,8 +57,9 @@ export default function Page() {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false); // <-- Tambahin ini
-  
+  const [profileOpen, setProfileOpen] = useState(false);
+  const router = useRouter();
+
   const handleAddToCart = (item: MenuItem) => {
     setCart((prevCart) => {
       const existingItem = prevCart.find(
@@ -80,8 +81,7 @@ export default function Page() {
     setDropdownOpen((prev) => !prev);
   };
   const handleLogout = () => {
-    // Kosongin session/localStorage atau token kalau ada
-    localStorage.removeItem("token"); // contoh
+    localStorage.removeItem("token"); 
     router.push("/auth/login");
   };
 
@@ -413,6 +413,65 @@ export default function Page() {
           </Swiper>
         </div>
       </section>
+      {isCartOpen && (
+  <div className="fixed top-0 right-0 w-full sm:w-[500px] h-full bg-[#5c0a0a] text-white z-50 p-6 overflow-y-auto">
+    <div className="mb-6 border-b border-white pb-4 relative">
+      <h2
+        className={`${nosifer.className} text-4xl font-bold text-center w-full text-[#f5deb3] drop-shadow-md my-4`}
+      >
+        KERANJANG
+      </h2>
+      <button
+        onClick={() => setIsCartOpen(false)}
+        className="absolute top-0 right-0 text-white text-2xl font-bold"
+      >
+        ✕
+      </button>
+    </div>
+    {cart.length > 0 ? (
+      <>
+        {cart.map((item) => (
+          <div
+            key={item.name}
+            className={`${alegreya.className} mb-6 border-b border-white pb-4`}
+          >
+            <Image
+              src={item.image}
+              alt={item.name}
+              width={150}
+              height={150}
+              className="rounded"
+            />
+            <h3 className="text-2xl font-bold mt-2">{item.name}</h3>
+            <p className="text-xl">Rp. {item.price.toLocaleString("id-ID")}</p>
+            <span className="text-xl">Jumlah: {item.qty}</span>
+          </div>
+        ))}
+
+        {/* Total Harga */}
+        <div
+          className={`${alegreya.className} text-xl font-bold bg-[#A8715C] text-[#1E1E1E] py-2 mb-4 rounded text-center`}
+        >
+          TOTAL ・ RP {cart.reduce((acc, item) => acc + item.price * (item.qty || 1), 0).toLocaleString("id-ID")}
+        </div>
+
+        {/* Tombol Bayar */}
+        <button
+          onClick={() => {
+            alert("Pembayaran berhasil! ☕");
+            setCart([]);
+            setIsCartOpen(false);
+          }}
+          className={`${alegreya.className} w-full py-4 bg-[#A8715C] text-xl text-[#1E1E1E] font-bold rounded shadow-lg hover:bg-yellow-800 transition cursor-pointer`}
+        >
+          BAYAR
+        </button>
+      </>
+    ) : (
+      <p className="text-center text-lg mt-10">Keranjang kosong ☕</p>
+    )}
+  </div>
+)}
 
       {/* Footer */}
       <footer
