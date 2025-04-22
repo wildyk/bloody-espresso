@@ -185,7 +185,9 @@ export default function Page() {
         </p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-10">
-          {menuItems.map((item, index) => (
+  {Array.isArray(menuItems) ? (
+    menuItems.map((item, index) => (
+
             <div
               key={index}
               className="bg-[#FFF4E6] text-center rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105 duration-300"
@@ -215,8 +217,12 @@ export default function Page() {
                 </button>
               </div>
             </div>
-          ))}
-        </div>
+    ))
+  ) : (
+    <p className="col-span-4 text-center text-lg text-white">Loading menu...</p>
+  )}
+</div>
+
       </section>
 
       {isCartOpen && (
