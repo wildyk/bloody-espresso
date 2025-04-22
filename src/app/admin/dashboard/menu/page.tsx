@@ -5,15 +5,9 @@ import { usePathname, useRouter } from "next/navigation";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { FaUtensils, FaExchangeAlt, FaHome } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import { nosifer, frijole } from "@/app/ui/fonts";
-
-interface MenuItem {
-  id: number;
-  name: string;
-  price: number;
-}
 
 export default function AdminDashboard() {
   const pathname = usePathname();
@@ -29,53 +23,72 @@ export default function AdminDashboard() {
     router.push("/auth/login");
   };
 
-  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const res = await fetch("/api/menu");
+        const data = await res.json();
+        setMenuItems(data); // Data langsung dari DB
+      } catch (error) {
+        console.error("Gagal fetch menu:", error);
+      }
+    };
+    fetchMenu();
+  }, []);
+  
+  const [menuItems, setMenuItems] = useState<{ id: number; name: string; price: number }[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [newItem, setNewItem] = useState({ name: "", price: 0 });
   const [showModal, setShowModal] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editedItem, setEditedItem] = useState({ name: "", price: 0 });
 
-  const addMenuItem = () => {
+  const addMenuItem = async () => {
     if (!newItem.name || newItem.price <= 0) return;
-    const item: MenuItem = {
-      id: Date.now(),
-      name: newItem.name,
-      price: newItem.price,
-    };
-    setMenuItems([...menuItems, item]);
-    setNewItem({ name: "", price: 0 });
-    setShowModal(false);
+    try {
+      const res = await fetch("/api/menu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(newItem),
+      });
+      const data = await res.json();
+      setMenuItems([...menuItems, data]); // Update state
+      setNewItem({ name: "", price: 0 });
+      setShowModal(false);
+    } catch (error) {
+      console.error("Gagal tambah menu:", error);
+    }
   };
-
-  const deleteMenuItem = (id: number) => {
-    setMenuItems(menuItems.filter((item) => item.id !== id));
+  
+  const deleteMenuItem = async (id: number) => {
+    try {
+      await fetch(`/api/menu/${id}`, { method: "DELETE" });
+      setMenuItems(menuItems.filter((item) => item.id !== id));
+    } catch (error) {
+      console.error("Gagal hapus menu:", error);
+    }
   };
-
-  const saveEdit = () => {
+  
+  const saveEdit = async () => {
     if (!editedItem.name || editedItem.price <= 0 || editingId === null) return;
-
-    const isSame = menuItems.find(
-      (item) =>
-        item.id === editingId &&
-        item.name === editedItem.name &&
-        item.price === editedItem.price
-    );
-
-    if (isSame) {
+    try {
+      await fetch(`/api/menu/${editingId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(editedItem),
+      });
+      setMenuItems(
+        menuItems.map((item) =>
+          item.id === editingId ? { ...item, ...editedItem } : item
+        )
+      );
       setEditingId(null);
       setEditedItem({ name: "", price: 0 });
-      return;
+    } catch (error) {
+      console.error("Gagal edit menu:", error);
     }
-
-    setMenuItems(
-      menuItems.map((item) =>
-        item.id === editingId ? { ...item, ...editedItem } : item
-      )
-    );
-    setEditingId(null);
-    setEditedItem({ name: "", price: 0 });
   };
+  
 
   const filteredMenu = menuItems.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
