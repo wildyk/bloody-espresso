@@ -246,7 +246,7 @@ function Page() {
     const submitTransaction = async ()=>{
         try {
             for (const item of cart){
-                await fetch("/api/menu", {
+                await fetch("/api/transaksi", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
