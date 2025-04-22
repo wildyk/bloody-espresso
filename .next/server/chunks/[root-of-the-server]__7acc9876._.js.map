@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 60, "column": 0}, "map": {"version":3,"sources":["file:///root/CODING/tubes-siweb/src/app/api/checkout/route.ts"],"sourcesContent":["import pool from '@/lib/types/pg';  \nimport { NextResponse } from 'next/server';\n\nexport async function POST(req: Request) {\n  const client = await pool.connect();\n  try {\n    const result = await client.query('SELECT NOW()');\n    return NextResponse.json({ time: result.rows[0] }); // Gunakan NextResponse, bukan Response\n  } catch (err: any) {\n    return NextResponse.json({ error: err.message }, { status: 500 }); // Tangkap error dengan NextResponse\n  } finally {\n    client.release();\n  }\n}\n"],"names":[],"mappings":";;;;;;;;AACA;;;AAEO,eAAe,KAAK,GAAY;IACrC,MAAM,SAAS,MAAM,KAAK,OAAO;IACjC,IAAI;QACF,MAAM,SAAS,MAAM,OAAO,KAAK,CAAC;QAClC,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;YAAE,MAAM,OAAO,IAAI,CAAC,EAAE;QAAC,IAAI,uCAAuC;IAC7F,EAAE,OAAO,KAAU;QACjB,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;YAAE,OAAO,IAAI,OAAO;QAAC,GAAG;YAAE,QAAQ;QAAI,IAAI,oCAAoC;IACzG,SAAU;QACR,OAAO,OAAO;IAChB;AACF","debugId":null}}]
+}

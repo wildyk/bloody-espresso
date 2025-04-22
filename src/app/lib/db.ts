@@ -1,10 +1,10 @@
 // lib/db.ts
-import { Pool } from 'pg';
+import { Pool } from 'pg'; // Import Pool dari pg
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: {
-    rejectUnauthorized: false, // wajib false untuk Neon
+    rejectUnauthorized: false, // Wajib false untuk Neon!
   },
 });
 
