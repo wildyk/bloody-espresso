@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
-import { utils, writeFile } from "xlsx";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { PowerIcon } from "@heroicons/react/24/outline";
 import { FaExchangeAlt, FaHome, FaUtensils, FaFileExport } from "react-icons/fa";
+import { utils, writeFile } from "xlsx";
 import { frijole, nosifer } from "@/app/ui/fonts";
 
 interface Transaction {
@@ -27,38 +27,35 @@ export default function TransaksiPage() {
     { href: "/admin/dashboard/menu", label: "Menu", icon: <FaUtensils className="w-6 h-6" /> },
     { href: "/admin/dashboard/transaksi", label: "Transaksi", icon: <FaExchangeAlt className="w-6 h-6" /> },
   ];
-  
+
   const handleSignOut = () => {
-    // Hapus token / session jika ada
-    // localStorage.removeItem("token"); // contoh
     router.push("/auth/login");
   };
-  const menuList = [
-    { name: "Espresso", price: 15000 },
-    { name: "Latte", price: 20000 },
-    { name: "Cappuccino", price: 18000 },
-    { name: "Mocha", price: 22000 },
-  ];
 
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [selectedMenu, setSelectedMenu] = useState(menuList[0]);
-  const [quantity, setQuantity] = useState(1);
-  const [date, setDate] = useState("");
 
-  const addTransaction = () => {
-    if (!date || quantity <= 0) return;
-    const newTransaction: Transaction = {
-      id: Date.now(),
-      menuName: selectedMenu.name,
-      menuPrice: selectedMenu.price,
-      quantity,
-      date,
-      total: selectedMenu.price * quantity,
+  useEffect(() => {
+    const fetchTransactions = async () => {
+      try {
+        const res = await fetch("/api/transaksi");
+        const data = await res.json();
+        console.log("Data transaksi dari API:", data);
+        setTransactions(
+          data.map((tx: any) => ({
+            id: tx.id,
+            menuName: tx.product_name,
+            menuPrice: tx.total_price / tx.quantity,
+            quantity: tx.quantity,
+            date: new Date(tx.created_at).toLocaleDateString(),
+            total: tx.total_price,
+          }))
+        );
+      } catch (error) {
+        console.error("Gagal fetch transaksi:", error);
+      }
     };
-    setTransactions([...transactions, newTransaction]);
-    setQuantity(1);
-    setDate("");
-  };
+    fetchTransactions();
+  }, []);
 
   const exportToExcel = () => {
     const data = transactions.map(tx => ({
@@ -118,7 +115,6 @@ export default function TransaksiPage() {
 
       {/* Main Content */}
       <div className="flex-grow flex flex-col min-h-screen text-white bg-gradient-to-br from-[#4A0D0D] to-[#750E0E] font-serif overflow-y-auto">
-        {/* Navbar */}
         <div className="flex items-center justify-between px-6 py-4 bg-red-900/50 border-b border-red-700">
           <div className="flex-1 flex justify-center ml-20">
             <h1 className={`${nosifer.className} text-4xl font-extrabold tracking-wide text-[#E5C1A5] drop-shadow-md text-center`}>
@@ -135,47 +131,11 @@ export default function TransaksiPage() {
         </div>
 
         <div className="text-center my-12">
-          <h2 className={`${frijole.className} text-5xl font-extrabold text-[#E5C1A5] drop-shadow-md`}>Transaksi</h2>
+          <h2 className={`${frijole.className} text-5xl font-extrabold text-[#E5C1A5] drop-shadow-md`}>Riwayat Transaksi</h2>
         </div>
 
-        {/* Form Transaksi */}
-        <div className="flex flex-wrap justify-center gap-4 mb-6 px-6">
-          <select
-            className="px-4 py-2 rounded-full border border-black text-black bg-white"
-            value={selectedMenu.name}
-            onChange={(e) => {
-              const menu = menuList.find((m) => m.name === e.target.value);
-              if (menu) setSelectedMenu(menu);
-            }}
-          >
-            {menuList.map((menu) => (
-              <option key={menu.name} value={menu.name}>{menu.name}</option>
-            ))}
-          </select>
-
-          <input
-            type="number"
-            min={1}
-            value={quantity}
-            onChange={(e) => setQuantity(parseInt(e.target.value))}
-            className="px-4 py-2 rounded-full border border-black text-black bg-white"
-            placeholder="Jumlah"
-          />
-
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            className="px-4 py-2 rounded-full border border-black text-black bg-white"
-          />
-
-          <button
-            onClick={addTransaction}
-            className="bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition-all"
-          >
-            Tambah Transaksi
-          </button>
-
+        {/* Export Button */}
+        <div className="flex justify-center mb-6">
           <button
             onClick={exportToExcel}
             className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-all flex items-center gap-2"
@@ -184,7 +144,7 @@ export default function TransaksiPage() {
           </button>
         </div>
 
-        {/* Tabel Transaksi */}
+        {/* Table */}
         <div className="overflow-x-auto border border-white rounded w-full max-w-7xl mx-auto mb-8">
           <table className="min-w-full table-auto text-white border-collapse">
             <thead className="bg-[#3B0A0A]">
@@ -202,10 +162,10 @@ export default function TransaksiPage() {
                 <tr key={tx.id} className="text-xl text-center hover:bg-[#5A1E1E]">
                   <td className="px-4 py-2 border border-white">{index + 1}</td>
                   <td className="px-4 py-2 border border-white">{tx.menuName}</td>
-                  <td className="px-4 py-2 border border-white">{tx.menuPrice.toLocaleString("id-ID")}</td>
+                  <td className="px-4 py-2 border border-white">Rp {tx.menuPrice.toLocaleString("id-ID")}</td>
                   <td className="px-4 py-2 border border-white">{tx.quantity}</td>
                   <td className="px-4 py-2 border border-white">{tx.date}</td>
-                  <td className="px-4 py-2 border border-white">{tx.total.toLocaleString("id-ID")}</td>
+                  <td className="px-4 py-2 border border-white">Rp {tx.total.toLocaleString("id-ID")}</td>
                 </tr>
               ))}
               {transactions.length === 0 && (

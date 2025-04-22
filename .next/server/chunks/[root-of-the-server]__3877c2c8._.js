@@ -173,17 +173,25 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$
 ;
 async function POST(req) {
     const body = await req.json();
+    console.log("Body diterima:", body); // Debug log
     const { product_name, quantity, total_price } = body;
+    if (!product_name || !quantity || !total_price) {
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            error: "Data tidak lengkap"
+        }, {
+            status: 400
+        });
+    }
     try {
         await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`
-      INSERT INTO menu_items (product_name, quantity, total_price)
+      INSERT INTO transaksi (product_name, quantity, total_price)
       VALUES (${product_name}, ${quantity}, ${total_price})
     `;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: "Transaksi berhasil disimpan!"
         });
     } catch (error) {
-        console.error("Insert error:", error);
+        console.error("Insert transaksi error:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Gagal menyimpan transaksi"
         }, {
@@ -193,10 +201,10 @@ async function POST(req) {
 }
 async function GET() {
     try {
-        const { rows } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`SELECT * FROM menu_items ORDER BY created_at DESC`;
+        const { rows } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`SELECT * FROM transaksi ORDER BY created_at DESC`;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(rows);
     } catch (error) {
-        console.error("Query error:", error);
+        console.error("Query transaksi error:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Gagal mengambil data transaksi."
         }, {
