@@ -103,20 +103,14 @@ export default function Page() {
 
   const handlePayment = async () => {
     if (cart.length === 0) return;
-
     setIsPaying(true);
-
     try {
       const response = await fetch("/api/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          total_price: total,
-          items: cart.map((item) => ({
-            name: item.name,
-            quantity: item.qty || 1,
-            price: item.price,
-          })),
+          total_price: cart.reduce((acc, item) => acc + item.price * (item.qty || 1), 0),
+          items: cart.map((item) => ({ name: item.name, quantity: item.qty || 1, price: item.price })),
         }),
       });
 

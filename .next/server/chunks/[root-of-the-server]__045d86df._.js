@@ -162,6 +162,7 @@ module.exports = mod;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
+// /app/api/checkout/route.ts
 __turbopack_context__.s({
     "GET": (()=>GET),
     "POST": (()=>POST)
@@ -172,28 +173,20 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$
 ;
 ;
 async function POST(req) {
+    const body = await req.json();
+    const { product_name, quantity, total_price } = body;
     try {
-        const body = await req.json();
-        const { total_price, items } = body;
-        // Validasi input
-        if (!total_price || !items || !Array.isArray(items) || items.length === 0) {
-            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-                error: "Data transaksi tidak lengkap!"
-            }, {
-                status: 400
-            });
-        }
         await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`
-      INSERT INTO transactions (total_price, items)
-      VALUES (${total_price}, ${JSON.stringify(items)})
+      INSERT INTO riwayat_transaksi (product_name, quantity, total_price)
+      VALUES (${product_name}, ${quantity}, ${total_price})
     `;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: "Transaksi berhasil disimpan!"
         });
     } catch (error) {
-        console.error("Error saat menyimpan transaksi:", error.message);
+        console.error("Insert error:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            error: "Gagal menyimpan transaksi."
+            error: "Gagal menyimpan transaksi"
         }, {
             status: 500
         });
@@ -201,14 +194,10 @@ async function POST(req) {
 }
 async function GET() {
     try {
-        const { rows } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`
-      SELECT id, total_price, items, created_at 
-      FROM transactions 
-      ORDER BY created_at DESC
-    `;
+        const { rows } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`SELECT * FROM riwayat_transaksi ORDER BY created_at DESC`;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(rows);
     } catch (error) {
-        console.error("Error saat mengambil data:", error.message);
+        console.error("Query error:", error);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             error: "Gagal mengambil data."
         }, {
