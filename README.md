@@ -1,36 +1,13 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Anggota :
+- Rayhan Wildy Ernst Kumaat / 231712656
+- Silvia Melani Siregar / 231712698
+- Elsa Dwita / 231712702
 
-## Getting Started
+Bloody Espresso adalah platform digital untuk coffee shop bertema horor yang menawarkan pengalaman berbeda bagi para pecinta kopi. Website ini dilengkapi dengan fitur: Halaman Menu Interaktif: Menampilkan berbagai varian kopi dengan detail produk dan sistem pemesanan langsung ke keranjang. Keranjang & Checkout: Pengunjung dapat memesan kopi, melihat ringkasan pesanan, dan melakukan pembayaran yang tersimpan ke database. User Authentication: Sistem login, register, dan reset password untuk memudahkan pelanggan mengelola akun mereka. Dashboard Admin: Fitur kelola menu dan riwayat transaksi untuk memudahkan pengelolaan usaha. Profil & Ulasan Pelanggan: Menampilkan testimoni pelanggan yang menambah daya tarik pengunjung baru. Dengan desain yang gelap dan misterius, Bloody Espresso menghadirkan suasana yang mendalam, menggabungkan teknologi modern (Next.js + Neon Database) dengan estetika horor yang unik.
 
-First, run the development server:
+Link Github : https://github.com/wildyk/ujicoba.git
+Link deploy : https://ujicoba-git-master-wildyks-projects.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Rayhan Wildy Ernst Kumaat / 231712656 = Mengerjakan implementasi kode 80%
+- Silvia Melani Siregar / 231712698 = Membuat desaign untuk halaman pengguna seperti beranda, profile, menu, dan kontak serta ada membantu dalam kode
+- Elsa Dwita / 231712702 = Membuat desaign untuk halaman admin seperti dashboard, menu, transaksi dan pembuatan desaign auth seperti login, forget, dan register
