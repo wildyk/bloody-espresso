@@ -39,23 +39,29 @@ export default function TransaksiPage() {
       try {
         const res = await fetch("/api/transaksi");
         const data = await res.json();
-        console.log("Data transaksi dari API:", data);
-        setTransactions(
-          data.map((tx: any) => ({
-            id: tx.id,
-            menuName: tx.product_name,
-            menuPrice: tx.total_price / tx.quantity,
-            quantity: tx.quantity,
-            date: new Date(tx.created_at).toLocaleDateString(),
-            total: tx.total_price,
-          }))
-        );
+        console.log("Data transaksi dari API:", data); 
+  
+        if (Array.isArray(data)) {
+          setTransactions(
+            data.map((tx: any) => ({
+              id: tx.id,
+              menuName: tx.product_name,
+              menuPrice: tx.total_price / tx.quantity,
+              quantity: tx.quantity,
+              date: new Date(tx.created_at).toLocaleDateString(),
+              total: tx.total_price,
+            }))
+          );
+        } else {
+          console.error("Data dari API bukan array:", data);
+        }
       } catch (error) {
         console.error("Gagal fetch transaksi:", error);
       }
     };
     fetchTransactions();
   }, []);
+  ;
 
   const exportToExcel = () => {
     const data = transactions.map(tx => ({

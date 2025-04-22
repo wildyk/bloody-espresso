@@ -4,7 +4,8 @@
   "/admin/dashboard/transaksi/page": "app/admin/dashboard/transaksi/page.js",
   "/api/menu/route": "app/api/menu/route.js",
   "/api/transaksi/route": "app/api/transaksi/route.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js",
-  "/verif/home/page": "app/verif/home/page.js",
   "/verif/menu/page": "app/verif/menu/page.js"
 }

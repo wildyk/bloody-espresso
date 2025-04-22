@@ -152,12 +152,12 @@ __turbopack_context__.s({
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$xlsx$2f$xlsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/xlsx/xlsx.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$PowerIcon$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__PowerIcon$3e$__ = __turbopack_context__.i("[project]/node_modules/@heroicons/react/24/outline/esm/PowerIcon.js [app-client] (ecmascript) <export default as PowerIcon>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-icons/fa/index.mjs [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$xlsx$2f$xlsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/xlsx/xlsx.mjs [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$fonts$2e$ts__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/src/app/ui/fonts.ts [app-client] (ecmascript) <module evaluation>");
 var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$frijole_e11d2e94$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__frijole$3e$__ = __turbopack_context__.i("[next]/internal/font/google/frijole_e11d2e94.js [app-client] (ecmascript) <export default as frijole>");
 var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$nosifer_d0ad537$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__nosifer$3e$__ = __turbopack_context__.i("[next]/internal/font/google/nosifer_d0ad537.js [app-client] (ecmascript) <export default as nosifer>");
@@ -212,49 +212,35 @@ function TransaksiPage() {
         }
     ];
     const handleSignOut = ()=>{
-        // Hapus token / session jika ada
-        // localStorage.removeItem("token"); // contoh
         router.push("/auth/login");
     };
-    const menuList = [
-        {
-            name: "Espresso",
-            price: 15000
-        },
-        {
-            name: "Latte",
-            price: 20000
-        },
-        {
-            name: "Cappuccino",
-            price: 18000
-        },
-        {
-            name: "Mocha",
-            price: 22000
-        }
-    ];
     const [transactions, setTransactions] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    const [selectedMenu, setSelectedMenu] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(menuList[0]);
-    const [quantity, setQuantity] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(1);
-    const [date, setDate] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
-    const addTransaction = ()=>{
-        if (!date || quantity <= 0) return;
-        const newTransaction = {
-            id: Date.now(),
-            menuName: selectedMenu.name,
-            menuPrice: selectedMenu.price,
-            quantity,
-            date,
-            total: selectedMenu.price * quantity
-        };
-        setTransactions([
-            ...transactions,
-            newTransaction
-        ]);
-        setQuantity(1);
-        setDate("");
-    };
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "TransaksiPage.useEffect": ()=>{
+            const fetchTransactions = {
+                "TransaksiPage.useEffect.fetchTransactions": async ()=>{
+                    try {
+                        const res = await fetch("/api/transaksi");
+                        const data = await res.json();
+                        console.log("Data transaksi dari API:", data);
+                        setTransactions(data.map({
+                            "TransaksiPage.useEffect.fetchTransactions": (tx)=>({
+                                    id: tx.id,
+                                    menuName: tx.product_name,
+                                    menuPrice: tx.total_price / tx.quantity,
+                                    quantity: tx.quantity,
+                                    date: new Date(tx.created_at).toLocaleDateString(),
+                                    total: tx.total_price
+                                })
+                        }["TransaksiPage.useEffect.fetchTransactions"]));
+                    } catch (error) {
+                        console.error("Gagal fetch transaksi:", error);
+                    }
+                }
+            }["TransaksiPage.useEffect.fetchTransactions"];
+            fetchTransactions();
+        }
+    }["TransaksiPage.useEffect"], []);
     const exportToExcel = ()=>{
         const data = transactions.map((tx)=>({
                 ID: tx.id,
@@ -288,17 +274,17 @@ function TransaksiPage() {
                                     height: 140
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                    lineNumber: 85,
+                                    lineNumber: 82,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 84,
+                                lineNumber: 81,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                            lineNumber: 83,
+                            lineNumber: 80,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
@@ -314,26 +300,26 @@ function TransaksiPage() {
                                             children: item.label
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                            lineNumber: 100,
+                                            lineNumber: 97,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, item.href, true, {
                                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                    lineNumber: 92,
+                                    lineNumber: 89,
                                     columnNumber: 17
                                 }, this);
                             })
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                            lineNumber: 88,
+                            lineNumber: 85,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "flex-grow border-t border-red-900"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                            lineNumber: 105,
+                            lineNumber: 102,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -347,36 +333,36 @@ function TransaksiPage() {
                                         className: "w-6 h-6"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                        lineNumber: 112,
+                                        lineNumber: 109,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         children: "Sign Out"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                        lineNumber: 113,
+                                        lineNumber: 110,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 107,
+                                lineNumber: 104,
                                 columnNumber: 13
                             }, this)
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                            lineNumber: 106,
+                            lineNumber: 103,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                    lineNumber: 82,
+                    lineNumber: 79,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                lineNumber: 81,
+                lineNumber: 78,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -392,12 +378,12 @@ function TransaksiPage() {
                                     children: "BLOODY ESPRESSO"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                    lineNumber: 124,
+                                    lineNumber: 120,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 123,
+                                lineNumber: 119,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -407,7 +393,7 @@ function TransaksiPage() {
                                         className: "w-8 h-8 rounded-full bg-gray-300"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                        lineNumber: 129,
+                                        lineNumber: 125,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -418,7 +404,7 @@ function TransaksiPage() {
                                                 children: "Elsa Dwita"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 131,
+                                                lineNumber: 127,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -426,116 +412,63 @@ function TransaksiPage() {
                                                 children: "Admin"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 132,
+                                                lineNumber: 128,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                        lineNumber: 130,
+                                        lineNumber: 126,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 128,
+                                lineNumber: 124,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                        lineNumber: 122,
+                        lineNumber: 118,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "text-center my-12",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
                             className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$frijole_e11d2e94$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__frijole$3e$__["frijole"].className} text-5xl font-extrabold text-[#E5C1A5] drop-shadow-md`,
-                            children: "Transaksi"
+                            children: "Riwayat Transaksi"
                         }, void 0, false, {
                             fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                            lineNumber: 138,
+                            lineNumber: 134,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                        lineNumber: 137,
+                        lineNumber: 133,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "flex flex-wrap justify-center gap-4 mb-6 px-6",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                                className: "px-4 py-2 rounded-full border border-black text-black bg-white",
-                                value: selectedMenu.name,
-                                onChange: (e)=>{
-                                    const menu = menuList.find((m)=>m.name === e.target.value);
-                                    if (menu) setSelectedMenu(menu);
-                                },
-                                children: menuList.map((menu)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
-                                        value: menu.name,
-                                        children: menu.name
-                                    }, menu.name, false, {
-                                        fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                        lineNumber: 152,
-                                        columnNumber: 15
-                                    }, this))
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 143,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                type: "number",
-                                min: 1,
-                                value: quantity,
-                                onChange: (e)=>setQuantity(parseInt(e.target.value)),
-                                className: "px-4 py-2 rounded-full border border-black text-black bg-white",
-                                placeholder: "Jumlah"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 156,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                type: "date",
-                                value: date,
-                                onChange: (e)=>setDate(e.target.value),
-                                className: "px-4 py-2 rounded-full border border-black text-black bg-white"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 165,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: addTransaction,
-                                className: "bg-green-700 hover:bg-green-800 text-white px-6 py-2 rounded-full transition-all",
-                                children: "Tambah Transaksi"
-                            }, void 0, false, {
-                                fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 172,
-                                columnNumber: 11
-                            }, this),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
-                                onClick: exportToExcel,
-                                className: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-all flex items-center gap-2",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaFileExport"], {}, void 0, false, {
-                                        fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                        lineNumber: 183,
-                                        columnNumber: 13
-                                    }, this),
-                                    " Export Excel"
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 179,
-                                columnNumber: 11
-                            }, this)
-                        ]
-                    }, void 0, true, {
+                        className: "flex justify-center mb-6",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                            onClick: exportToExcel,
+                            className: "bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-all flex items-center gap-2",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$icons$2f$fa$2f$index$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["FaFileExport"], {}, void 0, false, {
+                                    fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
+                                    lineNumber: 143,
+                                    columnNumber: 13
+                                }, this),
+                                " Export Excel"
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
+                            lineNumber: 139,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                        lineNumber: 142,
+                        lineNumber: 138,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -552,7 +485,7 @@ function TransaksiPage() {
                                                 children: "#"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 192,
+                                                lineNumber: 152,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -560,7 +493,7 @@ function TransaksiPage() {
                                                 children: "Menu"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 193,
+                                                lineNumber: 153,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -568,7 +501,7 @@ function TransaksiPage() {
                                                 children: "Harga"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 194,
+                                                lineNumber: 154,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -576,7 +509,7 @@ function TransaksiPage() {
                                                 children: "Jumlah"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 195,
+                                                lineNumber: 155,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -584,7 +517,7 @@ function TransaksiPage() {
                                                 children: "Tanggal"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 196,
+                                                lineNumber: 156,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -592,18 +525,18 @@ function TransaksiPage() {
                                                 children: "Total"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 197,
+                                                lineNumber: 157,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                        lineNumber: 191,
+                                        lineNumber: 151,
                                         columnNumber: 15
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                    lineNumber: 190,
+                                    lineNumber: 150,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -616,7 +549,7 @@ function TransaksiPage() {
                                                         children: index + 1
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                        lineNumber: 203,
+                                                        lineNumber: 163,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -624,15 +557,18 @@ function TransaksiPage() {
                                                         children: tx.menuName
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                        lineNumber: 204,
+                                                        lineNumber: 164,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                         className: "px-4 py-2 border border-white",
-                                                        children: tx.menuPrice.toLocaleString("id-ID")
-                                                    }, void 0, false, {
+                                                        children: [
+                                                            "Rp ",
+                                                            tx.menuPrice.toLocaleString("id-ID")
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                        lineNumber: 205,
+                                                        lineNumber: 165,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -640,7 +576,7 @@ function TransaksiPage() {
                                                         children: tx.quantity
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                        lineNumber: 206,
+                                                        lineNumber: 166,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -648,21 +584,24 @@ function TransaksiPage() {
                                                         children: tx.date
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                        lineNumber: 207,
+                                                        lineNumber: 167,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                         className: "px-4 py-2 border border-white",
-                                                        children: tx.total.toLocaleString("id-ID")
-                                                    }, void 0, false, {
+                                                        children: [
+                                                            "Rp ",
+                                                            tx.total.toLocaleString("id-ID")
+                                                        ]
+                                                    }, void 0, true, {
                                                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                        lineNumber: 208,
+                                                        lineNumber: 168,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, tx.id, true, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 202,
+                                                lineNumber: 162,
                                                 columnNumber: 17
                                             }, this)),
                                         transactions.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
@@ -672,45 +611,45 @@ function TransaksiPage() {
                                                 children: "Belum ada transaksi."
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                                lineNumber: 213,
+                                                lineNumber: 173,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                            lineNumber: 212,
+                                            lineNumber: 172,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                    lineNumber: 200,
+                                    lineNumber: 160,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                            lineNumber: 189,
+                            lineNumber: 149,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                        lineNumber: 188,
+                        lineNumber: 148,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                lineNumber: 120,
+                lineNumber: 117,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-        lineNumber: 79,
+        lineNumber: 76,
         columnNumber: 5
     }, this);
 }
-_s(TransaksiPage, "hnSO3gdN880O7INTp2ZUGvwVc2c=", false, function() {
+_s(TransaksiPage, "yrHHsnxJLvOR2ciR3+l29pQvTXg=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["usePathname"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
