@@ -22,13 +22,16 @@ export default function Page() {
   const [isPaying, setIsPaying] = useState(false);
 
   useEffect(() => {
-    async function fetchMenu() {
-      const res = await fetch("/api/menu");
+    const fetchData = async () => {
+      const res = await fetch("/api/menu"); 
       const data = await res.json();
+      console.log("Data dari API:", data);
       setMenuItems(data);
-    }
-    fetchMenu();
+    };
+  
+    fetchData();
   }, []);
+  
 
   const handleAddToCart = (item: MenuItem) => {
     setCart((prevCart) => {
@@ -66,11 +69,11 @@ export default function Page() {
     (acc, item) => acc + item.price * (item.qty || 1),
     0
   );
-  
+
   const submitTransaction = async () => {
     try {
       for (const item of cart) {
-        await fetch("/api/transaction", {
+        await fetch("/api/menu", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -173,35 +173,23 @@ var _s = __turbopack_context__.k.signature();
 ;
 function Page() {
     _s();
-    const menuItems = [
-        {
-            name: "Cappuccino",
-            description: "Coffee 50% | Milk 50%",
-            price: 15000,
-            image: "/Cappuccino.png"
-        },
-        {
-            name: "Chai Latte",
-            description: "Coffee 50% | Milk 50%",
-            price: 22000,
-            image: "/chai-latte.png"
-        },
-        {
-            name: "Macchiato",
-            description: "Coffee 50% | Milk 50%",
-            price: 20000,
-            image: "/macchiato.png"
-        },
-        {
-            name: "Espresso",
-            description: "Coffee 50% | Milk 50%",
-            price: 18000,
-            image: "/expresso.png"
-        }
-    ];
+    const [menuItems, setMenuItems] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [cart, setCart] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [isCartOpen, setIsCartOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [isPaying, setIsPaying] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Page.useEffect": ()=>{
+            const fetchData = {
+                "Page.useEffect.fetchData": async ()=>{
+                    const res = await fetch("/api/menu");
+                    const data = await res.json();
+                    console.log("Data dari API:", data);
+                    setMenuItems(data);
+                }
+            }["Page.useEffect.fetchData"];
+            fetchData();
+        }
+    }["Page.useEffect"], []);
     const handleAddToCart = (item)=>{
         setCart((prevCart)=>{
             const existingItem = prevCart.find((cartItem)=>cartItem.name === item.name);
@@ -232,14 +220,37 @@ function Page() {
                 } : item));
     };
     const total = cart.reduce((acc, item)=>acc + item.price * (item.qty || 1), 0);
-    const handlePayment = ()=>{
+    const submitTransaction = async ()=>{
+        try {
+            for (const item of cart){
+                await fetch("/api/menu", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        product_name: item.name,
+                        quantity: item.qty || 1,
+                        total_price: item.price * (item.qty || 1)
+                    })
+                });
+            }
+        } catch (error) {
+            console.error("Gagal kirim transaksi:", error);
+        }
+    };
+    const handlePayment = async ()=>{
         setIsPaying(true);
-        setTimeout(()=>{
+        try {
+            await submitTransaction();
             alert("Pembayaran berhasil! Terima kasih sudah memesan ☕");
             setCart([]);
             setIsCartOpen(false);
+        } catch (err) {
+            alert("Gagal memproses pembayaran. Coba lagi ya.");
+        } finally{
             setIsPaying(false);
-        }, 1000);
+        }
     };
     const [dropdownOpen, setDropdownOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const toggleDropdown = ()=>{
@@ -260,12 +271,12 @@ function Page() {
                             height: 50
                         }, void 0, false, {
                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                            lineNumber: 106,
+                            lineNumber: 117,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 105,
+                        lineNumber: 116,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -278,12 +289,12 @@ function Page() {
                                     children: "Beranda"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                    lineNumber: 118,
+                                    lineNumber: 129,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 117,
+                                lineNumber: 128,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -295,7 +306,7 @@ function Page() {
                                         children: "Tentang Kami"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 123,
+                                        lineNumber: 134,
                                         columnNumber: 13
                                     }, this),
                                     dropdownOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -310,12 +321,12 @@ function Page() {
                                                         children: "Profil Team"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 131,
+                                                        lineNumber: 142,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                    lineNumber: 130,
+                                                    lineNumber: 141,
                                                     columnNumber: 19
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -325,29 +336,29 @@ function Page() {
                                                         children: "Profil Toko"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 134,
+                                                        lineNumber: 145,
                                                         columnNumber: 21
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                    lineNumber: 133,
+                                                    lineNumber: 144,
                                                     columnNumber: 19
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                            lineNumber: 129,
+                                            lineNumber: 140,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 128,
+                                        lineNumber: 139,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 122,
+                                lineNumber: 133,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -357,12 +368,12 @@ function Page() {
                                     children: "Kontak"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                    lineNumber: 143,
+                                    lineNumber: 154,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 142,
+                                lineNumber: 153,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -372,12 +383,12 @@ function Page() {
                                     children: "Menu"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                    lineNumber: 146,
+                                    lineNumber: 157,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 145,
+                                lineNumber: 156,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -391,7 +402,7 @@ function Page() {
                                                 size: 40
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 154,
+                                                lineNumber: 165,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -399,13 +410,13 @@ function Page() {
                                                 children: "Keranjang"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 155,
+                                                lineNumber: 166,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 150,
+                                        lineNumber: 161,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -415,7 +426,7 @@ function Page() {
                                                 size: 40
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 158,
+                                                lineNumber: 169,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -423,31 +434,31 @@ function Page() {
                                                 children: "Profile"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 159,
+                                                lineNumber: 170,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 157,
+                                        lineNumber: 168,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 149,
+                                lineNumber: 160,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 114,
+                        lineNumber: 125,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                lineNumber: 104,
+                lineNumber: 115,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -458,7 +469,7 @@ function Page() {
                         children: "MENU"
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 166,
+                        lineNumber: 177,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -466,7 +477,7 @@ function Page() {
                         children: "Jelajahi semua rasa kopi bersama kami. Selalu ada secangkir kopi baru yang layak dicoba."
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 171,
+                        lineNumber: 182,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -482,7 +493,7 @@ function Page() {
                                         className: "w-full h-80 object-cover object-top"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 182,
+                                        lineNumber: 193,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -493,7 +504,7 @@ function Page() {
                                                 children: item.name
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 190,
+                                                lineNumber: 201,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -501,7 +512,7 @@ function Page() {
                                                 children: item.description
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 193,
+                                                lineNumber: 204,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -512,7 +523,7 @@ function Page() {
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 196,
+                                                lineNumber: 207,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -521,30 +532,30 @@ function Page() {
                                                 children: "ORDER"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 199,
+                                                lineNumber: 210,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 189,
+                                        lineNumber: 200,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, index, true, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 178,
+                                lineNumber: 189,
                                 columnNumber: 13
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 176,
+                        lineNumber: 187,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                lineNumber: 165,
+                lineNumber: 176,
                 columnNumber: 7
             }, this),
             isCartOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -558,7 +569,7 @@ function Page() {
                                 children: "KERANJANG"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 214,
+                                lineNumber: 225,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -567,13 +578,13 @@ function Page() {
                                 children: "✕"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 219,
+                                lineNumber: 230,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 213,
+                        lineNumber: 224,
                         columnNumber: 11
                     }, this),
                     cart.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -587,7 +598,7 @@ function Page() {
                                     className: "rounded"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                    lineNumber: 231,
+                                    lineNumber: 242,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -595,7 +606,7 @@ function Page() {
                                     children: item.name
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                    lineNumber: 238,
+                                    lineNumber: 249,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -606,7 +617,7 @@ function Page() {
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                    lineNumber: 239,
+                                    lineNumber: 250,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -618,7 +629,7 @@ function Page() {
                                             children: "-"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                            lineNumber: 243,
+                                            lineNumber: 254,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -626,7 +637,7 @@ function Page() {
                                             children: item.qty
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                            lineNumber: 249,
+                                            lineNumber: 260,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -635,7 +646,7 @@ function Page() {
                                             children: "+"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                            lineNumber: 250,
+                                            lineNumber: 261,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -644,19 +655,19 @@ function Page() {
                                             children: "Hapus"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                            lineNumber: 256,
+                                            lineNumber: 267,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                    lineNumber: 242,
+                                    lineNumber: 253,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, item.name, true, {
                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                            lineNumber: 227,
+                            lineNumber: 238,
                             columnNumber: 13
                         }, this)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -670,7 +681,7 @@ function Page() {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 267,
+                                lineNumber: 278,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -680,19 +691,19 @@ function Page() {
                                 children: isPaying ? "Memproses Pembayaran..." : "BAYAR"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 272,
+                                lineNumber: 283,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 266,
+                        lineNumber: 277,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                lineNumber: 212,
+                lineNumber: 223,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("footer", {
@@ -705,7 +716,7 @@ function Page() {
                         className: "absolute inset-0 bg-[#4A2C2C] opacity-80 z-0"
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 289,
+                        lineNumber: 300,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -722,12 +733,12 @@ function Page() {
                                     className: "filter invert"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                    lineNumber: 292,
+                                    lineNumber: 303,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 291,
+                                lineNumber: 302,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -740,7 +751,7 @@ function Page() {
                                                 children: "About"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 303,
+                                                lineNumber: 314,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -753,12 +764,12 @@ function Page() {
                                                             children: "Our Story"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 306,
+                                                            lineNumber: 317,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 305,
+                                                        lineNumber: 316,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -768,12 +779,12 @@ function Page() {
                                                             children: "FAQ"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 311,
+                                                            lineNumber: 322,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 310,
+                                                        lineNumber: 321,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -783,24 +794,24 @@ function Page() {
                                                             children: "Careers"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 316,
+                                                            lineNumber: 327,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 315,
+                                                        lineNumber: 326,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 304,
+                                                lineNumber: 315,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 302,
+                                        lineNumber: 313,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -811,7 +822,7 @@ function Page() {
                                                 children: "Customer Resources"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 324,
+                                                lineNumber: 335,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -824,12 +835,12 @@ function Page() {
                                                             children: "Menu"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 329,
+                                                            lineNumber: 340,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 328,
+                                                        lineNumber: 339,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -839,12 +850,12 @@ function Page() {
                                                             children: "Locations"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 334,
+                                                            lineNumber: 345,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 333,
+                                                        lineNumber: 344,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -854,24 +865,24 @@ function Page() {
                                                             children: "Support"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 339,
+                                                            lineNumber: 350,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 338,
+                                                        lineNumber: 349,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 327,
+                                                lineNumber: 338,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 323,
+                                        lineNumber: 334,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -882,7 +893,7 @@ function Page() {
                                                 children: "Services"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 347,
+                                                lineNumber: 358,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -895,12 +906,12 @@ function Page() {
                                                             children: "Payment Options"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 350,
+                                                            lineNumber: 361,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 349,
+                                                        lineNumber: 360,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -910,12 +921,12 @@ function Page() {
                                                             children: "Refunds & Exchanges"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 355,
+                                                            lineNumber: 366,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 354,
+                                                        lineNumber: 365,
                                                         columnNumber: 17
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
@@ -925,30 +936,30 @@ function Page() {
                                                             children: "Limitation of Liability"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                            lineNumber: 360,
+                                                            lineNumber: 371,
                                                             columnNumber: 19
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 359,
+                                                        lineNumber: 370,
                                                         columnNumber: 17
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 348,
+                                                lineNumber: 359,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 346,
+                                        lineNumber: 357,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 301,
+                                lineNumber: 312,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -962,14 +973,14 @@ function Page() {
                                                 children: "📍"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 370,
+                                                lineNumber: 381,
                                                 columnNumber: 15
                                             }, this),
                                             " 12 Jhon Avenue #35 - New York"
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 369,
+                                        lineNumber: 380,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -980,7 +991,7 @@ function Page() {
                                                 children: "📧"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 373,
+                                                lineNumber: 384,
                                                 columnNumber: 15
                                             }, this),
                                             " ",
@@ -990,13 +1001,13 @@ function Page() {
                                                 children: "ElizaCoffee@Coffee.Com"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 374,
+                                                lineNumber: 385,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 372,
+                                        lineNumber: 383,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1007,7 +1018,7 @@ function Page() {
                                                 children: "📞"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 382,
+                                                lineNumber: 393,
                                                 columnNumber: 15
                                             }, this),
                                             " ",
@@ -1017,13 +1028,13 @@ function Page() {
                                                 children: "+1-222-34-ELIZA"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 383,
+                                                lineNumber: 394,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 381,
+                                        lineNumber: 392,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1036,14 +1047,14 @@ function Page() {
                                                         className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} mr-2`
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                        lineNumber: 389,
+                                                        lineNumber: 400,
                                                         columnNumber: 17
                                                     }, this),
                                                     " Social Media:"
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 388,
+                                                lineNumber: 399,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1054,12 +1065,12 @@ function Page() {
                                                     className: "text-[#E3CDA2] hover:text-[#F5D29D]"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                    lineNumber: 393,
+                                                    lineNumber: 404,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 392,
+                                                lineNumber: 403,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1070,12 +1081,12 @@ function Page() {
                                                     className: "text-[#E3CDA2] hover:text-[#F5D29D]"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                    lineNumber: 399,
+                                                    lineNumber: 410,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 398,
+                                                lineNumber: 409,
                                                 columnNumber: 15
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1086,36 +1097,36 @@ function Page() {
                                                     className: "text-[#E3CDA2] hover:text-[#F5D29D]"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                    lineNumber: 405,
+                                                    lineNumber: 416,
                                                     columnNumber: 17
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                                lineNumber: 404,
+                                                lineNumber: 415,
                                                 columnNumber: 15
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                                        lineNumber: 387,
+                                        lineNumber: 398,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                                lineNumber: 368,
+                                lineNumber: 379,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/verif/menu/page.tsx",
-                        lineNumber: 290,
+                        lineNumber: 301,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                lineNumber: 283,
+                lineNumber: 294,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1123,17 +1134,17 @@ function Page() {
                 children: "Created by Elinau9 | Copyright 2023 Eliza Coffee. All Rights Reserved."
             }, void 0, false, {
                 fileName: "[project]/src/app/verif/menu/page.tsx",
-                lineNumber: 416,
+                lineNumber: 427,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/verif/menu/page.tsx",
-        lineNumber: 103,
+        lineNumber: 114,
         columnNumber: 5
     }, this);
 }
-_s(Page, "g7A3Tojoz/TRtYySx5oP7Fw94pw=");
+_s(Page, "CPVRqL/cYh/gOriGMtPBo2206zw=");
 _c = Page;
 var _c;
 __turbopack_context__.k.register(_c, "Page");
