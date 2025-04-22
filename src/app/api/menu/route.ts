@@ -7,7 +7,7 @@ export async function POST(req: Request) {
 
   try {
     await sql`
-      INSERT INTO riwayat_transaksi (product_name, quantity, total_price)
+      INSERT INTO menu_items (product_name, quantity, total_price)
       VALUES (${product_name}, ${quantity}, ${total_price})
     `;
     return NextResponse.json({ message: "Transaksi berhasil disimpan!" });
@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
 export async function GET() {
   try {
-    const { rows } = await sql`SELECT * FROM riwayat_transaksi ORDER BY created_at DESC`;
+    const { rows } = await sql`SELECT * FROM menu_items ORDER BY created_at DESC`;
     return NextResponse.json(rows);
   } catch (error) {
     console.error("Query error:", error);

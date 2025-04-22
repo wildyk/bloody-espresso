@@ -1,8 +1,8 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/checkout/route": "app/api/checkout/route.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/admin/dashboard/transaksi/page": "app/admin/dashboard/transaksi/page.js",
   "/auth/login/page": "app/auth/login/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js",
   "/page": "app/page.js",
   "/verif/home/page": "app/verif/home/page.js",
   "/verif/menu/page": "app/verif/menu/page.js"

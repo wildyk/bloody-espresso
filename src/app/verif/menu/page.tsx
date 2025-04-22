@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { alegreya, nosifer } from "@/app/ui/fonts";
 import Link from "next/link";
 import Image from "next/image";
@@ -16,36 +16,19 @@ interface MenuItem {
 }
 
 export default function Page() {
-  const menuItems: MenuItem[] = [
-    {
-      name: "Cappuccino",
-      description: "Coffee 50% | Milk 50%",
-      price: 15000,
-      image: "/Cappuccino.png",
-    },
-    {
-      name: "Chai Latte",
-      description: "Coffee 50% | Milk 50%",
-      price: 22000,
-      image: "/chai-latte.png",
-    },
-    {
-      name: "Macchiato",
-      description: "Coffee 50% | Milk 50%",
-      price: 20000,
-      image: "/macchiato.png",
-    },
-    {
-      name: "Espresso",
-      description: "Coffee 50% | Milk 50%",
-      price: 18000,
-      image: "/expresso.png",
-    },
-  ];
-
+  const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [cart, setCart] = useState<MenuItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
+
+  useEffect(() => {
+    async function fetchMenu() {
+      const res = await fetch("/api/menu");
+      const data = await res.json();
+      setMenuItems(data);
+    }
+    fetchMenu();
+  }, []);
 
   const handleAddToCart = (item: MenuItem) => {
     setCart((prevCart) => {
@@ -83,16 +66,41 @@ export default function Page() {
     (acc, item) => acc + item.price * (item.qty || 1),
     0
   );
-
-  const handlePayment = () => {
+  
+  const submitTransaction = async () => {
+    try {
+      for (const item of cart) {
+        await fetch("/api/transaction", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            product_name: item.name,
+            quantity: item.qty || 1,
+            total_price: item.price * (item.qty || 1),
+          }),
+        });
+      }
+    } catch (error) {
+      console.error("Gagal kirim transaksi:", error);
+    }
+  };
+  
+  const handlePayment = async () => {
     setIsPaying(true);
-    setTimeout(() => {
+    try {
+      await submitTransaction(); 
       alert("Pembayaran berhasil! Terima kasih sudah memesan ☕");
       setCart([]);
       setIsCartOpen(false);
+    } catch (err) {
+      alert("Gagal memproses pembayaran. Coba lagi ya.");
+    } finally {
       setIsPaying(false);
-    }, 1000);
+    }
   };
+  
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
