@@ -1,4 +1,3 @@
-// /app/api/checkout/route.ts
 import { NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 
