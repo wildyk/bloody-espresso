@@ -1,0 +1,47 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+input[type='number'] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.dripping-text {
+  position: relative;
+  display: inline-block;
+}
+
+.dripping-text::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  width: 8px;
+  height: 16px;
+  background: currentColor;
+  border-radius: 50%;
+  transform: translateX(-50%);
+  animation: drip 1.5s infinite ease-in-out;
+}
+
+@keyframes drip {
+  0%, 100% {
+    height: 16px;
+    opacity: 1;
+  }
+  50% {
+    height: 24px;
+    opacity: 0.5;
+  }
+}
