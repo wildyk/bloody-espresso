@@ -266,7 +266,6 @@ function TransaksiPage() {
         };
         fetchTransactions();
     }, []);
-    ;
     const exportToExcel = ()=>{
         const data = transactions.map((tx)=>({
                 ID: tx.id,

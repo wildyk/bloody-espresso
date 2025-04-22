@@ -12,6 +12,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Instagram, Facebook, Twitter } from "lucide-react";
 import { ShoppingCart, UserRound } from "lucide-react";
+import router from "next/router";
 
 interface MenuItem {
   name: string;
@@ -55,6 +56,7 @@ export default function Page() {
   const [cart, setCart] = useState<MenuItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isPaying, setIsPaying] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false)
 
   const handleAddToCart = (item: MenuItem) => {
     setCart((prevCart) => {
@@ -71,13 +73,15 @@ export default function Page() {
     });
     setIsCartOpen(true);
   };
-
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-
   const toggleDropdown = () => {
     setDropdownOpen(prev => !prev)
   }
-
+  const handleLogout = () => {
+    // Kosongin session/localStorage atau token kalau ada
+    localStorage.removeItem("token"); // contoh
+    router.push("/auth/login");
+  };
+  
   return (
     <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white relative overflow-y-auto">
       {/* Navbar */}
@@ -130,10 +134,23 @@ export default function Page() {
               <ShoppingCart size={40} />
               <span className="text-xl">Keranjang</span>
             </div>
-            <div className="flex flex-col items-center">
-              <UserRound size={40} />
-              <span className="text-xl">Profile</span>
-            </div>
+            <div className="relative flex flex-col items-center group cursor-pointer">
+  <UserRound size={40} />
+  <span className="text-xl">Profile</span>
+  
+  {/* Dropdown */}
+  <div className="absolute top-full mt-2 hidden group-hover:block bg-gray-800 rounded-lg shadow-lg w-40 z-20">
+    <ul className="py-2 text-white text-lg">
+      <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
+        <Link href="/verif/akun">Akun Saya</Link>
+      </li>
+      <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer" onClick={() => handleLogout()}>
+        Logout
+      </li>
+    </ul>
+  </div>
+</div>
+
           </li>
         </ul>
       </nav>

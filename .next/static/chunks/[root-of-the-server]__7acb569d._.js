@@ -245,7 +245,6 @@ function TransaksiPage() {
             fetchTransactions();
         }
     }["TransaksiPage.useEffect"], []);
-    ;
     const exportToExcel = ()=>{
         const data = transactions.map((tx)=>({
                 ID: tx.id,
