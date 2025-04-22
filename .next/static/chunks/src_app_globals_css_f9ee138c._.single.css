@@ -460,6 +460,10 @@
     top: 50%;
   }
 
+  .top-full {
+    top: 100%;
+  }
+
   .-right-12 {
     right: calc(var(--spacing) * -12);
   }
@@ -502,6 +506,10 @@
 
   .z-10 {
     z-index: 10;
+  }
+
+  .z-20 {
+    z-index: 20;
   }
 
   .z-50 {
@@ -2247,6 +2255,12 @@
 
   .group-last-of-type\:rounded-md:is(:where(.group):last-of-type *) {
     border-radius: calc(var(--radius)  - 2px);
+  }
+
+  @media (hover: hover) {
+    .group-hover\:block:is(:where(.group):hover *) {
+      display: block;
+    }
   }
 
   .peer-focus\:text-gray-900:is(:where(.peer):focus ~ *) {
