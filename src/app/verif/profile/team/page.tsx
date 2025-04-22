@@ -65,7 +65,6 @@ export default function Page() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const router = useRouter();
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     router.push("/auth/login");

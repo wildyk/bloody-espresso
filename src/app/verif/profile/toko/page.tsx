@@ -28,7 +28,6 @@ export default function Page() {
     localStorage.removeItem("token");
     router.push("/auth/login");
   };
-
   const toggleDropdown = () => {
     setDropdownOpen((prev) => !prev);
   };
