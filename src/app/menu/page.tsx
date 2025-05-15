@@ -1,145 +1,25 @@
-"use client";
-
-import { useState } from "react";
-import { alegreya, nosifer } from "@/app/ui/fonts";
-import Link from "next/link";
+'use client';
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { Instagram, Facebook, Twitter } from "lucide-react";
+import { fetchProdukWithFoto } from "@/app/lib/data";
+import Link from "next/link";
+import { alegreya } from "@/app/ui/fonts";
+import { useState } from 'react';
 
-interface MenuItem {
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  qty?: number;
-}
-
-export default function Page() {
-  const router = useRouter();
-  const [cart, setCart] = useState<MenuItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isPaying, setIsPaying] = useState(false);
-
-  // Simulasi status login (ganti dengan validasi nyata jika sudah ada auth)
-  const isLoggedIn = false;
-
-  const menuItems: MenuItem[] = [
-    {
-      name: "Cappuccino",
-      description: "Coffee 50% | Milk 50%",
-      price: 15000,
-      image: "/Cappuccino.png",
-    },
-    {
-      name: "Chai Latte",
-      description: "Coffee 50% | Milk 50%",
-      price: 22000,
-      image: "/chai-latte.png",
-    },
-    {
-      name: "Macchiato",
-      description: "Coffee 50% | Milk 50%",
-      price: 20000,
-      image: "/macchiato.png",
-    },
-    {
-      name: "Espresso",
-      description: "Coffee 50% | Milk 50%",
-      price: 18000,
-      image: "/expresso.png",
-    },
-  ];
-
-  const handleAddToCart = (item: MenuItem) => {
-    if (!isLoggedIn) {
-      alert("Silakan login terlebih dahulu untuk melakukan pemesanan.");
-      router.push("/auth/login");
-      return;
-    }
-
-    setCart((prevCart) => {
-      const existingItem = prevCart.find(
-        (cartItem) => cartItem.name === item.name
-      );
-      if (existingItem) {
-        return prevCart.map((cartItem) =>
-          cartItem.name === item.name
-            ? { ...cartItem, qty: (cartItem.qty || 1) + 1 }
-            : cartItem
-        );
-      } else {
-        return [...prevCart, { ...item, qty: 1 }];
-      }
-    });
-    setIsCartOpen(true);
-  };
-
-  const handleRemoveFromCart = (itemName: string) => {
-    setCart((prevCart) => prevCart.filter((item) => item.name !== itemName));
-  };
-
-  const handleQtyChange = (itemName: string, amount: number) => {
-    setCart((prevCart) =>
-      prevCart.map((item) =>
-        item.name === itemName
-          ? { ...item, qty: Math.max((item.qty || 1) + amount, 1) }
-          : item
-      )
-    );
-  };
-
-  const total = cart.reduce(
-    (acc, item) => acc + item.price * (item.qty || 1),
-    0
-  );
-
-  const [dropdownOpen, setDropdownOpen] = useState(false)
+export default async function MenuPage() {
+  const produkList = await fetchProdukWithFoto();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
-    setDropdownOpen(prev => !prev)
-  }
-  
-
-  const handlePayment = async () => {
-    if (cart.length === 0) return;
-    setIsPaying(true);
-    try {
-      const response = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          total_price: cart.reduce((acc, item) => acc + item.price * (item.qty || 1), 0),
-          items: cart.map((item) => ({ name: item.name, quantity: item.qty || 1, price: item.price })),
-        }),
-      });
-
-      if (response.ok) {
-        alert("Pembayaran berhasil! Transaksi disimpan ke database Neon ☕");
-        setCart([]);
-        setIsCartOpen(false);
-      } else {
-        const err = await response.json();
-        alert(`Gagal: ${err.error}`);
-      }
-    } catch (error) {
-      alert("Terjadi kesalahan saat memproses pembayaran.");
-      console.error(error);
-    } finally {
-      setIsPaying(false);
-    }
+    setDropdownOpen((prev) => !prev);
   };
-
   return (
-    <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white relative">
-      <nav className="flex justify-between items-center p-6 text-[#FFF8E8] ml-7">
+        <><nav className="flex justify-between items-center p-6 text-[#FFF8E8] ml-7">
       <Link href="/">
         <Image
           src="/logo.png"
           alt="Bloody Espresso Logo"
           width={80}
-          height={50}
-        />
+          height={50} />
       </Link>
 
       <ul className={`${alegreya.className} flex gap-5 text-2xl font-bold`}>
@@ -183,262 +63,41 @@ export default function Page() {
           <Link href="/auth/register">Daftar</Link>
         </li>
       </ul>
-    </nav>
-
-      <section className="text-center py-4 px-10 mb-53">
-        <h2
-          className={`${nosifer.className} text-7xl font-extrabold tracking-wide text-[#F8E4BE]`}
-        >
+    </nav><main className="min-h-screen bg-[#300000] text-white">
+        <h1 className="text-4xl text-center font-bold mt-8 font-[Nosifer]">
           MENU
-        </h2>
-        <p className={`${alegreya.className} mt-4 text-2xl text-gray-300`}>
+        </h1>
+        <p className="text-center mt-2 text-sm">
           Jelajahi semua rasa kopi bersama kami. Selalu ada secangkir kopi baru
           yang layak dicoba.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-10">
-          {menuItems.map((item, index) => (
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-6">
+          {produkList.map((produk) => (
             <div
-              key={index}
-              className="bg-[#FFF4E6] text-center rounded-lg overflow-hidden shadow-md transform transition-transform hover:scale-105 duration-300"
+              key={produk.id_produk}
+              className="bg-[#fcefdc] rounded-lg shadow overflow-hidden text-center"
             >
-              <Image
-                src={item.image}
-                alt={item.name}
-                width={400}
-                height={250}
-                className="w-full h-80 object-cover object-top"
-              />
-              <div className={`${alegreya.className} p-6`}>
-                <h3 className="text-[#603809] text-2xl font-extrabold">
-                  {item.name}
+              <div className="relative w-full h-48 bg-gray-100">
+                <img src={produk.foto} alt={produk.nama_produk} className="w-full h-48 object-cover" />
+              </div>
+              <div className="p-4">
+                <h3 className="text-lg font-semibold text-[#300000]">
+                  {produk.nama_produk}
                 </h3>
-                <p className="text-[#603809] text-xl mt-2">
-                  {item.description}
+                <p className="text-xs text-[#300000] mt-1">
+                  Coffee 50% | Milk 50%
                 </p>
-                <p className="text-[#603809] text-2xl font-bold mt-2">
-                  Rp. {item.price.toLocaleString("id-ID")}
+                <p className="text-base font-bold text-[#300000] mt-2">
+                  Rp. {produk.harga_produk.toLocaleString()}
                 </p>
-                <button
-                  className="mt-6 bg-[#A8715C] text-lg text-[#1E1E1E] px-14 py-4 rounded-full font-bold shadow-[0px_10px_30px_-5px_rgba(255,209,102,0.8)] hover:bg-yellow-800 transition cursor-pointer"
-                  onClick={() => handleAddToCart(item)}
-                >
+                <button className="mt-3 bg-[#9b684c] text-white py-1 px-4 rounded-full hover:bg-[#7d543d] transition">
                   ORDER
                 </button>
               </div>
             </div>
           ))}
         </div>
-      </section>
-
-      {isCartOpen && (
-        <div className="fixed top-0 right-0 w-full sm:w-[500px] h-full bg-[#5c0a0a] text-white z-50 p-6 overflow-y-auto">
-          <div className="mb-6 border-b border-white pb-4 relative">
-            <h2
-              className={`${nosifer.className} text-4xl font-bold text-center w-full text-[#f5deb3] drop-shadow-md my-4`}
-            >
-              KERANJANG
-            </h2>
-            <button
-              onClick={() => setIsCartOpen(false)}
-              className="absolute top-0 right-0 text-white text-2xl font-bold"
-            >
-              ✕
-            </button>
-          </div>
-          {cart.map((item) => (
-            <div
-              key={item.name}
-              className={`${alegreya.className} mb-6 border-b border-white pb-4`}
-            >
-              <Image
-                src={item.image}
-                alt={item.name}
-                width={150}
-                height={150}
-                className="rounded"
-              />
-              <h3 className="text-2xl font-bold mt-2">{item.name}</h3>
-              <p className="text-xl">
-                Rp. {item.price.toLocaleString("id-ID")}
-              </p>
-              <div className="flex items-center gap-3 mt-2">
-                <button
-                  onClick={() => handleQtyChange(item.name, -1)}
-                  className="px-3 py-1 bg-white text-black rounded"
-                >
-                  -
-                </button>
-                <span className="text-xl">{item.qty}</span>
-                <button
-                  onClick={() => handleQtyChange(item.name, 1)}
-                  className="px-3 py-1 bg-white text-black rounded"
-                >
-                  +
-                </button>
-                <button
-                  onClick={() => handleRemoveFromCart(item.name)}
-                  className="ml-auto text-xl text-white uppercase"
-                >
-                  Hapus
-                </button>
-              </div>
-            </div>
-          ))}
-
-          <div className="text-center mt-8">
-            <div
-              className={`${alegreya.className} text-xl font-bold bg-[#A8715C] text-[#1E1E1E] py-2 mb-4 rounded`}
-            >
-              TOTAL ・ RP {total.toLocaleString("id-ID")}
-            </div>
-            <button
-              onClick={handlePayment}
-              disabled={isPaying}
-              className={`${alegreya.className} w-full py-4 bg-[#A8715C] text-xl text-[#1E1E1E] font-bold rounded shadow-lg hover:bg-yellow-800 transition cursor-pointer`}
-            >
-              {isPaying ? "Memproses Pembayaran..." : "BAYAR"}
-            </button>
-          </div>
-        </div>
-      )}
-      {/* Footer */}
-      <footer
-        className="relative bg-cover bg-center text-[#E3CDA2] py-12 px-6 md:px-20 flex flex-col md:flex-row justify-between items-center"
-        style={{
-          backgroundImage: "url('/bg-kopi-footer.jpg')", // Gambar latar belakang footer
-        }}
-      >
-        <div className="absolute inset-0 bg-[#4A2C2C] opacity-80 z-0"></div>
-        <div className="relative z-10 w-full flex flex-col md:flex-row justify-between items-center pl-12 md:pl-0">
-          <div className="mb-6 md:mb-0">
-            <Image
-              src="/grinder.png" // Gambar ilustrasi penggiling kopi
-              width={200}
-              height={200}
-              alt="Coffee Grinder Illustration"
-              className="filter invert"
-            />
-          </div>
-
-          <div className="flex flex-col md:flex-row gap-8 md:gap-16 text-center md:text-left tracking-widest">
-            <div>
-              <h4 className="text-2xl font-semibold mb-4">About</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    Our Story
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    FAQ
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    Careers
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="ml-32">
-              <h4 className="text-2xl font-semibold mb-4">
-                Customer Resources
-              </h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    Menu
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    Locations
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    Support
-                  </Link>
-                </li>
-              </ul>
-            </div>
-
-            <div className="ml-32">
-              <h4 className="text-2xl font-semibold mb-4">Services</h4>
-              <ul className="space-y-2">
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    Payment Options
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    Refunds & Exchanges
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#" className="text-lg hover:text-[#F5D29D]">
-                    Limitation of Liability
-                  </Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="mr-15 mt-6 md:mt-0">
-            <p className="mb-3 text-lg">
-              <span className="mr-2">📍</span> 12 Jhon Avenue #35 - New York
-            </p>
-            <p className="mb-3 text-lg">
-              <span className="mr-2">📧</span>{" "}
-              <Link
-                href="mailto:ElizaCoffee@Coffee.Com"
-                className="hover:text-[#F5D29D]"
-              >
-                ElizaCoffee@Coffee.Com
-              </Link>
-            </p>
-            <p className="mb-3 text-lg">
-              <span className="mr-2">📞</span>{" "}
-              <Link href="tel:+122-34-ELIZA" className="hover:text-[#F5D29D]">
-                +1-222-34-ELIZA
-              </Link>
-            </p>
-            <div className="flex gap-4 mt-4">
-              <p className="mb-3 text-lg">
-                <span className={`${alegreya.className} mr-2`}></span> Social
-                Media:
-              </p>
-              <Link href="#" aria-label="Instagram">
-                <Instagram
-                  size={32}
-                  className="text-[#E3CDA2] hover:text-[#F5D29D]"
-                />
-              </Link>
-              <Link href="#" aria-label="Facebook">
-                <Facebook
-                  size={32}
-                  className="text-[#E3CDA2] hover:text-[#F5D29D]"
-                />
-              </Link>
-              <Link href="#" aria-label="Twitter">
-                <Twitter
-                  size={32}
-                  className="text-[#E3CDA2] hover:text-[#F5D29D]"
-                />
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
-
-      {/* Copyright Section */}
-      <div className="bg-[#2A1C1C] text-center py-4 text-lg text-[#E3CDA2]">
-        Created by Elinau9 | Copyright 2023 Eliza Coffee. All Rights Reserved.
-      </div>
-    </main>
+      </main></>
   );
 }

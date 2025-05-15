@@ -308,8 +308,7 @@ export async function fetchProdukWithFoto() {
     nama_produk: string;
     harga_produk: number;
     foto: string;
-    deskripsi: string;
-  }[]>`SELECT * FROM produk ORDER BY id_produk ASC`;
+  }[]>`SELECT * FROM menu ORDER BY id_produk ASC`;
   return produk;
 }
 
