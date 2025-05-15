@@ -1,4 +1,4 @@
-import ProdukTable from '@/app/ui/menu/table';
+import ProdukTable from '@/app/ui/menu/table'; // atau sesuaikan path
 
 export default function ProdukPage() {
   return (

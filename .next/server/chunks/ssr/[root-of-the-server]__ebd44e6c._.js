@@ -371,8 +371,8 @@ async function fetchFilteredCustomers(query) {
 async function fetchProduk() {
     try {
         const produk = await sql`
-      SELECT id, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
-    `;
+  SELECT id, nama_produk, harga_produk FROM produk ORDER BY id ASC
+`;
         return produk;
     } catch (error) {
         console.error('Database Error:', error);
