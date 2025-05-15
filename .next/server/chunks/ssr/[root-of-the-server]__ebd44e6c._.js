@@ -179,6 +179,7 @@ __turbopack_context__.s({
     "fetchInvoiceById": (()=>fetchInvoiceById),
     "fetchInvoicesPages": (()=>fetchInvoicesPages),
     "fetchLatestInvoices": (()=>fetchLatestInvoices),
+    "fetchProduk": (()=>fetchProduk),
     "fetchRevenue": (()=>fetchRevenue)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$postgres$2f$src$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/postgres/src/index.js [app-rsc] (ecmascript)");
@@ -365,6 +366,17 @@ async function fetchFilteredCustomers(query) {
     } catch (err) {
         console.error('Database Error:', err);
         throw new Error('Failed to fetch customer table.');
+    }
+}
+async function fetchProduk() {
+    try {
+        const produk = await sql`
+      SELECT id_produk, nama_produk, harga FROM products ORDER BY id_produk ASC
+    `;
+        return produk;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch products.');
     }
 }
 }}),
