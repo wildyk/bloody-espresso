@@ -16,12 +16,12 @@ export async function fetchRevenue() {
     // Artificially delay a response for demo purposes.
     // Don't do this in production :)
 
-    // console.log('Fetching revenue data...');
-    // await new Promise((resolve) => setTimeout(resolve, 3000));
+    console.log('Fetching revenue data...');
+    await new Promise((resolve) => setTimeout(resolve, 3000));
 
     const data = await sql<Revenue[]>`SELECT * FROM revenue`;
 
-    // console.log('Data fetch completed after 3 seconds.');
+    console.log('Data fetch completed after 3 seconds.');
 
     return data;
   } catch (error) {
@@ -219,8 +219,8 @@ export async function fetchFilteredCustomers(query: string) {
 
 export async function fetchProduk() {
   try {
-const produk = await sql<{ id: number; nama_produk: string; harga_produk: number }[]>`
-  SELECT id, nama_produk, harga_produk FROM produk ORDER BY id ASC
+const produk = await sql<{ id_produk: number; nama_produk: string; harga_produk: number }[]>`
+  SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id ASC
 `;
 
     return produk;

@@ -16,8 +16,8 @@ export default async function ProdukTable() {
         </thead>
         <tbody className="divide-y divide-gray-100 bg-white text-gray-800">
           {produkList.map((produk) => (
-            <tr key={produk.id}>
-              <td className="px-4 py-2">{produk.id}</td>
+            <tr key={produk.id_produk}>
+              <td className="px-4 py-2">{produk.id_produk}</td>
               <td className="px-4 py-2">{produk.nama_produk}</td>
               <td className="px-4 py-2">Rp {produk.harga_produk.toLocaleString()}</td>
             </tr>
