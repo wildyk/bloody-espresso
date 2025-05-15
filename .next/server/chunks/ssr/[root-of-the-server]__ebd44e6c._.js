@@ -180,7 +180,8 @@ __turbopack_context__.s({
     "fetchInvoicesPages": (()=>fetchInvoicesPages),
     "fetchLatestInvoices": (()=>fetchLatestInvoices),
     "fetchProduk": (()=>fetchProduk),
-    "fetchRevenue": (()=>fetchRevenue)
+    "fetchRevenue": (()=>fetchRevenue),
+    "fetchTransaksi": (()=>fetchTransaksi)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$postgres$2f$src$2f$index$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/postgres/src/index.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$utils$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/lib/utils.ts [app-rsc] (ecmascript)");
@@ -371,12 +372,23 @@ async function fetchFilteredCustomers(query) {
 async function fetchProduk() {
     try {
         const produk = await sql`
-  SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id ASC
+  SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
 `;
         return produk;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch produk.');
+    }
+}
+async function fetchTransaksi() {
+    try {
+        const transaksi = await sql`
+      SELECT * FROM transaksi ORDER BY tanggal_transaksi DESC
+    `;
+        return transaksi;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch transaksi.');
     }
 }
 }}),

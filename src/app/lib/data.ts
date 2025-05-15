@@ -219,13 +219,36 @@ export async function fetchFilteredCustomers(query: string) {
 
 export async function fetchProduk() {
   try {
-const produk = await sql<{ id_produk: number; nama_produk: string; harga_produk: number }[]>`
-  SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id ASC
-`;
+const produk = await sql<{ 
+  id_produk: number; 
+  nama_produk: string; 
+  harga_produk: number; 
+}[]>`
+  SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
+`
+
 
     return produk;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch produk.');
+  }
+}
+
+export async function fetchTransaksi() {
+  try {
+    const transaksi = await sql<{
+      id_transaksi: number;
+      id_produk: number;
+      nama_pembeli: string;
+      tanggal_transaksi: string;
+      total_harga: number;
+    }[]>`
+      SELECT * FROM transaksi ORDER BY tanggal_transaksi DESC
+    `;
+    return transaksi;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch transaksi.');
   }
 }
