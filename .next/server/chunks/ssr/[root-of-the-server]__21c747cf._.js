@@ -1,6 +1,6 @@
 module.exports = {
 
-"[project]/.next-internal/server/app/admin/dashboard/menu/page/actions.js [app-rsc] (server actions loader, ecmascript)": (function(__turbopack_context__) {
+"[project]/.next-internal/server/app/admin/dashboard/transaksi/page/actions.js [app-rsc] (server actions loader, ecmascript)": (function(__turbopack_context__) {
 
 var { g: global, __dirname, m: module, e: exports } = __turbopack_context__;
 {
@@ -422,152 +422,20 @@ async function fetchAnalytics() {
     }
 }
 }}),
-"[next]/internal/font/google/nosifer_d0ad537.module.css [app-rsc] (css module)": ((__turbopack_context__) => {
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.v({
-  "className": "nosifer_d0ad537-module__-kDrfG__className",
-});
-}}),
-"[next]/internal/font/google/nosifer_d0ad537.js [app-rsc] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/app/ui/transaksi/table.tsx [app-rsc] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.s({
-    "default": (()=>__TURBOPACK__default__export__)
-});
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$nosifer_d0ad537$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__ = __turbopack_context__.i("[next]/internal/font/google/nosifer_d0ad537.module.css [app-rsc] (css module)");
-;
-const fontData = {
-    className: __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$nosifer_d0ad537$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].className,
-    style: {
-        fontFamily: "'Nosifer', 'Nosifer Fallback'",
-        fontWeight: 400,
-        fontStyle: "normal"
-    }
-};
-if (__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$nosifer_d0ad537$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].variable != null) {
-    fontData.variable = __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$nosifer_d0ad537$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].variable;
-}
-const __TURBOPACK__default__export__ = fontData;
-}}),
-"[next]/internal/font/google/alegreya_c449b61a.module.css [app-rsc] (css module)": ((__turbopack_context__) => {
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.v({
-  "className": "alegreya_c449b61a-module__PHpizq__className",
-});
-}}),
-"[next]/internal/font/google/alegreya_c449b61a.js [app-rsc] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "default": (()=>__TURBOPACK__default__export__)
-});
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__ = __turbopack_context__.i("[next]/internal/font/google/alegreya_c449b61a.module.css [app-rsc] (css module)");
-;
-const fontData = {
-    className: __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].className,
-    style: {
-        fontFamily: "'Alegreya', 'Alegreya Fallback'",
-        fontStyle: "normal"
-    }
-};
-if (__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].variable != null) {
-    fontData.variable = __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].variable;
-}
-const __TURBOPACK__default__export__ = fontData;
-}}),
-"[next]/internal/font/google/frijole_e11d2e94.module.css [app-rsc] (css module)": ((__turbopack_context__) => {
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.v({
-  "className": "frijole_e11d2e94-module__Jf0JEa__className",
-});
-}}),
-"[next]/internal/font/google/frijole_e11d2e94.js [app-rsc] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "default": (()=>__TURBOPACK__default__export__)
-});
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$frijole_e11d2e94$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__ = __turbopack_context__.i("[next]/internal/font/google/frijole_e11d2e94.module.css [app-rsc] (css module)");
-;
-const fontData = {
-    className: __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$frijole_e11d2e94$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].className,
-    style: {
-        fontFamily: "'Frijole', 'Frijole Fallback'",
-        fontWeight: 400,
-        fontStyle: "normal"
-    }
-};
-if (__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$frijole_e11d2e94$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].variable != null) {
-    fontData.variable = __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$frijole_e11d2e94$2e$module$2e$css__$5b$app$2d$rsc$5d$__$28$css__module$29$__["default"].variable;
-}
-const __TURBOPACK__default__export__ = fontData;
-}}),
-"[project]/src/app/ui/fonts.ts [app-rsc] (ecmascript) <locals>": ((__turbopack_context__) => {
-"use strict";
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.s({});
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$nosifer_d0ad537$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[next]/internal/font/google/nosifer_d0ad537.js [app-rsc] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[next]/internal/font/google/alegreya_c449b61a.js [app-rsc] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$frijole_e11d2e94$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[next]/internal/font/google/frijole_e11d2e94.js [app-rsc] (ecmascript)");
-;
-;
-;
-;
-;
-;
-}}),
-"[project]/src/app/ui/fonts.ts [app-rsc] (ecmascript) <module evaluation>": ((__turbopack_context__) => {
-"use strict";
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.s({});
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$nosifer_d0ad537$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[next]/internal/font/google/nosifer_d0ad537.js [app-rsc] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[next]/internal/font/google/alegreya_c449b61a.js [app-rsc] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$frijole_e11d2e94$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[next]/internal/font/google/frijole_e11d2e94.js [app-rsc] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$fonts$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$locals$3e$__ = __turbopack_context__.i("[project]/src/app/ui/fonts.ts [app-rsc] (ecmascript) <locals>");
-}}),
-"[next]/internal/font/google/alegreya_c449b61a.js [app-rsc] (ecmascript) <export default as alegreya>": ((__turbopack_context__) => {
-"use strict";
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "alegreya": (()=>__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"])
-});
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[next]/internal/font/google/alegreya_c449b61a.js [app-rsc] (ecmascript)");
-}}),
-"[project]/src/app/ui/menu/table.tsx [app-rsc] (ecmascript)": ((__turbopack_context__) => {
-"use strict";
-
-var { g: global, __dirname } = __turbopack_context__;
-{
-__turbopack_context__.s({
-    "default": (()=>ProdukTable)
+    "default": (()=>TransaksiTable)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$data$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/lib/data.ts [app-rsc] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$fonts$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/src/app/ui/fonts.ts [app-rsc] (ecmascript) <module evaluation>");
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__ = __turbopack_context__.i("[next]/internal/font/google/alegreya_c449b61a.js [app-rsc] (ecmascript) <export default as alegreya>");
 ;
 ;
-;
-async function ProdukTable() {
-    const produkList = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$data$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["fetchProduk"])();
+async function TransaksiTable() {
+    const transaksiList = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$data$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["fetchTransaksi"])();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
         className: "overflow-x-auto rounded-md border border-gray-300 shadow-sm",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("table", {
@@ -578,139 +446,171 @@ async function ProdukTable() {
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} not-last:px-4 py-3 text-left font-semibold`,
+                                className: "px-4 py-3 text-left font-semibold",
+                                children: "ID Transaksi"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                                lineNumber: 11,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                className: "px-4 py-3 text-left font-semibold",
                                 children: "ID Produk"
                             }, void 0, false, {
-                                fileName: "[project]/src/app/ui/menu/table.tsx",
+                                fileName: "[project]/src/app/ui/transaksi/table.tsx",
                                 lineNumber: 12,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className}px-4 py-3 text-left font-semibold`,
-                                children: "Nama Produk"
+                                className: "px-4 py-3 text-left font-semibold",
+                                children: "Nama Pembeli"
                             }, void 0, false, {
-                                fileName: "[project]/src/app/ui/menu/table.tsx",
+                                fileName: "[project]/src/app/ui/transaksi/table.tsx",
                                 lineNumber: 13,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
-                                className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className}px-4 py-3 text-left font-semibold`,
-                                children: "Harga"
+                                className: "px-4 py-3 text-left font-semibold",
+                                children: "Tanggal"
                             }, void 0, false, {
-                                fileName: "[project]/src/app/ui/menu/table.tsx",
+                                fileName: "[project]/src/app/ui/transaksi/table.tsx",
                                 lineNumber: 14,
+                                columnNumber: 13
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
+                                className: "px-4 py-3 text-left font-semibold",
+                                children: "Total Harga"
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                                lineNumber: 15,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
-                        fileName: "[project]/src/app/ui/menu/table.tsx",
-                        lineNumber: 11,
+                        fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                        lineNumber: 10,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
-                    fileName: "[project]/src/app/ui/menu/table.tsx",
-                    lineNumber: 10,
+                    fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                    lineNumber: 9,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
                     className: "divide-y divide-gray-100 bg-white text-gray-800",
-                    children: produkList.map((produk)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
+                    children: transaksiList.map((t)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("tr", {
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                     className: "px-4 py-2",
-                                    children: produk.id_produk
+                                    children: t.id_transaksi
                                 }, void 0, false, {
-                                    fileName: "[project]/src/app/ui/menu/table.tsx",
-                                    lineNumber: 20,
+                                    fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                                    lineNumber: 21,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                     className: "px-4 py-2",
-                                    children: produk.nama_produk
+                                    children: t.id_produk
                                 }, void 0, false, {
-                                    fileName: "[project]/src/app/ui/menu/table.tsx",
-                                    lineNumber: 21,
+                                    fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                                    lineNumber: 22,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                    className: "px-4 py-2",
+                                    children: t.nama_pembeli
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                                    lineNumber: 23,
+                                    columnNumber: 15
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                    className: "px-4 py-2",
+                                    children: new Date(t.tanggal_transaksi).toLocaleDateString()
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                                    lineNumber: 24,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                     className: "px-4 py-2",
                                     children: [
                                         "Rp ",
-                                        produk.harga_produk.toLocaleString()
+                                        t.total_harga.toLocaleString()
                                     ]
                                 }, void 0, true, {
-                                    fileName: "[project]/src/app/ui/menu/table.tsx",
-                                    lineNumber: 22,
+                                    fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                                    lineNumber: 25,
                                     columnNumber: 15
                                 }, this)
                             ]
-                        }, produk.id_produk, true, {
-                            fileName: "[project]/src/app/ui/menu/table.tsx",
-                            lineNumber: 19,
+                        }, t.id_transaksi, true, {
+                            fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                            lineNumber: 20,
                             columnNumber: 13
                         }, this))
                 }, void 0, false, {
-                    fileName: "[project]/src/app/ui/menu/table.tsx",
-                    lineNumber: 17,
+                    fileName: "[project]/src/app/ui/transaksi/table.tsx",
+                    lineNumber: 18,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
-            fileName: "[project]/src/app/ui/menu/table.tsx",
-            lineNumber: 9,
+            fileName: "[project]/src/app/ui/transaksi/table.tsx",
+            lineNumber: 8,
             columnNumber: 7
         }, this)
     }, void 0, false, {
-        fileName: "[project]/src/app/ui/menu/table.tsx",
-        lineNumber: 8,
+        fileName: "[project]/src/app/ui/transaksi/table.tsx",
+        lineNumber: 7,
         columnNumber: 5
     }, this);
 }
 }}),
-"[project]/src/app/admin/dashboard/menu/page.tsx [app-rsc] (ecmascript)": ((__turbopack_context__) => {
+"[project]/src/app/admin/dashboard/transaksi/page.tsx [app-rsc] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.s({
-    "default": (()=>ProdukPage)
+    "default": (()=>TransaksiPage)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
-var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$menu$2f$table$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/ui/menu/table.tsx [app-rsc] (ecmascript)"); // atau sesuaikan path
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$transaksi$2f$table$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/ui/transaksi/table.tsx [app-rsc] (ecmascript)");
 ;
 ;
-function ProdukPage() {
+function TransaksiPage() {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "p-6",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                className: "mb-6 text-2xl font-bold text-gray-800",
-                children: "Katalog Produk"
+                className: "text-2xl font-bold mb-6 text-gray-800",
+                children: "Riwayat Transaksi"
             }, void 0, false, {
-                fileName: "[project]/src/app/admin/dashboard/menu/page.tsx",
+                fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
                 lineNumber: 6,
                 columnNumber: 7
             }, this),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$menu$2f$table$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
-                fileName: "[project]/src/app/admin/dashboard/menu/page.tsx",
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$transaksi$2f$table$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
+                fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
                 lineNumber: 7,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
-        fileName: "[project]/src/app/admin/dashboard/menu/page.tsx",
+        fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
         lineNumber: 5,
         columnNumber: 5
     }, this);
 }
 }}),
-"[project]/src/app/admin/dashboard/menu/page.tsx [app-rsc] (ecmascript, Next.js server component)": ((__turbopack_context__) => {
+"[project]/src/app/admin/dashboard/transaksi/page.tsx [app-rsc] (ecmascript, Next.js server component)": ((__turbopack_context__) => {
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-__turbopack_context__.n(__turbopack_context__.i("[project]/src/app/admin/dashboard/menu/page.tsx [app-rsc] (ecmascript)"));
+__turbopack_context__.n(__turbopack_context__.i("[project]/src/app/admin/dashboard/transaksi/page.tsx [app-rsc] (ecmascript)"));
 }}),
 
 };
 
-//# sourceMappingURL=%5Broot-of-the-server%5D__bb4db4d8._.js.map
+//# sourceMappingURL=%5Broot-of-the-server%5D__21c747cf._.js.map

@@ -69,8 +69,8 @@ function NavLinks() {
                 icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$DocumentDuplicateIcon$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__DocumentDuplicateIcon$3e$__["DocumentDuplicateIcon"]
             },
             {
-                name: "Customers",
-                href: "/dashboard/customers",
+                name: "Transaksi",
+                href: "/admin/dashboard/transaksi",
                 icon: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$UserGroupIcon$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__UserGroupIcon$3e$__["UserGroupIcon"]
             }
         ], []);

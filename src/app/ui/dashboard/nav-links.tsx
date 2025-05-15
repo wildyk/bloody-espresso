@@ -20,7 +20,7 @@ export default function NavLinks() {
         href: "/admin/dashboard/menu",
         icon: DocumentDuplicateIcon,
       },
-      { name: "Customers", href: "/dashboard/customers", icon: UserGroupIcon },
+      { name: "Transaksi", href: "/admin/dashboard/transaksi", icon: UserGroupIcon },
     ],
     []
   );

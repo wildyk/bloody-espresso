@@ -172,6 +172,7 @@ const generatePagination = (currentPage, totalPages)=>{
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.s({
+    "fetchAnalytics": (()=>fetchAnalytics),
     "fetchCardData": (()=>fetchCardData),
     "fetchCustomers": (()=>fetchCustomers),
     "fetchFilteredCustomers": (()=>fetchFilteredCustomers),
@@ -383,12 +384,41 @@ async function fetchProduk() {
 async function fetchTransaksi() {
     try {
         const transaksi = await sql`
-      SELECT * FROM transaksi ORDER BY tanggal_transaksi DESC
+      SELECT * FROM transaksi ORDER BY tanggal_transaksi ASC
     `;
         return transaksi;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch transaksi.');
+    }
+}
+async function fetchAnalytics() {
+    try {
+        // Query 1: total produk
+        const totalProdukRes = await sql`SELECT COUNT(*) FROM produk`;
+        const totalProduk = Number(totalProdukRes[0].count);
+        // Query 2: total revenue (jumlah total_harga dari transaksi)
+        const totalRevenueRes = await sql`SELECT SUM(total_harga) FROM transaksi`;
+        const totalRevenue = Number(totalRevenueRes[0].sum || 0);
+        // Query 3: produk paling sering muncul di transaksi
+        const mostSoldRes = await sql`
+      SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
+      FROM transaksi t
+      JOIN produk p ON t.id_produk = p.id_produk
+      GROUP BY p.nama_produk
+      ORDER BY jumlah_terjual DESC
+      LIMIT 1;
+    `;
+        const mostSold = mostSoldRes[0];
+        return {
+            totalProduk,
+            totalRevenue,
+            mostSold: mostSold?.nama_produk || '-',
+            jumlahTerjual: mostSold?.jumlah_terjual || 0
+        };
+    } catch (err) {
+        console.error('DB Error (analytics):', err);
+        throw new Error('Failed to fetch analytics data.');
     }
 }
 }}),
