@@ -3,6 +3,12 @@
   "/admin/dashboard/menu/page": "app/admin/dashboard/menu/page.js",
   "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/admin/dashboard/transaksi/page": "app/admin/dashboard/transaksi/page.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/auth/register/page": "app/auth/register/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js"
+  "/kontak/page": "app/kontak/page.js",
+  "/menu/page": "app/menu/page.js",
+  "/page": "app/page.js",
+  "/verif/home/page": "app/verif/home/page.js",
+  "/verif/menu/page": "app/verif/menu/page.js"
 }

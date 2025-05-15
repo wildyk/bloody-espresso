@@ -1,19 +1,32 @@
-'use client';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import { useEffect, useState } from 'react';
+export default function AnalitikSection({
+  data,
+}: {
+  data: {
+    totalProduk: number;
+    totalRevenue: number;
+    mostSold: string;
+    jumlahTerjual: number;
+  };
+}) {
+  const { totalProduk, totalRevenue, mostSold, jumlahTerjual } = data;
 
-export default function GrafikPenjualan({ data }: { data: { nama_produk: string; jumlah_terjual: number }[] }) {
   return (
-    <div className="w-full h-80 mt-6">
-      <h2 className="text-lg font-semibold text-gray-700 mb-2">Grafik Produk Terjual</h2>
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data}>
-          <XAxis dataKey="nama_produk" />
-          <YAxis />
-          <Tooltip />
-          <Bar dataKey="jumlah_terjual" fill="#991b1b" />
-        </BarChart>
-      </ResponsiveContainer>
+    <div className="grid gap-4 md:grid-cols-3">
+      <div className="rounded-lg border bg-white p-4 shadow">
+        <h2 className="text-lg font-semibold text-gray-700">Total Produk</h2>
+        <p className="text-2xl font-bold text-red-800 mt-2">{totalProduk}</p>
+      </div>
+
+      <div className="rounded-lg border bg-white p-4 shadow">
+        <h2 className="text-lg font-semibold text-gray-700">Total Revenue</h2>
+        <p className="text-2xl font-bold text-red-800 mt-2">Rp {totalRevenue.toLocaleString()}</p>
+      </div>
+
+      <div className="rounded-lg border bg-white p-4 shadow">
+        <h2 className="text-lg font-semibold text-gray-700">Produk Terlaris</h2>
+        <p className="text-lg text-gray-800 mt-2">{mostSold}</p>
+        <p className="text-sm text-gray-500">Terjual {jumlahTerjual}x</p>
+      </div>
     </div>
   );
 }

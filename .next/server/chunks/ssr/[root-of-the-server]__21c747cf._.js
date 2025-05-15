@@ -180,7 +180,9 @@ __turbopack_context__.s({
     "fetchInvoiceById": (()=>fetchInvoiceById),
     "fetchInvoicesPages": (()=>fetchInvoicesPages),
     "fetchLatestInvoices": (()=>fetchLatestInvoices),
+    "fetchPenjualanProduk": (()=>fetchPenjualanProduk),
     "fetchProduk": (()=>fetchProduk),
+    "fetchProdukWithFoto": (()=>fetchProdukWithFoto),
     "fetchRevenue": (()=>fetchRevenue),
     "fetchTransaksi": (()=>fetchTransaksi)
 });
@@ -419,6 +421,30 @@ async function fetchAnalytics() {
     } catch (err) {
         console.error('DB Error (analytics):', err);
         throw new Error('Failed to fetch analytics data.');
+    }
+}
+async function fetchPenjualanProduk() {
+    try {
+        const data = await sql`
+      SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
+      FROM transaksi t
+      JOIN produk p ON t.id_produk = p.id_produk
+      GROUP BY p.nama_produk
+      ORDER BY jumlah_terjual DESC
+    `;
+        return data;
+    } catch (err) {
+        console.error('DB Error (grafik):', err);
+        throw new Error('Gagal ambil data grafik penjualan.');
+    }
+}
+async function fetchProdukWithFoto() {
+    try {
+        const data = await sql`SELECT id_produk, nama_produk, harga, foto FROM produk ORDER BY id_produk ASC`;
+        return data;
+    } catch (error) {
+        console.error('Gagal ambil produk:', error);
+        throw new Error('Gagal ambil data produk.');
     }
 }
 }}),

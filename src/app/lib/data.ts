@@ -301,3 +301,15 @@ export async function fetchPenjualanProduk() {
     throw new Error('Gagal ambil data grafik penjualan.');
   }
 }
+
+export async function fetchProdukWithFoto() {
+  const produk = await sql<{
+    id_produk: number;
+    nama_produk: string;
+    harga_produk: number;
+    foto: string;
+    deskripsi: string;
+  }[]>`SELECT * FROM produk ORDER BY id_produk ASC`;
+  return produk;
+}
+
