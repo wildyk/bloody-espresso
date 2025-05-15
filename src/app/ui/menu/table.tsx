@@ -14,10 +14,10 @@ export default async function ProdukTable() {
       </thead>
       <tbody>
         {produkList.map((produk) => (
-          <tr key={produk.id_produk}>
-            <td>{produk.id_produk}</td>
+          <tr key={produk.id}>
+            <td>{produk.id}</td>
             <td>{produk.nama_produk}</td>
-            <td>Rp {produk.harga.toLocaleString()}</td>
+            <td>Rp {produk.harga_produk.toLocaleString()}</td>
           </tr>
         ))}
       </tbody>

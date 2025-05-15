@@ -219,8 +219,8 @@ export async function fetchFilteredCustomers(query: string) {
 
 export async function fetchProduk() {
   try {
-    const produk = await sql<{ id_produk: number; nama_produk: string; harga: number }[]>`
-      SELECT id_produk, nama_produk, harga FROM products ORDER BY id_produk ASC
+    const produk = await sql<{ id: number; nama_produk: string; harga_produk: number }[]>`
+      SELECT id, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
     `;
     return produk;
   } catch (error) {

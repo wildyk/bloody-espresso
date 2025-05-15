@@ -371,12 +371,12 @@ async function fetchFilteredCustomers(query) {
 async function fetchProduk() {
     try {
         const produk = await sql`
-      SELECT id_produk, nama_produk, harga FROM products ORDER BY id_produk ASC
+      SELECT id, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
     `;
         return produk;
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch products.');
+        throw new Error('Failed to fetch produk.');
     }
 }
 }}),
