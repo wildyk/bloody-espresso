@@ -9,7 +9,7 @@ import { alegreya } from '@/app/ui/fonts';
 
 
 const iconMap = {
-  collected: BanknotesIcon,
+  pendapatan: BanknotesIcon,
   customers: UserGroupIcon,
   pending: ClockIcon,
   invoices: InboxIcon,
@@ -26,7 +26,7 @@ export default async function CardWrapper() {
 
   return (
     <>
-      <Card title="Collected" value={totalPaidInvoices} type="collected" />
+      <Card title="Pendapatan" value={totalPaidInvoices} type="pendapatan" />
       <Card title="Pending" value={totalPendingInvoices} type="pending" />
       <Card title="Total Invoices" value={numberOfInvoices} type="invoices" />
       <Card
@@ -45,7 +45,7 @@ export function Card({
 }: {
   title: string;
   value: number | string;
-  type: 'invoices' | 'customers' | 'pending' | 'collected';
+  type: 'invoices' | 'customers' | 'pending' | 'pendapatan';
 }) {
   const Icon = iconMap[type];
 

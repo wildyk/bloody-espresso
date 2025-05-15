@@ -1,18 +1,25 @@
 'use client';
 
+import React from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
-export default function Search({ placeholder }: { placeholder: string }) {
+interface SearchProps {
+  placeholder?: string;
+}
+
+export default function Search({ placeholder = 'Cari sesuatu...' }: SearchProps) {
   return (
-    <div className="relative flex flex-1 flex-shrink-0">
+    <div className="relative w-full max-w-md">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+        id="search"
+        type="text"
         placeholder={placeholder}
+        className="peer block w-full rounded-md border border-gray-300 bg-white/90 py-2 pl-10 pr-4 text-sm text-gray-900 placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
       />
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-500 peer-focus:text-red-500" />
     </div>
   );
 }

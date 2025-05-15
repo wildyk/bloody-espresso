@@ -1,23 +1,26 @@
-'use client';
-
+"use client";
 import {
   UserGroupIcon,
   HomeIcon,
   DocumentDuplicateIcon,
-} from '@heroicons/react/24/outline';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import clsx from 'clsx';
-import { useMemo } from 'react';
+} from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
+import { useMemo } from "react";
 
 export default function NavLinks() {
   const pathname = usePathname();
 
   const links = useMemo(
     () => [
-      { name: 'Home', href: '/admin/dashboard', icon: HomeIcon },
-      { name: 'Menu', href: '/admin/dashboard/menu', icon: DocumentDuplicateIcon },
-      { name: 'Customers', href: '/dashboard/customers', icon: UserGroupIcon },
+      { name: "Home", href: "/admin/dashboard", icon: HomeIcon },
+      {
+        name: "Menu",
+        href: "/admin/dashboard/menu",
+        icon: DocumentDuplicateIcon,
+      },
+      { name: "Customers", href: "/dashboard/customers", icon: UserGroupIcon },
     ],
     []
   );
@@ -31,8 +34,10 @@ export default function NavLinks() {
             key={link.name}
             href={link.href}
             className={clsx(
-              'flex h-12 grow items-center justify-center gap-2 rounded-md bg-red-950 text-sm font-medium hover:bg-red-900 md:flex-none md:justify-start md:p-2 md:px-3',
-              { 'bg-red-950 text-white': pathname === link.href }
+              "flex h-12 w-full items-center justify-start gap-2 rounded-md bg-red-800 px-3 text-sm font-medium hover:bg-red-700 hover:text-white",
+              {
+                "bg-red-700 text-white": pathname === link.href,
+              }
             )}
           >
             <LinkIcon className="w-6" />
