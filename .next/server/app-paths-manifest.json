@@ -1,19 +1,7 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/api/menu/route": "app/api/menu/route.js",
-  "/auth/forget/page": "app/auth/forget/page.js",
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/auth/login/page": "app/auth/login/page.js",
-  "/auth/register/page": "app/auth/register/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/kontak/page": "app/kontak/page.js",
-  "/menu/page": "app/menu/page.js",
-  "/page": "app/page.js",
-  "/profile/team/page": "app/profile/team/page.js",
-  "/profile/toko/page": "app/profile/toko/page.js",
-  "/verif/akun/page": "app/verif/akun/page.js",
-  "/verif/home/page": "app/verif/home/page.js",
-  "/verif/kontak/page": "app/verif/kontak/page.js",
-  "/verif/menu/page": "app/verif/menu/page.js",
-  "/verif/profile/team/page": "app/verif/profile/team/page.js",
-  "/verif/profile/toko/page": "app/verif/profile/toko/page.js"
+  "/page": "app/page.js"
 }
