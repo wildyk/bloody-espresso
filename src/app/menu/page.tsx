@@ -8,7 +8,7 @@ export default async function MenuPage() {
   const produkList = await fetchProdukWithFoto();
 
   return (
-    <main className="min-h-screen bg-[#300000] text-white">
+    <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white">
       <Navbar />
             <section className="text-center py-4 px-10 mb-53">
         <h2

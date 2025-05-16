@@ -1,21 +1,27 @@
-import AnalitikSection from '@/app/ui/analitik/analitik';
-import GrafikPenjualan from '@/app/ui/analitik/grafikpenjualan';
-import { fetchAnalytics, fetchPenjualanProduk } from '@/app/lib/data';
+import { Suspense } from 'react';
+import AnalyticsSection from '@/app/ui/analitik/analitiksection';
+import AnalitikSectionSkeleton from '@/app/ui/skeletons';
+import GrafikPenjualanSkeleton from '@/app/ui/skeletons';
 
-export default async function AnalitikPage() {
-  // Panggil data dari database
-  const analytics = await fetchAnalytics();
-  const chartData = await fetchPenjualanProduk();
-
+export default function Page() {
   return (
-    <section className="p-6">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Analitik</h1>
-
-      {/* Info Box: Total Produk, Total Revenue, Produk Terlaris */}
-      <AnalitikSection data={analytics} />
-
-      {/* Grafik Bar Penjualan Produk */}
-      <GrafikPenjualan data={chartData} />
-    </section>
+    <main className="p-6">
+      <h1 className="text-2xl font-bold mb-4">Halaman Analitik</h1>
+      <Suspense
+        fallback={
+          <div className="space-y-8">
+            <AnalitikSectionSkeleton />
+            <GrafikPenjualanSkeleton />
+          </div>
+        }
+      >
+        <AnalyticsSection data={{
+          totalProduk: 0,
+          totalRevenue: 0,
+          mostSold: '',
+          jumlahTerjual: 0
+        }} />
+      </Suspense>
+    </main>
   );
 }
