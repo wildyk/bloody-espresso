@@ -439,13 +439,8 @@ async function fetchPenjualanProduk() {
     }
 }
 async function fetchProdukWithFoto() {
-    try {
-        const data = await sql`SELECT id_produk, nama_produk, harga, foto FROM produk ORDER BY id_produk ASC`;
-        return data;
-    } catch (error) {
-        console.error('Gagal ambil produk:', error);
-        throw new Error('Gagal ambil data produk.');
-    }
+    const produk = await sql`SELECT * FROM menu ORDER BY id_produk ASC`;
+    return produk;
 }
 }}),
 "[next]/internal/font/google/nosifer_d0ad537.module.css [app-rsc] (css module)": ((__turbopack_context__) => {

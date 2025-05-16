@@ -1,10 +1,6 @@
 {
   "pages": {},
-  "app": {
-    "[project]/src/app/admin/dashboard/page": [
-      "static/media/4UacrEBBsBhlBjvfkQjt71kZfyBzPgNG9hU4_6qjkySFrt19-s.p.4fa2fc3a.woff2"
-    ]
-  },
-  "appUsingSizeAdjust": true,
+  "app": {},
+  "appUsingSizeAdjust": false,
   "pagesUsingSizeAdjust": false
 }
