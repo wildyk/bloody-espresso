@@ -1,7 +1,10 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
+  "/admin/dashboard/analitik/page": "app/admin/dashboard/analitik/page.js",
   "/admin/dashboard/menu/page": "app/admin/dashboard/menu/page.js",
-  "/admin/dashboard/page": "app/admin/dashboard/page.js",
   "/admin/dashboard/transaksi/page": "app/admin/dashboard/transaksi/page.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/menu/page": "app/menu/page.js",
   "/page": "app/page.js"
 }

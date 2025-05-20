@@ -1,14 +1,22 @@
+// app/admin/dashboard/analitik/page.tsx
 import { Suspense } from 'react';
-import AnalitikClient from './analitikclient';
-import AnalitikSkeleton from './analitikskeleton';
+import Loading from './loading';
+import AnalitikMetricSection from './analitikmetriksection';
+import GrafikPenjualanSection from './grafiksection';
 
 export default function AnalitikPage() {
   return (
     <section className="p-6">
       <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard Analitik</h1>
 
-      <Suspense fallback={<AnalitikSkeleton />}>
-        <AnalitikClient />
+      {/* Metrik akan streaming saat sudah siap */}
+      <Suspense fallback={<Loading type="metrics" />}>
+        <AnalitikMetricSection />
+      </Suspense>
+
+      {/* Grafik bisa streaming terpisah */}
+      <Suspense fallback={<Loading type="chart" />}>
+        <GrafikPenjualanSection />
       </Suspense>
     </section>
   );

@@ -373,10 +373,11 @@ async function fetchFilteredCustomers(query) {
     }
 }
 async function fetchProduk() {
+    await new Promise((resolve)=>setTimeout(resolve, 1500));
     try {
         const produk = await sql`
-  SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
-`;
+      SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
+    `;
         return produk;
     } catch (error) {
         console.error('Database Error:', error);
@@ -395,6 +396,7 @@ async function fetchTransaksi() {
     }
 }
 async function fetchAnalytics() {
+    await new Promise((resolve)=>setTimeout(resolve, 1500));
     try {
         // Query 1: total produk
         const totalProdukRes = await sql`SELECT COUNT(*) FROM produk`;
@@ -424,6 +426,7 @@ async function fetchAnalytics() {
     }
 }
 async function fetchPenjualanProduk() {
+    await new Promise((resolve)=>setTimeout(resolve, 2000));
     try {
         const data = await sql`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual

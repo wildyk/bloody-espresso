@@ -14,7 +14,7 @@ export default function NavLinks() {
 
   const links = useMemo(
     () => [
-      { name: "Home", href: "/admin/dashboard", icon: HomeIcon },
+      { name: "Home", href: "/admin/dashboard/analitik", icon: HomeIcon },
       {
         name: "Menu",
         href: "/admin/dashboard/menu",

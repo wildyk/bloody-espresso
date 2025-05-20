@@ -218,15 +218,15 @@ export async function fetchFilteredCustomers(query: string) {
 }
 
 export async function fetchProduk() {
+  await new Promise((resolve) => setTimeout(resolve, 1500)); 
   try {
-const produk = await sql<{ 
-  id_produk: number; 
-  nama_produk: string; 
-  harga_produk: number; 
-}[]>`
-  SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
-`
-
+    const produk = await sql<{
+      id_produk: number;
+      nama_produk: string;
+      harga_produk: number;
+    }[]>`
+      SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
+    `;
 
     return produk;
   } catch (error) {
@@ -235,7 +235,9 @@ const produk = await sql<{
   }
 }
 
+
 export async function fetchTransaksi() {
+  await new Promise((r) => setTimeout(r, 1500));
   try {
     const transaksi = await sql<{
       id_transaksi: number;
@@ -254,6 +256,7 @@ export async function fetchTransaksi() {
 }
 
 export async function fetchAnalytics() {
+  await new Promise((resolve) => setTimeout(resolve, 1500)); 
   try {
     // Query 1: total produk
     const totalProdukRes = await sql`SELECT COUNT(*) FROM produk`;
@@ -287,6 +290,7 @@ export async function fetchAnalytics() {
 }
 
 export async function fetchPenjualanProduk() {
+  await new Promise((resolve) => setTimeout(resolve, 2000)); 
   try {
     const data = await sql<{ nama_produk: string; jumlah_terjual: number }[]>`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual

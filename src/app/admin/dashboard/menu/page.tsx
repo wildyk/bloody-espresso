@@ -1,10 +1,13 @@
-import ProdukTable from '@/app/ui/menu/table'; // atau sesuaikan path
+import { Suspense } from 'react';
+import ProdukSkeleton from './produkskeleton';
+import ProdukTableWrapper from './produktablewrapper';
 
 export default function ProdukPage() {
   return (
     <section className="p-6">
-      <h1 className="mb-6 text-2xl font-bold text-gray-800">Katalog Produk</h1>
-      <ProdukTable />
+      <Suspense fallback={<ProdukSkeleton />}>
+        <ProdukTableWrapper />
+      </Suspense>
     </section>
   );
 }

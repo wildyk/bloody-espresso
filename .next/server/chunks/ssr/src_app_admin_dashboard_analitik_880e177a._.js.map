@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///root/CODING/tubes-siweb/src/app/admin/dashboard/analitik/analitikskeleton.tsx"],"sourcesContent":["export default function AnalitikSkeleton() {\n  return (\n    <section className=\"p-6 animate-pulse\">\n      <div className=\"h-8 w-1/3 bg-gray-300 rounded mb-6\"></div> {/* Judul skeleton */}\n      <div className=\"grid gap-4 md:grid-cols-3 mb-10\">\n        <div className=\"h-24 bg-gray-200 rounded-lg\"></div>\n        <div className=\"h-24 bg-gray-200 rounded-lg\"></div>\n        <div className=\"h-24 bg-gray-200 rounded-lg\"></div>\n      </div>\n      <div className=\"h-[400px] bg-gray-200 rounded-lg\"></div>\n    </section>\n  );\n}\n"],"names":[],"mappings":";;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAQ,WAAU;;0BACjB,8OAAC;gBAAI,WAAU;;;;;;YAA2C;0BAC1D,8OAAC;gBAAI,WAAU;;kCACb,8OAAC;wBAAI,WAAU;;;;;;kCACf,8OAAC;wBAAI,WAAU;;;;;;kCACf,8OAAC;wBAAI,WAAU;;;;;;;;;;;;0BAEjB,8OAAC;gBAAI,WAAU;;;;;;;;;;;;AAGrB","debugId":null}},
+    {"offset": {"line": 74, "column": 0}, "map": {"version":3,"sources":["file:///root/CODING/tubes-siweb/src/app/admin/dashboard/analitik/loading.tsx"],"sourcesContent":["import AnalitikSkeleton from './analitikskeleton';\n\nexport default function Loading() {\n  return <AnalitikSkeleton />;\n}\n"],"names":[],"mappings":";;;;AAAA;;;AAEe,SAAS;IACtB,qBAAO,8OAAC,iKAAA,CAAA,UAAgB;;;;;AAC1B","debugId":null}}]
+}
