@@ -7,7 +7,7 @@ runtime.loadChunk("server/chunks/ssr/_6f1103e4._.js");
 runtime.loadChunk("server/chunks/ssr/node_modules_96715ba7._.js");
 runtime.loadChunk("server/chunks/ssr/node_modules_next_dist_client_components_forbidden-error_ea7ea172.js");
 runtime.loadChunk("server/chunks/ssr/node_modules_next_dist_client_components_unauthorized-error_c8949b27.js");
-runtime.loadChunk("server/chunks/ssr/src_app_2f4f6a33._.js");
+runtime.loadChunk("server/chunks/ssr/_1918016b._.js");
 runtime.loadChunk("server/chunks/ssr/src_app_admin_dashboard_transaksi_69a3c838._.js");
 runtime.loadChunk("server/chunks/ssr/node_modules_1308751f._.js");
 runtime.loadChunk("server/chunks/ssr/[root-of-the-server]__ebaa01bb._.js");
