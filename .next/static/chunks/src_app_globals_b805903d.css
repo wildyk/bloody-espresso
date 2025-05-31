@@ -1167,6 +1167,10 @@
     flex-shrink: 0;
   }
 
+  .shrink {
+    flex-shrink: 1;
+  }
+
   .flex-grow, .grow {
     flex-grow: 1;
   }
@@ -1704,6 +1708,10 @@
 
   .bg-red-500 {
     background-color: var(--color-red-500);
+  }
+
+  .bg-red-600 {
+    background-color: var(--color-red-600);
   }
 
   .bg-red-700 {
@@ -2722,6 +2730,12 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-red-500:hover {
+      background-color: var(--color-red-500);
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:bg-red-700:hover {
       background-color: var(--color-red-700);
     }
@@ -2736,6 +2750,12 @@
   @media (hover: hover) {
     .hover\:bg-red-900:hover {
       background-color: var(--color-red-900);
+    }
+  }
+
+  @media (hover: hover) {
+    .hover\:bg-red-950:hover {
+      background-color: var(--color-red-950);
     }
   }
 
@@ -2909,6 +2929,12 @@
   }
 
   @media (width >= 40rem) {
+    .sm\:w-auto {
+      width: auto;
+    }
+  }
+
+  @media (width >= 40rem) {
     .sm\:rotate-0 {
       rotate: none;
     }
@@ -2923,6 +2949,24 @@
   @media (width >= 40rem) {
     .sm\:grid-cols-13 {
       grid-template-columns: repeat(13, minmax(0, 1fr));
+    }
+  }
+
+  @media (width >= 40rem) {
+    .sm\:flex-row {
+      flex-direction: row;
+    }
+  }
+
+  @media (width >= 40rem) {
+    .sm\:items-center {
+      align-items: center;
+    }
+  }
+
+  @media (width >= 40rem) {
+    .sm\:justify-between {
+      justify-content: space-between;
     }
   }
 
@@ -2953,12 +2997,6 @@
   @media (width >= 48rem) {
     .md\:mt-0 {
       margin-top: calc(var(--spacing) * 0);
-    }
-  }
-
-  @media (width >= 48rem) {
-    .md\:mr-4 {
-      margin-right: calc(var(--spacing) * 4);
     }
   }
 

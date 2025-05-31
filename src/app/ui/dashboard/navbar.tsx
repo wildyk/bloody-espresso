@@ -2,7 +2,6 @@
 
 import { useRef, useState } from "react";
 import { BellIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import Search from "@/app/ui/search";
 import Image from "next/image";
 
 export default function Navbar() {
@@ -14,11 +13,6 @@ export default function Navbar() {
   return (
     <>
       <nav className="relative z-50 flex items-center justify-between bg-red-900 px-4 py-3 text-white shadow-md">
-        {/* Search */}
-        <div className="flex-1 md:ml-4 max-w-sm w-full">
-          <Search />
-        </div>
-
         {/* Ikon kanan: Notifikasi + Akun */}
         <div className="flex items-center gap-6 ml-4">
           {/* Notifikasi */}
