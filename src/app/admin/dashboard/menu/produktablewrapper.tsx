@@ -1,9 +1,13 @@
+import { fetchAllProduk } from '@/app/lib/data';
 import ProdukTable from '@/app/ui/menu/table';
 
-export default function ProdukTableWrapper({
+export const dynamic = 'force-dynamic';
+export default async function ProdukTableWrapper({
   searchParams,
 }: {
   searchParams: { query?: string; page?: string };
 }) {
-  return <ProdukTable searchParams={searchParams} />;
+  const produkList = await fetchAllProduk();
+
+  return <ProdukTable data={produkList} searchParams={searchParams} />;
 }

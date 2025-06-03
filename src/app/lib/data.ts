@@ -220,22 +220,39 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 
 export async function fetchProduk(id: string) {
-  await new Promise((resolve) => setTimeout(resolve, 1500)); 
   try {
-    const produk = await sql<{
+    const result = await sql<{
       id_produk: number;
       nama_produk: string;
       harga_produk: number;
     }[]>`
-      SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
+      SELECT id_produk, nama_produk, harga_produk 
+      FROM produk 
+      WHERE id_produk = ${id}
+      LIMIT 1
     `;
 
-    return produk;
+    return result[0]; 
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch produk.');
+    throw new Error('Failed to fetch produk by ID.');
+  }
+  
+}
+export async function fetchAllProduk() {
+  try {
+    const result = await sql`
+      SELECT id_produk, nama_produk, harga_produk 
+      FROM produk 
+      ORDER BY id_produk ASC
+    `;
+    return result;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch all produk.');
   }
 }
+
 
 
 export async function fetchTransaksi() {

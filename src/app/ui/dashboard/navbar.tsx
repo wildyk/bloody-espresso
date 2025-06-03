@@ -12,9 +12,9 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="relative z-50 flex items-center justify-between bg-red-900 px-4 py-3 text-white shadow-md">
-        {/* Ikon kanan: Notifikasi + Akun */}
-        <div className="flex items-center gap-6 ml-4">
+      <nav className="relative z-50 flex items-center justify-end bg-red-900 px-4 py-3 text-white shadow-md pr-10">
+        {/* Kontainer kanan */}
+        <div className="flex items-center gap-10">
           {/* Notifikasi */}
           <div className="relative">
             <button onClick={toggleNotifications} className="relative">
@@ -28,10 +28,10 @@ export default function Navbar() {
           {/* Akun */}
           <div className="flex items-center gap-2">
             <Image
-              src="/customers/evil-rabbit.png" // ganti dengan path fotomu
+              src="/customers/evil-rabbit.png"
               alt="Profile"
-              width={50}
-              height={50}
+              width={40}
+              height={40}
               className="rounded-full object-cover"
             />
             <div className="hidden md:block leading-tight">

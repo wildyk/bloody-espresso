@@ -1,19 +1,16 @@
-import Form from "@/app/ui/menu/createform";
-import Breadcrumbs from "@/app/ui/menu/breadcrumbs";
-import { fetchProduk } from "@/app/lib/data";
+import Form from '@/app/ui/menu/createform';
+import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
 
-export default async function CreateInvoicePage() {
-    const menu = await fetchProduk("");
-
-    return (
-        <main>
-            <Breadcrumbs
-                breadcrumbs={[
-                    { label: "Menu", href: "/admin/dashboard/menu" },
-                    { label: "Create Menu", href: "/admin/dashboard/menu/create", active: true },
-                ]}
-            />
-            <Form menu={menu} />
-        </main>
-    );
+export default function CreateMenuPage() {
+  return (
+    <main>
+      <Breadcrumbs
+        breadcrumbs={[
+          { label: 'Menu', href: '/admin/dashboard/menu' },
+          { label: 'Create Menu', href: '/admin/dashboard/menu/create', active: true },
+        ]}
+      />
+      <Form />
+    </main>
+  );
 }

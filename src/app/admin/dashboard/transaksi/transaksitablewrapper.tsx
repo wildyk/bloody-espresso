@@ -1,10 +1,13 @@
 import TransaksiTable from '@/app/ui/transaksi/table';
 
-export default async function TransaksiTableWrapper() {
+interface Props {
+  searchParams?: { [key: string]: string | string[] | undefined };
+}
+
+export default async function TransaksiTableWrapper({ searchParams }: Props) {
   return (
     <>
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">Riwayat Transaksi</h1>
-      <TransaksiTable />
+      <TransaksiTable searchParams={searchParams || {}} />
     </>
   );
 }

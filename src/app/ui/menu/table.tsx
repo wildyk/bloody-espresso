@@ -1,5 +1,6 @@
-import { fetchProduk } from '@/app/lib/data';
+import { fetchAllProduk } from '@/app/lib/data';
 import { alegreya } from '@/app/ui/fonts';
+import { UpdateProduk, DeleteProduk } from '@/app/ui/menu/buttons';
 
 export default async function ProdukTable({
   searchParams,
@@ -10,7 +11,7 @@ export default async function ProdukTable({
   const currentPage = parseInt(searchParams.page || '1', 10);
   const itemsPerPage = 5;
 
-  const produkList = await fetchProduk('');
+  const produkList = await fetchAllProduk();
 
   const filtered = produkList.filter((produk) =>
     produk.nama_produk.toLowerCase().includes(query)
@@ -25,53 +26,155 @@ export default async function ProdukTable({
 
   return (
     <>
-      <div className="overflow-x-auto rounded-md border border-gray-300 shadow-sm">
-        <table className="min-w-full divide-y divide-gray-200 text-sm">
-          <thead className="bg-red-800 text-white">
-            <tr>
-              <th className={`${alegreya.className} not-last:px-4 py-3 text-left font-semibold`}>ID Produk</th>
-              <th className={`${alegreya.className}px-4 py-3 text-left font-semibold`}>Nama Produk</th>
-              <th className={`${alegreya.className}px-4 py-3 text-left font-semibold`}>Harga</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-100 bg-white text-gray-800">
-            {paginated.map((produk) => (
-              <tr key={produk.id_produk}>
-                <td className="px-4 py-2">{produk.id_produk}</td>
-                <td className="px-4 py-2">{produk.nama_produk}</td>
-                <td className="px-4 py-2">Rp {produk.harga_produk.toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="mt-8 flow-root">
+        <div className="inline-block min-w-full align-middle">
+          <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
+            {/* Table Header */}
+            <div className="border-b border-gray-200 bg-red-900 px-6 py-4">
+              <h3 className="text-xl font-semibold text-white">Daftar Produk</h3>
+              <p className="text-white text-sm mt-1">Total {totalItems} produk ditemukan</p>
+            </div>
+            
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50 border-b border-gray-200">
+                <tr>
+                  <th scope="col" className={`${alegreya.className} px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+                    ID Produk
+                  </th>
+                  <th scope="col" className={`${alegreya.className} px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+                    Nama Produk
+                  </th>
+                  <th scope="col" className={`${alegreya.className} px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`}>
+                    Harga
+                  </th>
+                  <th scope="col" className="px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Aksi
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {paginated.map((produk) => (
+                  <tr
+                    key={produk.id_produk}
+                    className="hover:bg-gray-50 transition-colors duration-200"
+                  >
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-medium text-gray-900">
+                        {produk.id_produk}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="text-sm font-semibold text-gray-900">
+                        {produk.nama_produk}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200">
+                        Rp {produk.harga_produk.toLocaleString('id-ID')}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-center">
+                      <div className="flex justify-center gap-3">
+                        <UpdateProduk id={produk.id_produk.toString()} />
+                        <DeleteProduk id={produk.id_produk.toString()} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            {/* Empty State */}
+            {paginated.length === 0 && (
+              <div className="text-center py-12 border-t border-gray-200">
+                <div className="mx-auto h-24 w-24 text-gray-400">
+                  <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"></path>
+                  </svg>
+                </div>
+                <h3 className="mt-4 text-lg font-medium text-gray-900">Tidak ada produk ditemukan</h3>
+                <p className="mt-2 text-sm text-gray-500">
+                  {query ? `Tidak ada hasil untuk pencarian "${query}"` : 'Belum ada produk yang ditambahkan'}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
       </div>
 
-<div className="mt-4 flex justify-center gap-2">
-  {[...Array(totalPages)].map((_, i) => {
-    const page = i + 1;
-    const params = new URLSearchParams();
+      {/* Enhanced Pagination */}
+      {totalPages > 1 && (
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-lg">
+          <div className="text-sm text-gray-700">
+            Menampilkan <span className="font-medium">{(currentPage - 1) * itemsPerPage + 1}</span> sampai{' '}
+            <span className="font-medium">{Math.min(currentPage * itemsPerPage, totalItems)}</span> dari{' '}
+            <span className="font-medium">{totalItems}</span> produk
+          </div>
+          
+          <div className="flex items-center gap-2">
+            {/* Previous Button */}
+            {currentPage > 1 && (
+              <a
+                href={`?${new URLSearchParams({
+                  ...Object.fromEntries(Object.entries(searchParams).filter(([key]) => key !== 'page')),
+                  page: String(currentPage - 1)
+                }).toString()}`}
+                className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 transition-colors duration-200"
+              >
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+                <span className="ml-1 hidden sm:block">Sebelumnya</span>
+              </a>
+            )}
 
-    Object.entries(searchParams).forEach(([key, value]) => {
-      if (value && key !== 'page') params.set(key, value);
-    });
+            {/* Page Numbers */}
+            <div className="flex items-center gap-1">
+              {[...Array(totalPages)].map((_, i) => {
+                const page = i + 1;
+                const params = new URLSearchParams();
 
-    params.set('page', String(page));
-    const href = `?${params.toString()}`;
+                Object.entries(searchParams).forEach(([key, value]) => {
+                  if (value && key !== 'page') params.set(key, value);
+                });
 
-    return (
-      <a
-        key={page}
-        href={href}
-        className={`rounded px-3 py-1 text-sm ${
-          page === currentPage ? 'bg-red-900 text-white' : 'border'
-        }`}
-      >
-        {page}
-      </a>
-    );
-  })}
-</div>
+                params.set('page', String(page));
+                const href = `?${params.toString()}`;
 
+                return (
+                  <a
+                    key={page}
+                    href={href}
+                    className={`relative inline-flex items-center px-4 py-2 text-sm font-medium border transition-colors duration-200 ${
+                      page === currentPage
+                        ? 'z-10 bg-red-900 text-white focus:z-20 focus-visible:outline-offset-2 focus-visible:outline-red-600 rounded-md'
+                        : 'text-gray-900 border-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 rounded-md bg-white'
+                    }`}
+                  >
+                    {page}
+                  </a>
+                );
+              })}
+            </div>
+
+            {/* Next Button */}
+            {currentPage < totalPages && (
+              <a
+                href={`?${new URLSearchParams({
+                  ...Object.fromEntries(Object.entries(searchParams).filter(([key]) => key !== 'page')),
+                  page: String(currentPage + 1)
+                }).toString()}`}
+                className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 transition-colors duration-200"
+              >
+                <span className="mr-1 hidden sm:block">Selanjutnya</span>
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 }

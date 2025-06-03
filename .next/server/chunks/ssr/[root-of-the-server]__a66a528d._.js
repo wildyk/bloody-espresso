@@ -91,6 +91,7 @@ module.exports = mod;
 var { g: global, __dirname } = __turbopack_context__;
 {
 __turbopack_context__.s({
+    "fetchAllProduk": (()=>fetchAllProduk),
     "fetchAnalytics": (()=>fetchAnalytics),
     "fetchPenjualanProduk": (()=>fetchPenjualanProduk),
     "fetchProduk": (()=>fetchProduk),
@@ -103,15 +104,30 @@ const sql = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$
     ssl: 'require'
 });
 async function fetchProduk(id) {
-    await new Promise((resolve)=>setTimeout(resolve, 1500));
     try {
-        const produk = await sql`
-      SELECT id_produk, nama_produk, harga_produk FROM produk ORDER BY id_produk ASC
+        const result = await sql`
+      SELECT id_produk, nama_produk, harga_produk 
+      FROM produk 
+      WHERE id_produk = ${id}
+      LIMIT 1
     `;
-        return produk;
+        return result[0];
     } catch (error) {
         console.error('Database Error:', error);
-        throw new Error('Failed to fetch produk.');
+        throw new Error('Failed to fetch produk by ID.');
+    }
+}
+async function fetchAllProduk() {
+    try {
+        const result = await sql`
+      SELECT id_produk, nama_produk, harga_produk 
+      FROM produk 
+      ORDER BY id_produk ASC
+    `;
+        return result;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch all produk.');
     }
 }
 async function fetchTransaksi() {

@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import ProdukSkeleton from './produkskeleton';
 import ProdukTableWrapper from './produktablewrapper';
 import Search from '@/app/ui/search';
-import { CreateMenu } from '@/app/ui/menu/buttons';
+import { CreateProduk } from '@/app/ui/menu/buttons';
 
 export default function ProdukPage({
   searchParams,
@@ -17,11 +17,10 @@ export default function ProdukPage({
 
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
           <Search placeholder="Cari produk..." />
-          <CreateMenu />
+          <CreateProduk />
         </div>
       </div>
 
-      {/* Tabel Produk + Loading Fallback */}
       <Suspense fallback={<ProdukSkeleton />}>
         <ProdukTableWrapper searchParams={searchParams} />
       </Suspense>

@@ -13,8 +13,17 @@ const MenuSchema = z.object({
   harga_produk: z.number(),
 });
 
+const TransaksiSchema = z.object({
+  id: z.string(),
+  id_produk: z.string(),
+  nama_pembeli: z.string(),
+  total_harga: z.number(),
+  tanggal_transaksi: z.string(),
+});
+
 const CreateMenu = MenuSchema.omit({ id: true });
 const UpdateMenu = MenuSchema.omit({ id: true });
+const CreateTransaksi = TransaksiSchema.omit({ id: true, tanggal_transaksi: true });
 
 export async function createMenu(formData: FormData) {
   const { nama_produk, harga_produk } = CreateMenu.parse({
@@ -23,7 +32,7 @@ export async function createMenu(formData: FormData) {
   });
 
   await sql`
-    INSERT INTO menu (nama_produk, harga_produk)
+    INSERT INTO produk (nama_produk, harga_produk)
     VALUES (${nama_produk}, ${harga_produk})
   `;
 
@@ -38,7 +47,7 @@ export async function updateMenu(id: string, formData: FormData) {
   });
 
   await sql`
-    UPDATE menu
+    UPDATE produk
     SET nama_produk = ${nama_produk}, harga_produk = ${harga_produk}
     WHERE id_produk = ${id}
   `;
@@ -48,20 +57,9 @@ export async function updateMenu(id: string, formData: FormData) {
 }
 
 export async function deleteMenu(id: string) {
-  await sql`DELETE FROM menu WHERE id_produk = ${id}`;
+  await sql`DELETE FROM produk WHERE id_produk = ${id}`;
   revalidatePath('/admin/dashboard/menu');
 }
-
-const TransaksiSchema = z.object({
-  id: z.string(),
-  id_produk: z.string(),
-  nama_pembeli: z.string(),
-  total_harga: z.number(),
-  tanggal_transaksi: z.string(),
-});
-
-const CreateTransaksi = TransaksiSchema.omit({ id: true, tanggal_transaksi: true });
-const UpdateTransaksi = TransaksiSchema.omit({ id: true, tanggal_transaksi: true });
 
 export async function createTransaksi(formData: FormData) {
   const { id_produk, nama_pembeli, total_harga } = CreateTransaksi.parse({
@@ -81,24 +79,3 @@ export async function createTransaksi(formData: FormData) {
   redirect('/admin/dashboard/transaksi');
 }
 
-export async function updateTransaksi(id: string, formData: FormData) {
-  const { id_produk, nama_pembeli, total_harga } = UpdateTransaksi.parse({
-    id_produk: formData.get('id_produk'),
-    nama_pembeli: formData.get('nama_pembeli'),
-    total_harga: Number(formData.get('total_harga')),
-  });
-
-  await sql`
-    UPDATE transaksi
-    SET id_produk = ${id_produk}, nama_pembeli = ${nama_pembeli}, total_harga = ${total_harga}
-    WHERE id_transaksi = ${id}
-  `;
-
-  revalidatePath('/admin/dashboard/transaksi');
-  redirect('/admin/dashboard/transaksi');
-}
-
-export async function deleteTransaksi(id: string) {
-  await sql`DELETE FROM transaksi WHERE id_transaksi = ${id}`;
-  revalidatePath('/admin/dashboard/transaksi');
-}

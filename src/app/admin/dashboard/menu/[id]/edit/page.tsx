@@ -1,23 +1,29 @@
+import Form from '@/app/ui/menu/editform';
 import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
-import EditMenuForm from '@/app/ui/menu/editform';
 import { fetchProduk } from '@/app/lib/data';
+import { notFound } from 'next/navigation';
+ 
+export default async function Page({ params }: { params: { id: string } }) {
+  const id = params.id;
+  const produk = await fetchProduk(id);
 
-interface EditMenuPageProps {
-  params: { id: string };
-}
-
-export default async function EditMenuPage({ params }: EditMenuPageProps) {
-  const menu = await fetchProduk(params.id);
+  if (!produk) {
+    notFound();
+  }
 
   return (
     <main>
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Menu', href: '/admin/dashboard/menu' },
-          { label: 'Edit Produk', href: `/admin/dashboard/menu/${params.id}/edit`, active: true },
+          {
+            label: 'Edit Menu',
+            href: `/admin/dashboard/menu/${id}/edit`,
+            active: true,
+          },
         ]}
       />
-      <EditMenuForm menu={menu} />
+      <Form produk={produk} />
     </main>
   );
 }

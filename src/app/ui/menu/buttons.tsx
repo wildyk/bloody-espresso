@@ -1,24 +1,22 @@
-'use client';
+'use client'
 
 import { PencilIcon, PlusIcon, TrashIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { deleteMenu } from '@/app/lib/actions'; // ganti dengan fungsi hapus milikmu
+import { deleteMenu } from '@/app/lib/actions';
 
-// Tombol Tambah Produk
-export function CreateMenu() {
+export function CreateProduk() {
   return (
     <Link
       href="/admin/dashboard/menu/create"
-      className="flex h-10 items-center rounded-lg bg-red-900 px-4 text-sm font-medium text-white transition-colors hover:bg-red-950 focus-visible:outline-offset-2 focus-visible:outline-blue-600"
+      className="flex h-10 items-center rounded-lg bg-red-800 px-4 text-sm font-medium text-white transition-colors hover:bg-red-700 focus-visible:outline-offset-2 focus-visible:outline-red-600"
     >
-      <span className="hidden md:block">Tambah Produk</span>
+      <span className="hidden md:block">Tambah Produk</span>{' '}
       <PlusIcon className="h-5 md:ml-4" />
     </Link>
   );
 }
 
-// Tombol Edit Produk
-export function UpdateMenu({ id }: { id: string }) {
+export function UpdateProduk({ id }: { id: string }) {
   return (
     <Link
       href={`/admin/dashboard/menu/${id}/edit`}
@@ -29,18 +27,18 @@ export function UpdateMenu({ id }: { id: string }) {
   );
 }
 
-// Tombol Hapus Produk
-export function DeleteMenu({ id }: { id: string }) {
-  const deleteMenuWithId = deleteMenu.bind(null, id);
-
+export function DeleteProduk({ id }: { id: string }) {
+  const handleSubmit = async (formData: FormData) => {
+    if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
+      await deleteMenu(id);
+    }
+  };
+     
   return (
-    <form action={deleteMenuWithId}>
-      <button
-        type="submit"
-        className="rounded-md border p-2 hover:bg-gray-100"
-      >
+    <form action={handleSubmit}>
+      <button className="rounded-md border p-2 hover:bg-gray-100">
         <span className="sr-only">Hapus</span>
-        <TrashIcon className="w-5 text-red-600" />
+        <TrashIcon className="w-5" />
       </button>
     </form>
   );
