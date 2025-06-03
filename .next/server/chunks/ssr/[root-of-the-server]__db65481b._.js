@@ -61,10 +61,11 @@ module.exports = mod;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-/* __next_internal_action_entry_do_not_use__ [{"4007f2ed3316365d463f8f1a19871a414138b0ea1c":"createTransaksi","404ef95b7438f1013121e5ba800680d7f6b289d8b1":"createMenu","4092bf8249b5cf83282f76425a4f104d078960b79c":"deleteMenu","602cf8d20e8baa474a749b763ff3d7e57d5c43fb59":"updateMenu"},"",""] */ __turbopack_context__.s({
+/* __next_internal_action_entry_do_not_use__ [{"4007f2ed3316365d463f8f1a19871a414138b0ea1c":"createTransaksi","40403a14bc12d1b8a93066b32311ada5571ebc473b":"getProductById","404ef95b7438f1013121e5ba800680d7f6b289d8b1":"createMenu","4092bf8249b5cf83282f76425a4f104d078960b79c":"deleteMenu","602cf8d20e8baa474a749b763ff3d7e57d5c43fb59":"updateMenu"},"",""] */ __turbopack_context__.s({
     "createMenu": (()=>createMenu),
     "createTransaksi": (()=>createTransaksi),
     "deleteMenu": (()=>deleteMenu),
+    "getProductById": (()=>getProductById),
     "updateMenu": (()=>updateMenu)
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/build/webpack/loaders/next-flight-loader/server-reference.js [app-rsc] (ecmascript)");
@@ -95,17 +96,14 @@ const TransaksiSchema = __TURBOPACK__imported__module__$5b$project$5d2f$node_mod
     id_produk: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
     nama_pembeli: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
     total_harga: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number(),
-    tanggal_transaksi: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string()
+    tanggal_transaksi: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
+    quantity: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().optional()
 });
 const CreateMenu = MenuSchema.omit({
     id: true
 });
 const UpdateMenu = MenuSchema.omit({
     id: true
-});
-const CreateTransaksi = TransaksiSchema.omit({
-    id: true,
-    tanggal_transaksi: true
 });
 async function createMenu(formData) {
     const { nama_produk, harga_produk } = CreateMenu.parse({
@@ -136,17 +134,55 @@ async function deleteMenu(id) {
     await sql`DELETE FROM produk WHERE id_produk = ${id}`;
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
 }
+async function getProductById(id) {
+    try {
+        const result = await sql`
+      SELECT id_produk, nama_produk, harga_produk 
+      FROM produk 
+      WHERE id_produk = ${id}
+    `;
+        if (result.length === 0) {
+            return null;
+        }
+        return {
+            id_produk: result[0].id_produk,
+            nama_produk: result[0].nama_produk,
+            harga_produk: Number(result[0].harga_produk)
+        };
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch product data.');
+    }
+}
 async function createTransaksi(formData) {
-    const { id_produk, nama_pembeli, total_harga } = CreateTransaksi.parse({
-        id_produk: formData.get('id_produk'),
-        nama_pembeli: formData.get('nama_pembeli'),
-        total_harga: Number(formData.get('total_harga'))
+    const id_produk = formData.get('id_produk');
+    const nama_pembeli = formData.get('nama_pembeli');
+    const total_harga = Number(formData.get('total_harga'));
+    const quantity = Number(formData.get('quantity')) || 1;
+    const tanggal_transaksi = formData.get('tanggal_transaksi') || new Date().toISOString().split('T')[0];
+    const CreateTransaksiWithQuantity = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
+        id_produk: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
+        nama_pembeli: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
+        total_harga: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number(),
+        quantity: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().min(1),
+        tanggal_transaksi: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string()
     });
-    const tanggal_transaksi = new Date().toISOString().split('T')[0];
-    await sql`
-    INSERT INTO transaksi (id_produk, nama_pembeli, total_harga, tanggal_transaksi)
-    VALUES (${id_produk}, ${nama_pembeli}, ${total_harga}, ${tanggal_transaksi})
-  `;
+    const validatedData = CreateTransaksiWithQuantity.parse({
+        id_produk,
+        nama_pembeli,
+        total_harga,
+        quantity,
+        tanggal_transaksi
+    });
+    try {
+        await sql`
+      INSERT INTO transaksi (id_produk, nama_pembeli, total_harga, tanggal_transaksi, quantity)
+      VALUES (${validatedData.id_produk}, ${validatedData.nama_pembeli}, ${validatedData.total_harga}, ${validatedData.tanggal_transaksi}, ${validatedData.quantity})
+    `;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to create transaksi.');
+    }
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/transaksi');
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/transaksi');
 }
@@ -155,11 +191,13 @@ async function createTransaksi(formData) {
     createMenu,
     updateMenu,
     deleteMenu,
+    getProductById,
     createTransaksi
 ]);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createMenu, "404ef95b7438f1013121e5ba800680d7f6b289d8b1", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateMenu, "602cf8d20e8baa474a749b763ff3d7e57d5c43fb59", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteMenu, "4092bf8249b5cf83282f76425a4f104d078960b79c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getProductById, "40403a14bc12d1b8a93066b32311ada5571ebc473b", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createTransaksi, "4007f2ed3316365d463f8f1a19871a414138b0ea1c", null);
 }}),
 "[project]/.next-internal/server/app/admin/dashboard/menu/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/lib/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>": ((__turbopack_context__) => {
@@ -275,8 +313,10 @@ async function fetchTransaksi() {
     await new Promise((r)=>setTimeout(r, 1500));
     try {
         const transaksi = await sql`
-      SELECT * FROM transaksi ORDER BY tanggal_transaksi ASC
-    `;
+  SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
+  FROM transaksi
+  ORDER BY tanggal_transaksi ASC
+`;
         return transaksi;
     } catch (error) {
         console.error('Database Error:', error);
@@ -399,7 +439,7 @@ __turbopack_context__.s({
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$data$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/lib/data.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$fonts$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/src/app/ui/fonts.ts [app-rsc] (ecmascript) <module evaluation>");
-var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__ = __turbopack_context__.i("[next]/internal/font/google/alegreya_c449b61a.js [app-rsc] (ecmascript) <export default as alegreya>");
+var __TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_4aac7abd$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__ = __turbopack_context__.i("[next]/internal/font/google/alegreya_4aac7abd.js [app-rsc] (ecmascript) <export default as alegreya>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$menu$2f$buttons$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/ui/menu/buttons.tsx [app-rsc] (ecmascript)");
 ;
 ;
@@ -435,7 +475,7 @@ async function ProdukTable({ searchParams }) {
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "text-white text-sm mt-1",
+                                        className: "text-white text-lg mt-1",
                                         children: [
                                             "Total ",
                                             totalItems,
@@ -461,7 +501,7 @@ async function ProdukTable({ searchParams }) {
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                     scope: "col",
-                                                    className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`,
+                                                    className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_4aac7abd$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider`,
                                                     children: "ID Produk"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/ui/menu/table.tsx",
@@ -470,7 +510,7 @@ async function ProdukTable({ searchParams }) {
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                     scope: "col",
-                                                    className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`,
+                                                    className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_4aac7abd$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider`,
                                                     children: "Nama Produk"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/ui/menu/table.tsx",
@@ -479,7 +519,7 @@ async function ProdukTable({ searchParams }) {
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                     scope: "col",
-                                                    className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_c449b61a$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} px-6 py-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider`,
+                                                    className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_4aac7abd$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} px-6 py-4 text-left text-sm font-medium text-gray-500 uppercase tracking-wider`,
                                                     children: "Harga"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/ui/menu/table.tsx",
@@ -488,7 +528,7 @@ async function ProdukTable({ searchParams }) {
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
                                                     scope: "col",
-                                                    className: "px-6 py-4 text-center text-xs font-medium text-gray-500 uppercase tracking-wider",
+                                                    className: "px-6 py-4 text-center text-sm font-medium text-gray-500 uppercase tracking-wider",
                                                     children: "Aksi"
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/ui/menu/table.tsx",
@@ -514,7 +554,7 @@ async function ProdukTable({ searchParams }) {
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                         className: "px-6 py-4 whitespace-nowrap",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "text-sm font-medium text-gray-900",
+                                                            className: "text-xl font-medium text-gray-900",
                                                             children: produk.id_produk
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/ui/menu/table.tsx",
@@ -529,7 +569,7 @@ async function ProdukTable({ searchParams }) {
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                         className: "px-6 py-4 whitespace-nowrap",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                                            className: "text-sm font-semibold text-gray-900",
+                                                            className: "text-lg font-semibold text-gray-900",
                                                             children: produk.nama_produk
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/ui/menu/table.tsx",
@@ -544,7 +584,7 @@ async function ProdukTable({ searchParams }) {
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                         className: "px-6 py-4 whitespace-nowrap",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                            className: "inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800 border border-green-200",
+                                                            className: "inline-flex items-center px-3 py-1 rounded-full text-lg font-medium bg-green-100 text-green-800 border border-green-200",
                                                             children: [
                                                                 "Rp ",
                                                                 produk.harga_produk.toLocaleString('id-ID')
@@ -678,7 +718,7 @@ async function ProdukTable({ searchParams }) {
                 className: "mt-8 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-lg",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "text-sm text-gray-700",
+                        className: "text-lg text-gray-700",
                         children: [
                             "Menampilkan ",
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -774,7 +814,7 @@ async function ProdukTable({ searchParams }) {
                                     const href = `?${params.toString()}`;
                                     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("a", {
                                         href: href,
-                                        className: `relative inline-flex items-center px-4 py-2 text-sm font-medium border transition-colors duration-200 ${page === currentPage ? 'z-10 bg-red-900 text-white focus:z-20 focus-visible:outline-offset-2 focus-visible:outline-red-600 rounded-md' : 'text-gray-900 border-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 rounded-md bg-white'}`,
+                                        className: `relative inline-flex items-center px-4 py-2 text-lg font-medium border transition-colors duration-200 ${page === currentPage ? 'z-10 bg-red-900 text-white focus:z-20 focus-visible:outline-offset-2 focus-visible:outline-red-600 rounded-md' : 'text-gray-900 border-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 rounded-md bg-white'}`,
                                         children: page
                                     }, page, false, {
                                         fileName: "[project]/src/app/ui/menu/table.tsx",
@@ -792,7 +832,7 @@ async function ProdukTable({ searchParams }) {
                                     ...Object.fromEntries(Object.entries(searchParams).filter(([key])=>key !== 'page')),
                                     page: String(currentPage + 1)
                                 }).toString()}`,
-                                className: "relative inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 transition-colors duration-200",
+                                className: "relative inline-flex items-center rounded-md border border-gray-300 bg-white px-3 py-2 text-lg font-medium text-gray-500 hover:bg-gray-50 focus:z-20 focus:outline-offset-0 transition-colors duration-200",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                         className: "mr-1 hidden sm:block",
@@ -938,7 +978,7 @@ function ProdukPage({ searchParams }) {
                 className: "mb-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
-                        className: "text-2xl font-bold text-gray-800",
+                        className: "text-3xl font-bold text-gray-800",
                         children: "Katalog Produk"
                     }, void 0, false, {
                         fileName: "[project]/src/app/admin/dashboard/menu/page.tsx",

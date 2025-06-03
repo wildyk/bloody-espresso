@@ -1,9 +1,9 @@
 import SideNav from '@/app/ui/dashboard/sidenav';
-import Navbar from '@/app/ui/dashboard/navbar'; // <-- import baru
-
+import Navbar from '@/app/ui/dashboard/navbar';
+import { alegreya } from '@/app/ui/fonts';
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
+    <div className={`flex h-screen flex-col md:flex-row md:overflow-hidden ${alegreya.className}`}>
       <div className="w-full flex-none md:w-72">
         <SideNav />
       </div>

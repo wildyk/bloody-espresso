@@ -5,7 +5,10 @@ export const nosifer = Nosifer({
     weight: '400'
 });
 
-export const alegreya = Alegreya({ subsets: ["latin"] });
+export const alegreya = Alegreya({
+  subsets: ['latin'],
+  weight: ['400', '500', '700'],
+});
 
 export const frijole = Frijole({
     subsets: ["latin"],

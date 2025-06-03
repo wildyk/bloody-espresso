@@ -30,7 +30,7 @@ export default function SideNav() {
         <div className="border-t border-red-700 my-4"></div>
         <Link
           href="/auth/login"
-          className="flex h-[48px] w-full items-center justify-center gap-2 rounded-md bg-red-800 p-3 text-sm font-medium hover:bg-red-700 hover:text-white md:justify-start md:px-3"
+          className="flex h-[48px] w-full items-center justify-center gap-2 rounded-md bg-red-800 p-3 text-base font-medium hover:bg-red-700 hover:text-white md:justify-start md:px-3"
         >
           <PowerIcon className="w-6" />
           <span className="hidden md:block">Sign Out</span>

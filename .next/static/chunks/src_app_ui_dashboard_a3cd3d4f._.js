@@ -51,7 +51,7 @@ function NavLinks() {
             const LinkIcon = link.icon;
             return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                 href: link.href,
-                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])("flex h-12 w-full items-center justify-start gap-2 rounded-md bg-red-800 px-3 text-sm font-medium hover:bg-red-700 hover:text-white", {
+                className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])("flex h-12 w-full items-center justify-start gap-2 rounded-md bg-red-800 px-3 text-base font-medium hover:bg-red-700 hover:text-white", {
                     "bg-red-700 text-white": pathname === link.href
                 }),
                 children: [
@@ -129,14 +129,14 @@ function Navbar() {
                                 className: "relative",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$heroicons$2f$react$2f$24$2f$outline$2f$esm$2f$BellIcon$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__BellIcon$3e$__["BellIcon"], {
-                                        className: "w-7 h-7 hover:text-gray-300"
+                                        className: "w-10 h-10 hover:text-gray-300"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/ui/dashboard/navbar.tsx",
                                         lineNumber: 21,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "absolute -top-1 -right-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white",
+                                        className: "absolute -top-1 -right-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-lg font-bold text-white",
                                         children: "3"
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/ui/dashboard/navbar.tsx",
@@ -172,7 +172,7 @@ function Navbar() {
                                     className: "hidden md:block leading-tight",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-sm font-semibold",
+                                            className: "text-xl font-semibold",
                                             children: "Elsa Dwita"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/ui/dashboard/navbar.tsx",
@@ -180,7 +180,7 @@ function Navbar() {
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                            className: "text-xs text-gray-300",
+                                            className: "text-lg text-gray-300",
                                             children: "Administrator"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/ui/dashboard/navbar.tsx",
@@ -218,7 +218,7 @@ function Navbar() {
                         className: "flex items-center justify-between mb-4",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                className: "text-lg font-semibold",
+                                className: "text-xl font-semibold",
                                 children: "Notifikasi"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/ui/dashboard/navbar.tsx",

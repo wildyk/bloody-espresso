@@ -7,7 +7,7 @@ export default function CreateMenuPage() {
       <Breadcrumbs
         breadcrumbs={[
           { label: 'Menu', href: '/admin/dashboard/menu' },
-          { label: 'Create Menu', href: '/admin/dashboard/menu/create', active: true },
+          { label: 'Tambah Menu', href: '/admin/dashboard/menu/create', active: true },
         ]}
       />
       <Form />

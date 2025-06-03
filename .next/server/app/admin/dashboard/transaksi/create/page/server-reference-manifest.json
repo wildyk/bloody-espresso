@@ -1,0 +1,27 @@
+{
+  "node": {
+    "4007f2ed3316365d463f8f1a19871a414138b0ea1c": {
+      "workers": {
+        "app/admin/dashboard/transaksi/create/page": {
+          "moduleId": "[project]/.next-internal/server/app/admin/dashboard/transaksi/create/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/lib/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/admin/dashboard/transaksi/create/page": "action-browser"
+      }
+    },
+    "40403a14bc12d1b8a93066b32311ada5571ebc473b": {
+      "workers": {
+        "app/admin/dashboard/transaksi/create/page": {
+          "moduleId": "[project]/.next-internal/server/app/admin/dashboard/transaksi/create/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/lib/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/admin/dashboard/transaksi/create/page": "action-browser"
+      }
+    }
+  },
+  "edge": {}
+}

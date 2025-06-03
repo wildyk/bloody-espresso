@@ -18,8 +18,8 @@ export default function Navbar() {
           {/* Notifikasi */}
           <div className="relative">
             <button onClick={toggleNotifications} className="relative">
-              <BellIcon className="w-7 h-7 hover:text-gray-300" />
-              <span className="absolute -top-1 -right-1 inline-flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+              <BellIcon className="w-10 h-10 hover:text-gray-300" />
+              <span className="absolute -top-1 -right-1 inline-flex h-6 w-6 items-center justify-center rounded-full bg-red-500 text-lg font-bold text-white">
                 3
               </span>
             </button>
@@ -35,8 +35,8 @@ export default function Navbar() {
               className="rounded-full object-cover"
             />
             <div className="hidden md:block leading-tight">
-              <p className="text-sm font-semibold">Elsa Dwita</p>
-              <p className="text-xs text-gray-300">Administrator</p>
+              <p className="text-xl font-semibold">Elsa Dwita</p>
+              <p className="text-lg text-gray-300">Administrator</p>
             </div>
           </div>
         </div>
@@ -49,7 +49,7 @@ export default function Navbar() {
           className="fixed top-0 right-0 z-50 h-full w-80 bg-white shadow-lg p-4 text-black transition-transform duration-300 ease-in-out"
         >
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold">Notifikasi</h2>
+            <h2 className="text-xl font-semibold">Notifikasi</h2>
             <button onClick={toggleNotifications}>
               <XMarkIcon className="h-6 w-6 text-gray-600 hover:text-black" />
             </button>
