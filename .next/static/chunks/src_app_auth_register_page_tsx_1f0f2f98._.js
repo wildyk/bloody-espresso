@@ -1,9 +1,9 @@
 (globalThis.TURBOPACK_CHUNK_LISTS = globalThis.TURBOPACK_CHUNK_LISTS || []).push({
     script: typeof document === "object" ? document.currentScript : undefined,
     chunks: [
-  "static/chunks/[next]_internal_font_google_17d6fb87._.css",
-  "static/chunks/node_modules_next_6bab6250._.js",
-  "static/chunks/[root-of-the-server]__2c181742._.js"
+  "static/chunks/node_modules_bc950191._.js",
+  "static/chunks/[root-of-the-server]__a7442f68._.js",
+  "static/chunks/[next]_internal_font_google_17d6fb87._.css"
 ],
     source: "dynamic"
 });

@@ -134,8 +134,10 @@ async function fetchTransaksi() {
     await new Promise((r)=>setTimeout(r, 1500));
     try {
         const transaksi = await sql`
-      SELECT * FROM transaksi ORDER BY tanggal_transaksi ASC
-    `;
+  SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
+  FROM transaksi
+  ORDER BY tanggal_transaksi ASC
+`;
         return transaksi;
     } catch (error) {
         console.error('Database Error:', error);

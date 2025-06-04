@@ -1,8 +1,15 @@
 {
+  "/_not-found/page": "app/_not-found/page.js",
+  "/admin/dashboard/analitik/page": "app/admin/dashboard/analitik/page.js",
   "/admin/dashboard/menu/[id]/edit/page": "app/admin/dashboard/menu/[id]/edit/page.js",
   "/admin/dashboard/menu/create/page": "app/admin/dashboard/menu/create/page.js",
   "/admin/dashboard/menu/page": "app/admin/dashboard/menu/page.js",
   "/admin/dashboard/transaksi/create/page": "app/admin/dashboard/transaksi/create/page.js",
   "/admin/dashboard/transaksi/page": "app/admin/dashboard/transaksi/page.js",
-  "/favicon.ico/route": "app/favicon.ico/route.js"
+  "/auth/login/page": "app/auth/login/page.js",
+  "/auth/register/page": "app/auth/register/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/kontak/page": "app/kontak/page.js",
+  "/menu/page": "app/menu/page.js",
+  "/page": "app/page.js"
 }
