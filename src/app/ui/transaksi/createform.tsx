@@ -1,8 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { UserIcon, CalendarIcon, CurrencyDollarIcon, ShoppingCartIcon, TagIcon } from '@heroicons/react/24/outline';
-import { createTransaksi, getProductById } from '@/app/lib/actions';
+import { UserIcon, CalendarIcon, CurrencyDollarIcon, ShoppingCartIcon, TagIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { createTransaksi, getAllProducts } from '@/app/lib/actions';
 import { Button } from '@/app/ui/button';
 import { alegreya } from '@/app/ui/fonts';
 
@@ -13,50 +13,56 @@ interface Product {
 }
 
 export default function TransactionForm() {
-  const [product, setProduct] = useState<Product | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [loading, setLoading] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [totalHarga, setTotalHarga] = useState(0);
   const [error, setError] = useState('');
 
-  const handleProductIdChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Fetch all products on component mount
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const productsData = await getAllProducts();
+        
+        // Sort products by id_produk in ascending order
+        const sortedProducts = (productsData || []).sort((a: Product, b: Product) => a.id_produk - b.id_produk);
+        
+        setProducts(sortedProducts);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+        setError('Gagal mengambil data produk');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleProductChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const productId = e.target.value;
     
     if (!productId) {
-      setProduct(null);
+      setSelectedProduct(null);
       setTotalHarga(0);
-      setError('');
       return;
     }
 
-    setLoading(true);
-    setError('');
-
-    try {
-      const productData = await getProductById(parseInt(productId));
-      if (productData) {
-        setProduct(productData);
-        setTotalHarga(productData.harga_produk * quantity);
-      } else {
-        setProduct(null);
-        setTotalHarga(0);
-        setError('Produk tidak ditemukan');
-      }
-    } catch (error) {
-      console.error('Error fetching product:', error);
-      setProduct(null);
-      setTotalHarga(0);
-      setError('Gagal mengambil data produk');
-    } finally {
-      setLoading(false);
+    const product = products.find(p => p.id_produk === parseInt(productId));
+    if (product) {
+      setSelectedProduct(product);
+      setTotalHarga(product.harga_produk * quantity);
     }
   };
 
   useEffect(() => {
-    if (product) {
-      setTotalHarga(product.harga_produk * quantity);
+    if (selectedProduct) {
+      setTotalHarga(selectedProduct.harga_produk * quantity);
     }
-  }, [product, quantity]);
+  }, [selectedProduct, quantity]);
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(e.target.value) || 1;
@@ -68,32 +74,52 @@ export default function TransactionForm() {
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         <div className="mb-4">
           <label htmlFor="id_produk" className="mb-2 block text-xl font-medium">
-            ID Produk
+            Pilih Produk
           </label>
           <div className="relative">
-            <input
+            <select
               id="id_produk"
               name="id_produk"
-              type="number"
               required
-              placeholder="Masukkan ID produk"
-              onChange={handleProductIdChange}
-              className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-base outline-2 placeholder:text-gray-500"
-            />
+              onChange={handleProductChange}
+              disabled={loading}
+              className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 pr-10 text-base outline-2 bg-white disabled:bg-gray-100 disabled:cursor-not-allowed appearance-none"
+            >
+              <option value="">
+                {loading ? 'Memuat produk...' : 'Pilih produk'}
+              </option>
+              {products.map((product) => (
+                <option key={product.id_produk} value={product.id_produk}>
+                  ID: {product.id_produk} - {product.nama_produk} - Rp {product.harga_produk.toLocaleString('id-ID')}
+                </option>
+              ))}
+            </select>
             <ShoppingCartIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
+            <ChevronDownIcon className="pointer-events-none absolute right-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
-          {loading && (
-            <p className="mt-1 text-sm text-blue-600">Mencari produk...</p>
-          )}
           {error && (
             <p className="mt-1 text-sm text-red-600">{error}</p>
           )}
         </div>
 
-        {product && (
+        {selectedProduct && (
           <div className="mb-4 rounded-md bg-blue-50 p-4 border border-blue-200">
             <h3 className="text-lg font-medium text-blue-900 mb-2">Informasi Produk</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-blue-700">
+                  ID Produk
+                </label>
+                <div className="relative mt-1">
+                  <input
+                    type="text"
+                    value={selectedProduct.id_produk}
+                    readOnly
+                    className="block w-full rounded-md border border-blue-200 bg-blue-50 py-2 pl-10 text-base text-blue-900"
+                  />
+                  <TagIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-blue-500" />
+                </div>
+              </div>
               <div>
                 <label className="block text-sm font-medium text-blue-700">
                   Nama Produk
@@ -101,7 +127,7 @@ export default function TransactionForm() {
                 <div className="relative mt-1">
                   <input
                     type="text"
-                    value={product.nama_produk}
+                    value={selectedProduct.nama_produk}
                     readOnly
                     className="block w-full rounded-md border border-blue-200 bg-blue-50 py-2 pl-10 text-base text-blue-900"
                   />
@@ -115,7 +141,7 @@ export default function TransactionForm() {
                 <div className="relative mt-1">
                   <input
                     type="text"
-                    value={`Rp ${product.harga_produk.toLocaleString('id-ID')}`}
+                    value={`Rp ${selectedProduct.harga_produk.toLocaleString('id-ID')}`}
                     readOnly
                     className="block w-full rounded-md border border-blue-200 bg-blue-50 py-2 pl-10 text-base text-blue-900"
                   />
@@ -126,7 +152,7 @@ export default function TransactionForm() {
           </div>
         )}
 
-        {product && (
+        {selectedProduct && (
           <div className="mb-4">
             <label htmlFor="quantity" className="mb-2 block text-xl font-medium">
               Jumlah
@@ -196,9 +222,9 @@ export default function TransactionForm() {
             />
             <CurrencyDollarIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
-          {product && (
+          {selectedProduct && (
             <p className="mt-1 text-sm text-gray-600">
-              {quantity} × Rp {product.harga_produk.toLocaleString('id-ID')} = Rp {totalHarga.toLocaleString('id-ID')}
+              {quantity} × Rp {selectedProduct.harga_produk.toLocaleString('id-ID')} = Rp {totalHarga.toLocaleString('id-ID')}
             </p>
           )}
         </div>
@@ -211,7 +237,7 @@ export default function TransactionForm() {
         >
           Batal
         </Link>
-        <Button type="submit" disabled={!product}>
+        <Button type="submit" disabled={!selectedProduct}>
           Simpan Transaksi
         </Button>
       </div>

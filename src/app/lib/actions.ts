@@ -1,5 +1,4 @@
 'use server';
-
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import postgres from 'postgres';
@@ -85,6 +84,26 @@ export async function getProductById(id: number) {
   }
 }
 
+// NEW FUNCTION: Get all products for dropdown
+export async function getAllProducts() {
+  try {
+    const result = await sql`
+      SELECT id_produk, nama_produk, harga_produk 
+      FROM produk 
+      ORDER BY nama_produk ASC
+    `;
+
+    return result.map(row => ({
+      id_produk: row.id_produk,
+      nama_produk: row.nama_produk,
+      harga_produk: Number(row.harga_produk)
+    }));
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch products.');
+  }
+}
+
 export async function createTransaksi(formData: FormData) {
   const id_produk = formData.get('id_produk');
   const nama_pembeli = formData.get('nama_pembeli');
@@ -121,4 +140,3 @@ export async function createTransaksi(formData: FormData) {
   revalidatePath('/admin/dashboard/transaksi');
   redirect('/admin/dashboard/transaksi');
 }
-

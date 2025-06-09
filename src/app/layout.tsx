@@ -1,7 +1,7 @@
 import { Nosifer, Alegreya } from "next/font/google";
-import "./globals.css";
-import Navbar from "@/app/ui/navbar";
-import Footer from "@/app/ui/footer"; // Tambahkan Footer di sini
+import "@/app/globals.css";
+import ConditionalWrapper from "@/app/ui/conditional-wrapper";
+import { ReactNode } from "react";
 
 const nosifer = Nosifer({
   weight: "400",
@@ -23,19 +23,11 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body
-        className={`${alegreya.variable} ${nosifer.variable} antialiased font-alegreya bg-[#1c1c1c]`}
-      >
-        <Navbar />
-        <main className="pt-28">{children}</main>
-        <Footer />
+      <body className={`${alegreya.variable} ${nosifer.variable} antialiased font-alegreya`}>
+        <ConditionalWrapper>{children}</ConditionalWrapper>
       </body>
     </html>
   );
