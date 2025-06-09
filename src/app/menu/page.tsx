@@ -1,57 +1,64 @@
-import Image from "next/image";
 import { fetchProdukWithFoto } from "@/app/lib/data";
-import Link from "next/link";
 import { alegreya, nosifer } from "@/app/ui/fonts";
-import Navbar from "@/app/ui/navbar"; // pastikan path-nya sesuai!
+import Navbar from "@/app/ui/navbar";
+import MenuClient from "./menu-client";
 
 export default async function MenuPage() {
-  const produkList = await fetchProdukWithFoto();
+  let produkList: any[] = [];
+  let error: string | null = null;
+
+  try {
+    produkList = await fetchProdukWithFoto();
+  } catch (err) {
+    console.error('Error fetching products:', err);
+    error = 'Gagal memuat menu dari database. Silakan coba lagi.';
+  }
+
+  if (error) {
+    return (
+      <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white">
+        <Navbar />
+        <div className="flex items-center justify-center py-20">
+          <div className="text-center">
+            <p className={`${alegreya.className} text-xl text-red-300 mb-4`}>{error}</p>
+            <form>
+              <button 
+                type="button"
+                onClick={() => window.location.reload()}
+                className="bg-[#9b684c] text-white py-2 px-6 rounded-full hover:bg-[#7d543d] transition-colors"
+              >
+                Coba Lagi
+              </button>
+            </form>
+          </div>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white">
       <Navbar />
-            <section className="text-center py-4 px-10 mb-53">
-        <h2
-          className={`${nosifer.className} text-7xl font-extrabold tracking-wide text-[#F8E4BE]`}
-        >
+      
+      <section className="text-center py-20 px-4">
+        <h1 className={`${nosifer.className} text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-wide text-[#F8E4BE] mb-6`}>
           MENU
-        </h2>
-        <p className={`${alegreya.className} mt-4 text-2xl text-gray-300`}>
+        </h1>
+        
+        <p className={`${alegreya.className} text-lg sm:text-xl md:text-2xl text-[#f5deb3]/80 mb-12 max-w-4xl mx-auto`}>
           Jelajahi semua rasa kopi bersama kami. Selalu ada secangkir kopi baru
           yang layak dicoba.
         </p>
 
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 p-6">
-        {produkList.map((produk) => (
-          <div
-            key={produk.id_produk}
-            className="bg-[#fcefdc] rounded-lg shadow overflow-hidden text-center"
-          >
-            <div className="relative w-full h-48 bg-gray-100">
-              <img
-                src={produk.foto}
-                alt={produk.nama_produk}
-                className="w-full h-48 object-cover"
-              />
-            </div>
-            <div className="p-4">
-              <h3 className="text-lg font-semibold text-[#300000]">
-                {produk.nama_produk}
-              </h3>
-              <p className="text-xs text-[#300000] mt-1">
-                Coffee 50% | Milk 50%
-              </p>
-              <p className="text-base font-bold text-[#300000] mt-2">
-                Rp. {produk.harga_produk.toLocaleString()}
-              </p>
-              <button className="mt-3 bg-[#9b684c] text-white py-1 px-4 rounded-full hover:bg-[#7d543d] transition">
-                ORDER
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+        {produkList.length === 0 ? (
+          <p className={`${alegreya.className} text-xl text-[#f5deb3]/60`}>
+            Belum ada menu tersedia di database.
+          </p>
+        ) : (
+          <MenuClient produkList={produkList} />
+        )}
       </section>
     </main>
   );
 }
+

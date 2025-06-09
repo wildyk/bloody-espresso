@@ -20,7 +20,7 @@ export default function Breadcrumbs({
         {/* Home Icon + Dashboard */}
         <li className="flex items-center">
           <Link
-            href="/admin/dashboard"
+            href="/admin/dashboard/analitik"
             className="flex items-center text-gray-500 hover:text-gray-700 transition-colors"
           >
             <HomeIcon className="h-5 w-5 mr-2" />

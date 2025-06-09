@@ -60,15 +60,6 @@
   margin: 0 8px !important;
 }
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
-}
-
 /* Efek tambahan untuk tombol navigasi */
 button:focus {
   outline: none;
@@ -148,3 +139,4 @@ button:focus {
 html, body {
   height: 100%;
 }
+

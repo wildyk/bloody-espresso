@@ -1,5 +1,4 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { UserIcon, CalendarIcon, CurrencyDollarIcon, ShoppingCartIcon, TagIcon } from '@heroicons/react/24/outline';
@@ -20,7 +19,6 @@ export default function TransactionForm() {
   const [totalHarga, setTotalHarga] = useState(0);
   const [error, setError] = useState('');
 
-  // Function untuk mengambil data produk berdasarkan ID
   const handleProductIdChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const productId = e.target.value;
     
@@ -54,7 +52,6 @@ export default function TransactionForm() {
     }
   };
 
-  // Update total harga ketika quantity berubah
   useEffect(() => {
     if (product) {
       setTotalHarga(product.harga_produk * quantity);
@@ -69,7 +66,6 @@ export default function TransactionForm() {
   return (
     <form action={createTransaksi} className={alegreya.className}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        {/* ID Produk */}
         <div className="mb-4">
           <label htmlFor="id_produk" className="mb-2 block text-xl font-medium">
             ID Produk
@@ -94,7 +90,6 @@ export default function TransactionForm() {
           )}
         </div>
 
-        {/* Info Produk (Read-only) */}
         {product && (
           <div className="mb-4 rounded-md bg-blue-50 p-4 border border-blue-200">
             <h3 className="text-lg font-medium text-blue-900 mb-2">Informasi Produk</h3>
@@ -131,7 +126,6 @@ export default function TransactionForm() {
           </div>
         )}
 
-        {/* Quantity */}
         {product && (
           <div className="mb-4">
             <label htmlFor="quantity" className="mb-2 block text-xl font-medium">
@@ -153,7 +147,6 @@ export default function TransactionForm() {
           </div>
         )}
 
-        {/* Nama Pembeli */}
         <div className="mb-4">
           <label htmlFor="nama_pembeli" className="mb-2 block text-xl font-medium">
             Nama Pembeli
@@ -171,7 +164,6 @@ export default function TransactionForm() {
           </div>
         </div>
 
-        {/* Tanggal Transaksi */}
         <div className="mb-4">
           <label htmlFor="tanggal_transaksi" className="mb-2 block text-xl font-medium">
             Tanggal Transaksi
@@ -189,7 +181,6 @@ export default function TransactionForm() {
           </div>
         </div>
 
-        {/* Total Harga */}
         <div className="mb-4">
           <label htmlFor="total_harga" className="mb-2 block text-xl font-medium">
             Total Harga
@@ -213,7 +204,6 @@ export default function TransactionForm() {
         </div>
       </div>
 
-      {/* Tombol Aksi */}
       <div className={`${alegreya.className} mt-6 flex justify-end gap-4`}>
         <Link
           href="/admin/dashboard/transaksi"

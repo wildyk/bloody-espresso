@@ -1,4 +1,3 @@
-// lib/db.ts
 import { Pool } from 'pg'; // Import Pool dari pg
 
 const pool = new Pool({

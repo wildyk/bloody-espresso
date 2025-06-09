@@ -1,13 +1,15 @@
 import { Nosifer, Alegreya , Frijole} from 'next/font/google';
 
-export const nosifer = Nosifer({
-    subsets: ["latin"],
-    weight: '400'
+export const alegreya = Alegreya({
+  weight: ['400', '500', '600', '700'],
+  subsets: ['latin'],
+  variable: '--font-alegreya',
 });
 
-export const alegreya = Alegreya({
+export const nosifer = Nosifer({
+  weight: '400',
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
+  variable: '--font-nosifer',
 });
 
 export const frijole = Frijole({

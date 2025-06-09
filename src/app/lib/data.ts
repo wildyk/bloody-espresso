@@ -128,3 +128,61 @@ export async function fetchProdukWithFoto() {
   return produk;
 }
 
+
+// Fungsi untuk menambah item ke keranjang (cart)
+export async function addToCart(cartData: {
+  id_produk: number;
+  nama_produk: string;
+  quantity: number;
+  harga_produk: number;
+  total_harga: number;
+}) {
+  try {
+    const result = await sql`
+      INSERT INTO cart (id_produk, nama_produk, quantity, harga_produk, total_harga, created_at)
+      VALUES (${cartData.id_produk}, ${cartData.nama_produk}, ${cartData.quantity}, ${cartData.harga_produk}, ${cartData.total_harga}, NOW())
+      RETURNING *
+    `;
+    return result[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to add to cart');
+  }
+}
+
+// Fungsi untuk membuat transaksi langsung
+export async function createTransaksi(transaksiData: {
+  id_produk: number;
+  nama_pembeli: string;
+  quantity: number;
+  total_harga: number;
+}) {
+  try {
+    const result = await sql`
+      INSERT INTO transaksi (id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity)
+      VALUES (${transaksiData.id_produk}, ${transaksiData.nama_pembeli}, NOW(), ${transaksiData.total_harga}, ${transaksiData.quantity})
+      RETURNING *
+    `;
+    return result[0];
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to create transaction');
+  }
+}
+
+// Fungsi untuk mengambil cart items
+export async function fetchCartItems() {
+  try {
+    const result = await sql`
+      SELECT c.*, m.nama_produk, m.foto 
+      FROM cart c
+      JOIN menu m ON c.id_produk = m.id_produk
+      ORDER BY c.created_at DESC
+    `;
+    return result;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch cart items');
+  }
+}
+
