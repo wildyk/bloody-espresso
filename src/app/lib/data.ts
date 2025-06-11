@@ -1,5 +1,4 @@
 import postgres from 'postgres';
-import { formatCurrency } from './utils';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
@@ -9,7 +8,6 @@ export async function fetchProduk(id: string) {
     if (isNaN(numericId)) {
       throw new Error('Invalid ID format.');
     }
-
     const result = await sql<{
       id_produk: number;
       nama_produk: string;
@@ -20,8 +18,7 @@ export async function fetchProduk(id: string) {
       WHERE id_produk = ${numericId}
       LIMIT 1
     `;
-
-    return result[0] || null; // Kembalikan null jika tidak ada data
+    return result[0] || null;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch produk by ID.');
