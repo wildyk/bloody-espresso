@@ -1,18 +1,16 @@
 import postgres from 'postgres';
+import { Produk } from './definitions';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
-export async function fetchProduk(id: string) {
+// Perbaikan 1: Tambahkan explicit return type dengan Produk | null
+export async function fetchProduk(id: string): Promise<Produk | null> {
   try {
     const numericId = Number(id);
     if (isNaN(numericId)) {
       throw new Error('Invalid ID format.');
     }
-    const result = await sql<{
-      id_produk: number;
-      nama_produk: string;
-      harga_produk: number;
-    }[]>`
+    const result = await sql<Produk[]>`
       SELECT id_produk, nama_produk, harga_produk 
       FROM produk 
       WHERE id_produk = ${numericId}
@@ -24,14 +22,11 @@ export async function fetchProduk(id: string) {
     throw new Error('Failed to fetch produk by ID.');
   }
 }
-  
-export async function fetchAllProduk() {
+
+// Perbaikan 2: Tambahkan explicit return type
+export async function fetchAllProduk(): Promise<Produk[]> {
   try {
-    const result = await sql<{
-      id_produk: number;
-      nama_produk: string;
-      harga_produk: number;
-    }[]>`
+    const result = await sql<Produk[]>`
       SELECT id_produk, nama_produk, harga_produk 
       FROM produk 
       ORDER BY id_produk ASC
@@ -43,16 +38,19 @@ export async function fetchAllProduk() {
   }
 }
 
-export async function fetchTransaksi() {
+// Definisikan type untuk Transaksi
+export type Transaksi = {
+  id_transaksi: number;
+  id_produk: number;
+  nama_pembeli: string;
+  tanggal_transaksi: string;
+  total_harga: number;
+  quantity: number;
+};
+
+export async function fetchTransaksi(): Promise<Transaksi[]> {
   try {
-    const transaksi = await sql<{
-      id_transaksi: number;
-      id_produk: number;
-      nama_pembeli: string;
-      tanggal_transaksi: string;
-      total_harga: number;
-      quantity: number;
-    }[]>`
+    const transaksi = await sql<Transaksi[]>`
       SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
       FROM transaksi
       ORDER BY tanggal_transaksi ASC
@@ -64,7 +62,15 @@ export async function fetchTransaksi() {
   }
 }
 
-export async function fetchAnalytics() {
+// Definisikan type untuk Analytics
+export type Analytics = {
+  totalProduk: number;
+  totalRevenue: number;
+  mostSold: string;
+  jumlahTerjual: number;
+};
+
+export async function fetchAnalytics(): Promise<Analytics> {
   try {
     // Query 1: total produk
     const totalProdukRes = await sql<{ count: number }[]>`SELECT COUNT(*) AS count FROM produk`;
@@ -100,9 +106,15 @@ export async function fetchAnalytics() {
   }
 }
 
-export async function fetchPenjualanProduk() {
+// Definisikan type untuk PenjualanProduk
+export type PenjualanProduk = {
+  nama_produk: string;
+  jumlah_terjual: number;
+};
+
+export async function fetchPenjualanProduk(): Promise<PenjualanProduk[]> {
   try {
-    const data = await sql<{ nama_produk: string; jumlah_terjual: number }[]>`
+    const data = await sql<PenjualanProduk[]>`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
       FROM transaksi t
       JOIN produk p ON t.id_produk = p.id_produk
@@ -116,14 +128,17 @@ export async function fetchPenjualanProduk() {
   }
 }
 
-export async function fetchProdukWithFoto() {
+// Definisikan type untuk ProdukWithFoto
+export type ProdukWithFoto = {
+  id_produk: number;
+  nama_produk: string;
+  harga_produk: number;
+  foto: string;
+};
+
+export async function fetchProdukWithFoto(): Promise<ProdukWithFoto[]> {
   try {
-    const produk = await sql<{
-      id_produk: number;
-      nama_produk: string;
-      harga_produk: number;
-      foto: string;
-    }[]>`SELECT * FROM produk ORDER BY id_produk ASC`; // Ganti 'menu' dengan 'produk' jika sesuai
+    const produk = await sql<ProdukWithFoto[]>`SELECT * FROM produk ORDER BY id_produk ASC`;
     return produk;
   } catch (error) {
     console.error('Database Error:', error);
@@ -131,32 +146,38 @@ export async function fetchProdukWithFoto() {
   }
 }
 
-export async function addToCart(cartData: {
+// Definisikan type untuk CartData
+export type CartData = {
   id_produk: number;
   nama_produk: string;
   quantity: number;
   harga_produk: number;
   total_harga: number;
-}) {
+};
+
+export async function addToCart(cartData: CartData): Promise<any> {
   try {
     const result = await sql`
       INSERT INTO cart (id_produk, nama_produk, quantity, harga_produk, total_harga, created_at)
       VALUES (${cartData.id_produk}, ${cartData.nama_produk}, ${cartData.quantity}, ${cartData.harga_produk}, ${cartData.total_harga}, NOW())
       RETURNING *
     `;
-    return result[0] || null; // Kembalikan null jika tidak ada hasil
+    return result[0] || null;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to add to cart');
   }
 }
 
-export async function createTransaksi(transaksiData: {
+// Definisikan type untuk TransaksiData
+export type TransaksiData = {
   id_produk: number;
   nama_pembeli: string;
   quantity: number;
   total_harga: number;
-}) {
+};
+
+export async function createTransaksi(transaksiData: TransaksiData): Promise<any> {
   try {
     const result = await sql`
       INSERT INTO transaksi (id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity)
@@ -170,20 +191,24 @@ export async function createTransaksi(transaksiData: {
   }
 }
 
-export async function fetchCartItems() {
+// Definisikan type untuk CartItem
+export type CartItem = {
+  id_produk: number;
+  nama_produk: string;
+  quantity: number;
+  harga_produk: number;
+  total_harga: number;
+  created_at: string;
+  foto: string;
+};
+
+// Perbaikan 3: Fix query - gunakan konsisten antara 'menu' atau 'produk'
+export async function fetchCartItems(): Promise<CartItem[]> {
   try {
-    const result = await sql<{
-      id_produk: number;
-      nama_produk: string;
-      quantity: number;
-      harga_produk: number;
-      total_harga: number;
-      created_at: string;
-      foto: string;
-    }[]>`
-      SELECT c.*, m.nama_produk, m.foto 
+    const result = await sql<CartItem[]>`
+      SELECT c.*, p.nama_produk, p.foto 
       FROM cart c
-      JOIN menu m ON c.id_produk = m.id_produk
+      JOIN produk p ON c.id_produk = p.id_produk
       ORDER BY c.created_at DESC
     `;
     return result;
@@ -192,4 +217,3 @@ export async function fetchCartItems() {
     throw new Error('Failed to fetch cart items');
   }
 }
-
