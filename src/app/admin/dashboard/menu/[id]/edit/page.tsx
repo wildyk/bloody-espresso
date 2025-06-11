@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { notFound } from 'next/navigation';
 import Form from '@/app/ui/menu/editform';
 import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
