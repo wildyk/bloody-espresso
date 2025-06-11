@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 17, "column": 0}, "map": {"version":3,"sources":["file:///root/CODING/tubes-siweb/src/components/card.tsx"],"sourcesContent":["export function Card({ children, className }: { children: React.ReactNode; className?: string }) {\r\n    return <div className={`bg-[#5E1A1A] p-6 rounded-xl ${className}`}>{children}</div>;\r\n  }\r\n  \r\n  export function CardContent({ children }: { children: React.ReactNode }) {\r\n    return <div>{children}</div>;\r\n  }\r\n  "],"names":[],"mappings":";;;;;;AAAO,SAAS,KAAK,EAAE,QAAQ,EAAE,SAAS,EAAqD;IAC3F,qBAAO,8OAAC;QAAI,WAAW,CAAC,4BAA4B,EAAE,WAAW;kBAAG;;;;;;AACtE;AAEO,SAAS,YAAY,EAAE,QAAQ,EAAiC;IACrE,qBAAO,8OAAC;kBAAK;;;;;;AACf","debugId":null}}]
-}

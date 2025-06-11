@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
-    {"offset": {"line": 164, "column": 0}, "map": {"version":3,"sources":["file:///root/CODING/tubes-siweb/src/app/api/transaksi/route.ts"],"sourcesContent":["import { NextResponse } from \"next/server\";\nimport { sql } from \"@vercel/postgres\";\n\nexport async function GET() {\n  try {\n    const { rows } = await sql`SELECT * FROM transaksi`; // Hapus ORDER BY dulu\n    console.log(\"Hasil query transaksi:\", rows); // Debug log\n    return NextResponse.json(rows);\n  } catch (error) {\n    console.error(\"Query transaksi error:\", error); // Cek log detail\n    return NextResponse.json({ error: \"Gagal mengambil data transaksi.\" }, { status: 500 });\n  }\n}\n\n"],"names":[],"mappings":";;;AAAA;AACA;AAAA;;;AAEO,eAAe;IACpB,IAAI;QACF,MAAM,EAAE,IAAI,EAAE,GAAG,MAAM,mLAAA,CAAA,MAAG,CAAC,uBAAuB,CAAC,EAAE,sBAAsB;QAC3E,QAAQ,GAAG,CAAC,0BAA0B,OAAO,YAAY;QACzD,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;IAC3B,EAAE,OAAO,OAAO;QACd,QAAQ,KAAK,CAAC,0BAA0B,QAAQ,iBAAiB;QACjE,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;YAAE,OAAO;QAAkC,GAAG;YAAE,QAAQ;QAAI;IACvF;AACF","debugId":null}}]
-}

@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 7, "column": 0}, "map": {"version":3,"sources":["file:///root/CODING/tubes-siweb/src/app/admin/dashboard/analitik/loading.tsx"],"sourcesContent":["export default function Loading({ type }: { type: 'metrics' | 'chart' }) {\n  return (\n    <div className=\"animate-pulse\">\n      {type === 'metrics' ? (\n        <div className=\"grid grid-cols-3 gap-4 mb-10\">\n          <div className=\"h-24 bg-gray-200 rounded\"></div>\n          <div className=\"h-24 bg-gray-200 rounded\"></div>\n          <div className=\"h-24 bg-gray-200 rounded\"></div>\n        </div>\n      ) : (\n        <div className=\"h-64 bg-gray-200 rounded\"></div>\n      )}\n    </div>\n  );\n}\n"],"names":[],"mappings":";;;;;AAAe,SAAS,QAAQ,EAAE,IAAI,EAAiC;IACrE,qBACE,8OAAC;QAAI,WAAU;kBACZ,SAAS,0BACR,8OAAC;YAAI,WAAU;;8BACb,8OAAC;oBAAI,WAAU;;;;;;8BACf,8OAAC;oBAAI,WAAU;;;;;;8BACf,8OAAC;oBAAI,WAAU;;;;;;;;;;;iCAGjB,8OAAC;YAAI,WAAU;;;;;;;;;;;AAIvB","debugId":null}}]
-}
