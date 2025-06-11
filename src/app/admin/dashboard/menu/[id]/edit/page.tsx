@@ -2,15 +2,15 @@ import Form from '@/app/ui/menu/editform';
 import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
+import { Produk } from '@/app/lib/definitions';
 
-// Definisikan tipe untuk produk
-type Produk = {
-  id_produk: number;
-  nama_produk: string;
-  harga_produk: number;
-} | null;
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: PageProps) {
   const id = params.id;
   const produk: Produk = await fetchProduk(id);
 

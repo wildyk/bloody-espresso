@@ -1,19 +1,11 @@
 import postgres from 'postgres';
-import {
-  CustomerField,
-  CustomersTableType,
-  InvoiceForm,
-  InvoicesTable,
-  LatestInvoiceRaw,
-  Revenue,
-} from './definitions';
 import { formatCurrency } from './utils';
 
 const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function fetchProduk(id: string) {
   try {
-    const numericId = Number(id); // Konversi id dari string ke number
+    const numericId = Number(id);
     if (isNaN(numericId)) {
       throw new Error('Invalid ID format.');
     }
