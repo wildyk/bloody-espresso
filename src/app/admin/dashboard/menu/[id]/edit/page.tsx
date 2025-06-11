@@ -1,18 +1,19 @@
+import { notFound } from 'next/navigation';
 import Form from '@/app/ui/menu/editform';
 import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
-import { notFound } from 'next/navigation';
 import { Produk } from '@/app/lib/definitions';
 
-interface PageProps {
+type Props = {
   params: {
     id: string;
   };
-}
+};
 
-export default async function Page({ params }: PageProps) {
-  const id = params.id;
-  const produk: Produk = await fetchProduk(id);
+export default async function Page({ params }: Props) {
+  const { id } = params;
+
+  const produk: Produk | null = await fetchProduk(id);
 
   if (!produk) {
     notFound();

@@ -10,8 +10,8 @@ export default function ContactPage() {
         <h2 className={`${nosifer.className} text-7xl font-extrabold tracking-wide text-[#F8E4BE] mb-10`}>
           Kontak
         </h2>
-        
-        <p className="text-xl text-[#f5deb3]/80 text-center max-w-3xl mb-12">
+
+        <p className={`${alegreya.className} text-xl text-[#f5deb3]/80 text-center max-w-3xl mb-12`}>
           "Punya pertanyaan seputar menu, lokasi, atau cuma mau ngobrol soal
           kopi dan suasana misterius Bloody Espresso? Jangan sungkan! Kirim
           pesan aja—kita nggak gigit, malah bisa jadi teman ngopi kamu

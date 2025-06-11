@@ -64,6 +64,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$button$2
 ;
 ;
 function EditMenuForm({ produk }) {
+    if (!produk) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+            children: "Produk tidak ditemukan."
+        }, void 0, false, {
+            fileName: "[project]/src/app/ui/menu/editform.tsx",
+            lineNumber: 17,
+            columnNumber: 12
+        }, this); // Atau redirect/error handling lain
+    }
     const updateMenuWithId = __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$data$3a$7f5a9a__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$text$2f$javascript$3e$__["updateMenu"].bind(null, produk.id_produk.toString());
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
         action: updateMenuWithId,
@@ -80,7 +89,7 @@ function EditMenuForm({ produk }) {
                                 children: "Nama Produk"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/ui/menu/editform.tsx",
-                                lineNumber: 23,
+                                lineNumber: 27,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -93,13 +102,13 @@ function EditMenuForm({ produk }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/app/ui/menu/editform.tsx",
-                                lineNumber: 26,
+                                lineNumber: 30,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/ui/menu/editform.tsx",
-                        lineNumber: 22,
+                        lineNumber: 26,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -111,7 +120,7 @@ function EditMenuForm({ produk }) {
                                 children: "Harga Produk"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/ui/menu/editform.tsx",
-                                lineNumber: 39,
+                                lineNumber: 43,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -125,19 +134,19 @@ function EditMenuForm({ produk }) {
                                 required: true
                             }, void 0, false, {
                                 fileName: "[project]/src/app/ui/menu/editform.tsx",
-                                lineNumber: 42,
+                                lineNumber: 46,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/ui/menu/editform.tsx",
-                        lineNumber: 38,
+                        lineNumber: 42,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/ui/menu/editform.tsx",
-                lineNumber: 20,
+                lineNumber: 24,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -149,7 +158,7 @@ function EditMenuForm({ produk }) {
                         children: "Cancel"
                     }, void 0, false, {
                         fileName: "[project]/src/app/ui/menu/editform.tsx",
-                        lineNumber: 56,
+                        lineNumber: 60,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -157,19 +166,19 @@ function EditMenuForm({ produk }) {
                         children: "Edit Menu"
                     }, void 0, false, {
                         fileName: "[project]/src/app/ui/menu/editform.tsx",
-                        lineNumber: 62,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/ui/menu/editform.tsx",
-                lineNumber: 55,
+                lineNumber: 59,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/ui/menu/editform.tsx",
-        lineNumber: 19,
+        lineNumber: 23,
         columnNumber: 5
     }, this);
 }

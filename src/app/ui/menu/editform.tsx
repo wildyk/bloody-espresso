@@ -11,8 +11,12 @@ export default function EditMenuForm({
     id_produk: number;
     nama_produk: string;
     harga_produk: number;
-  };
+  } | null; // Tambahkan null untuk menangani kasus dari Page
 }) {
+  if (!produk) {
+    return <div>Produk tidak ditemukan.</div>; // Atau redirect/error handling lain
+  }
+
   const updateMenuWithId = updateMenu.bind(null, produk.id_produk.toString());
 
   return (
