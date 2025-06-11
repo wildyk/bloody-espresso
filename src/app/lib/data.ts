@@ -13,6 +13,11 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: 'require' });
 
 export async function fetchProduk(id: string) {
   try {
+    const numericId = Number(id); // Konversi id dari string ke number
+    if (isNaN(numericId)) {
+      throw new Error('Invalid ID format.');
+    }
+
     const result = await sql<{
       id_produk: number;
       nama_produk: string;
@@ -20,20 +25,24 @@ export async function fetchProduk(id: string) {
     }[]>`
       SELECT id_produk, nama_produk, harga_produk 
       FROM produk 
-      WHERE id_produk = ${id}
+      WHERE id_produk = ${numericId}
       LIMIT 1
     `;
 
-    return result[0]; 
+    return result[0] || null; // Kembalikan null jika tidak ada data
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch produk by ID.');
   }
-  
 }
+  
 export async function fetchAllProduk() {
   try {
-    const result = await sql`
+    const result = await sql<{
+      id_produk: number;
+      nama_produk: string;
+      harga_produk: number;
+    }[]>`
       SELECT id_produk, nama_produk, harga_produk 
       FROM produk 
       ORDER BY id_produk ASC
@@ -46,20 +55,19 @@ export async function fetchAllProduk() {
 }
 
 export async function fetchTransaksi() {
-  await new Promise((r) => setTimeout(r, 1500));
   try {
-const transaksi = await sql<{
-  id_transaksi: number;
-  id_produk: number;
-  nama_pembeli: string;
-  tanggal_transaksi: string;
-  total_harga: number;
-  quantity: number;
-}[]>`
-  SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
-  FROM transaksi
-  ORDER BY tanggal_transaksi ASC
-`;
+    const transaksi = await sql<{
+      id_transaksi: number;
+      id_produk: number;
+      nama_pembeli: string;
+      tanggal_transaksi: string;
+      total_harga: number;
+      quantity: number;
+    }[]>`
+      SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
+      FROM transaksi
+      ORDER BY tanggal_transaksi ASC
+    `;
     return transaksi;
   } catch (error) {
     console.error('Database Error:', error);
@@ -68,18 +76,20 @@ const transaksi = await sql<{
 }
 
 export async function fetchAnalytics() {
-  await new Promise((resolve) => setTimeout(resolve, 1500)); 
   try {
     // Query 1: total produk
-    const totalProdukRes = await sql`SELECT COUNT(*) FROM produk`;
+    const totalProdukRes = await sql<{ count: number }[]>`SELECT COUNT(*) AS count FROM produk`;
     const totalProduk = Number(totalProdukRes[0].count);
 
-    // Query 2: total revenue (jumlah total_harga dari transaksi)
-    const totalRevenueRes = await sql`SELECT SUM(total_harga) FROM transaksi`;
+    // Query 2: total revenue
+    const totalRevenueRes = await sql<{ sum: number | null }[]>`SELECT SUM(total_harga) AS sum FROM transaksi`;
     const totalRevenue = Number(totalRevenueRes[0].sum || 0);
 
-    // Query 3: produk paling sering muncul di transaksi
-    const mostSoldRes = await sql`
+    // Query 3: produk paling sering muncul
+    const mostSoldRes = await sql<{
+      nama_produk: string;
+      jumlah_terjual: number;
+    }[]>`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
       FROM transaksi t
       JOIN produk p ON t.id_produk = p.id_produk
@@ -102,7 +112,6 @@ export async function fetchAnalytics() {
 }
 
 export async function fetchPenjualanProduk() {
-  await new Promise((resolve) => setTimeout(resolve, 2000)); 
   try {
     const data = await sql<{ nama_produk: string; jumlah_terjual: number }[]>`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
@@ -119,17 +128,20 @@ export async function fetchPenjualanProduk() {
 }
 
 export async function fetchProdukWithFoto() {
-  const produk = await sql<{
-    id_produk: number;
-    nama_produk: string;
-    harga_produk: number;
-    foto: string;
-  }[]>`SELECT * FROM menu ORDER BY id_produk ASC`;
-  return produk;
+  try {
+    const produk = await sql<{
+      id_produk: number;
+      nama_produk: string;
+      harga_produk: number;
+      foto: string;
+    }[]>`SELECT * FROM produk ORDER BY id_produk ASC`; // Ganti 'menu' dengan 'produk' jika sesuai
+    return produk;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch produk with foto.');
+  }
 }
 
-
-// Fungsi untuk menambah item ke keranjang (cart)
 export async function addToCart(cartData: {
   id_produk: number;
   nama_produk: string;
@@ -143,14 +155,13 @@ export async function addToCart(cartData: {
       VALUES (${cartData.id_produk}, ${cartData.nama_produk}, ${cartData.quantity}, ${cartData.harga_produk}, ${cartData.total_harga}, NOW())
       RETURNING *
     `;
-    return result[0];
+    return result[0] || null; // Kembalikan null jika tidak ada hasil
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to add to cart');
   }
 }
 
-// Fungsi untuk membuat transaksi langsung
 export async function createTransaksi(transaksiData: {
   id_produk: number;
   nama_pembeli: string;
@@ -163,17 +174,24 @@ export async function createTransaksi(transaksiData: {
       VALUES (${transaksiData.id_produk}, ${transaksiData.nama_pembeli}, NOW(), ${transaksiData.total_harga}, ${transaksiData.quantity})
       RETURNING *
     `;
-    return result[0];
+    return result[0] || null;
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to create transaction');
   }
 }
 
-// Fungsi untuk mengambil cart items
 export async function fetchCartItems() {
   try {
-    const result = await sql`
+    const result = await sql<{
+      id_produk: number;
+      nama_produk: string;
+      quantity: number;
+      harga_produk: number;
+      total_harga: number;
+      created_at: string;
+      foto: string;
+    }[]>`
       SELECT c.*, m.nama_produk, m.foto 
       FROM cart c
       JOIN menu m ON c.id_produk = m.id_produk
