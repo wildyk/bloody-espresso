@@ -4,15 +4,20 @@ import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
 import { Produk } from '@/app/lib/definitions';
 
-type Props = {
+type PageProps = {
   params: {
     id: string;
   };
 };
 
-export default async function Page({ params }: Props) {
-  const { id } = params;
+// ⛔ HINDARI: async function Page({ params }: PageProps)
+// ✅ GUNAKAN: function Page lalu panggil komponen async di dalamnya
+export default function Page({ params }: PageProps) {
+  return <Content id={params.id} />;
+}
 
+// Pisahkan komponen async ke luar
+async function Content({ id }: { id: string }) {
   const produk: Produk | null = await fetchProduk(id);
 
   if (!produk) {
