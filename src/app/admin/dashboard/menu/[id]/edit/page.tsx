@@ -7,11 +7,8 @@ import { fetchProduk } from '@/app/lib/data';
 import { Produk } from '@/app/lib/definitions';
 
 export default async function Page({ params }: { params: { id: string } }) {
-  const produk: Produk | null = await fetchProduk(params.id);
-
-  if (!produk) {
-    notFound();
-  }
+  const produk = await fetchProduk(params.id);
+  if (!produk) notFound();
 
   return (
     <main>
@@ -29,3 +26,4 @@ export default async function Page({ params }: { params: { id: string } }) {
     </main>
   );
 }
+
