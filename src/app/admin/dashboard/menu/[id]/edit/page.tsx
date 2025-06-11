@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic";
+
 import { notFound } from 'next/navigation';
 import Form from '@/app/ui/menu/editform';
 import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
@@ -11,15 +12,9 @@ type PageProps = {
   };
 };
 
-// ⛔ HINDARI: async function Page({ params }: PageProps)
-// ✅ GUNAKAN: function Page lalu panggil komponen async di dalamnya
-export default function Page({ params }: PageProps) {
-  return <Content id={params.id} />;
-}
-
-// Pisahkan komponen async ke luar
-async function Content({ id }: { id: string }) {
-  const produk: Produk | null = await fetchProduk(id);
+// LANGSUNG jadikan Page async function
+export default async function Page({ params }: PageProps) {
+  const produk: Produk | null = await fetchProduk(params.id);
 
   if (!produk) {
     notFound();
@@ -32,7 +27,7 @@ async function Content({ id }: { id: string }) {
           { label: 'Menu', href: '/admin/dashboard/menu' },
           {
             label: 'Edit Menu',
-            href: `/admin/dashboard/menu/${id}/edit`,
+            href: `/admin/dashboard/menu/${params.id}/edit`,
             active: true,
           },
         ]}
