@@ -92,7 +92,7 @@ function Page() {
             role: "Pelajar",
             text: "Aku hanya mampir untuk secangkir kopi, tapi sekarangkan aku merasa seperti sedang mengikuti... apakah itu suara tangis, atau hanya suasana yang bikin merinding?",
             rating: 5,
-            avatar: "/image.png"
+            avatar: "/image1.png"
         },
         {
             name: "Siti Nurhaliza",
@@ -484,7 +484,7 @@ function Page() {
                                 className: "w-full max-w-6xl mx-auto",
                                 children: reviews.map((review, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swiper$2f$swiper$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SwiperSlide"], {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "jsx-f5ce58a9bac4ba11" + " " + "bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm transition-transform duration-300",
+                                            className: "jsx-f5ce58a9bac4ba11" + " " + "bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm min-h-[430px] flex flex-col justify-between transition-transform duration-300",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "jsx-f5ce58a9bac4ba11" + " " + "flex justify-center mb-4",
@@ -549,7 +549,7 @@ function Page() {
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/page.tsx",
                                             lineNumber: 263,
-                                            columnNumber: 15
+                                            columnNumber: 1
                                         }, this)
                                     }, index, false, {
                                         fileName: "[project]/src/app/page.tsx",

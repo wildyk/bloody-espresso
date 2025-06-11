@@ -1,4 +1,9 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js"
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/auth/login/page": "app/auth/login/page.js",
+  "/page": "app/page.js",
+  "/profile/team/page": "app/profile/team/page.js",
+  "/verif/akun/page": "app/verif/akun/page.js",
+  "/verif/home/page": "app/verif/home/page.js"
 }

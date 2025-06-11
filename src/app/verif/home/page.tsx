@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 import { alegreya, nosifer } from "@/app/ui/fonts";
 import Image from "next/image";
 import Link from "next/link";
@@ -19,7 +19,7 @@ export default function Page() {
       role: "Pelajar",
       text: "Aku hanya mampir untuk secangkir kopi, tapi sekarangkan aku merasa seperti sedang mengikuti... apakah itu suara tangis, atau hanya suasana yang bikin merinding?",
       rating: 5,
-      avatar: "/image.png",
+      avatar: "/image1.png",
     },
     {
       name: "Siti Nurhaliza",
@@ -32,7 +32,7 @@ export default function Page() {
       name: "Budi Santoso",
       role: "Penggemar Misteri",
       text: "Suasana di sini benar-benar mendebarkan! Kopi hitamnya sangat enak, dan dekorasi horor membuat pengalaman minum kopi jadi tak terlupakan.",
-      rating: 5,
+      rating: 3,
       avatar: "/image3.jpg",
     },
     {
@@ -228,12 +228,13 @@ export default function Page() {
 
       {/* Ulasan Section */}
       <section className="relative py-8 px-6 md:px-20 bg-gradient-to-r from-red-950 to-black mb-10">
-          <h2
-            className={`${nosifer.className} text-7xl w-full text-center font-bold text-[#F5D29D] p-10 mb-10 dripping-text`}>
-            Ulasan Pelanggan
-          </h2>
-        
-          <div className="relative w-full max-w-7xl mx-auto ">
+        <h2
+          className={`${nosifer.className} text-7xl w-full text-center font-bold text-[#F5D29D] p-10 mb-10 dripping-text`}
+        >
+          Ulasan Pelanggan
+        </h2>
+
+        <div className="relative w-full max-w-7xl mx-auto ">
           {/* Navigation Buttons - outside swiper */}
           <div className="absolute -left-12 top-[50%] -translate-y-1/2 z-10 text-[#f5deb3] cursor-pointer text-5xl font-bold hover:scale-125 transition swiper-button-prev-custom">
             ❮
@@ -241,26 +242,26 @@ export default function Page() {
           <div className="absolute -right-12 top-[50%] -translate-y-1/2 z-10 text-[#f5deb3] cursor-pointer text-5xl font-bold hover:scale-125 transition swiper-button-next-custom">
             ❯
           </div>
-        {/* Swiper Container */}
-        <Swiper
-          loop={true}
-          spaceBetween={30}
-          slidesPerView={1}
-          navigation={{
-            nextEl: ".swiper-button-next-custom",
-            prevEl: ".swiper-button-prev-custom",
-          }}          
-          pagination={{ clickable: true }}
-          modules={[Navigation, Pagination]}
-          breakpoints={{
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
-          }}
-          className="w-full max-w-6xl mx-auto"
-        >
-          {reviews.map((review, index) => (
+          {/* Swiper Container */}
+          <Swiper
+            loop={true}
+            spaceBetween={30}
+            slidesPerView={1}
+            navigation={{
+              nextEl: ".swiper-button-next-custom",
+              prevEl: ".swiper-button-prev-custom",
+            }}
+            pagination={{ clickable: true }}
+            modules={[Navigation, Pagination]}
+            breakpoints={{
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 3 },
+            }}
+            className="w-full max-w-6xl mx-auto"
+          >
+            {reviews.map((review, index) => (
             <SwiperSlide key={index}>
-              <div className="bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm transition-transform duration-300">
+<div className="bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm min-h-[430px] flex flex-col justify-between transition-transform duration-300">
                 <div className="flex justify-center mb-4">
                   <Image
                     src={review.avatar}
@@ -288,8 +289,8 @@ export default function Page() {
                 </p>
               </div>
             </SwiperSlide>
-          ))}
-        </Swiper>
+            ))}
+          </Swiper>
         </div>
       </section>
     </main>

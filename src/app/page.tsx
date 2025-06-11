@@ -19,7 +19,7 @@ export default function Page() {
       role: "Pelajar",
       text: "Aku hanya mampir untuk secangkir kopi, tapi sekarangkan aku merasa seperti sedang mengikuti... apakah itu suara tangis, atau hanya suasana yang bikin merinding?",
       rating: 5,
-      avatar: "/image.png",
+      avatar: "/image1.png",
     },
     {
       name: "Siti Nurhaliza",
@@ -260,7 +260,7 @@ export default function Page() {
         >
           {reviews.map((review, index) => (
             <SwiperSlide key={index}>
-              <div className="bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm transition-transform duration-300">
+<div className="bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm min-h-[430px] flex flex-col justify-between transition-transform duration-300">
                 <div className="flex justify-center mb-4">
                   <Image
                     src={review.avatar}

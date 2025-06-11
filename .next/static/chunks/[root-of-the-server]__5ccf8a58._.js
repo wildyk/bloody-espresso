@@ -98,26 +98,15 @@ function AuthenticatedNavbar() {
             })["AuthenticatedNavbar.useEffect"];
         }
     }["AuthenticatedNavbar.useEffect"], []);
-    const toggleDropdown = ()=>{
-        setDropdownOpen((prev)=>!prev);
-    };
-    const toggleProfile = ()=>{
-        setProfileOpen((prev)=>!prev);
-    };
+    const handleImageError = ()=>setImageError(true);
     const handleLinkClick = ()=>{
         setDropdownOpen(false);
         setProfileOpen(false);
     };
-    const handleImageError = ()=>{
-        setImageError(true);
-    };
     const handleLogout = ()=>{
-        // Add your logout logic here
         console.log('Logging out...');
+    // Implement logout logic here
     };
-    function setIsCartOpen(arg0) {
-        throw new Error('Function not implemented.');
-    }
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("nav", {
         className: "fixed top-0 left-0 right-0 z-50 flex justify-between items-center bg-gradient-to-r from-red-950 to-black p-6 text-[#FFF8E8] border-b-2 border-[#4a2c17] shadow-lg",
         children: [
@@ -134,59 +123,57 @@ function AuthenticatedNavbar() {
                     onError: handleImageError
                 }, void 0, false, {
                     fileName: "[project]/src/app/verif/navbar.tsx",
-                    lineNumber: 61,
+                    lineNumber: 48,
                     columnNumber: 11
                 }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "flex items-center justify-center w-20 h-12 bg-[#8B4513] text-[#FFF8E8] font-bold text-sm rounded",
                     children: "BLOODY"
                 }, void 0, false, {
                     fileName: "[project]/src/app/verif/navbar.tsx",
-                    lineNumber: 71,
+                    lineNumber: 58,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/verif/navbar.tsx",
-                lineNumber: 59,
+                lineNumber: 46,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
-                className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_de173fce$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} flex gap-5 text-2xl font-bold`,
+                className: `${__TURBOPACK__imported__module__$5b$next$5d2f$internal$2f$font$2f$google$2f$alegreya_de173fce$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__alegreya$3e$__["alegreya"].className} flex gap-5 text-2xl font-bold items-center`,
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                        className: "relative mr-16 cursor-pointer hover:text-[#E3CDA2] transition-colors duration-200",
+                        className: "mr-16 hover:text-[#E3CDA2]",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             href: "/verif/home",
-                            className: "block py-2",
                             children: "Beranda"
                         }, void 0, false, {
                             fileName: "[project]/src/app/verif/navbar.tsx",
-                            lineNumber: 80,
+                            lineNumber: 67,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/navbar.tsx",
-                        lineNumber: 79,
+                        lineNumber: 66,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                        className: "relative mr-16 cursor-pointer hover:text-[#E3CDA2] transition-colors duration-200",
+                        className: "relative mr-16",
                         ref: dropdownRef,
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                onClick: toggleDropdown,
-                                className: "pb-1 select-none py-2 flex items-center",
-                                role: "button",
+                                onClick: ()=>setDropdownOpen(!dropdownOpen),
+                                className: "flex items-center cursor-pointer hover:text-[#E3CDA2] select-none",
                                 tabIndex: 0,
                                 onKeyDown: (e)=>{
                                     if (e.key === 'Enter' || e.key === ' ') {
                                         e.preventDefault();
-                                        toggleDropdown();
+                                        setDropdownOpen(!dropdownOpen);
                                     }
                                 },
                                 children: [
                                     "Tentang Kami",
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
-                                        className: `ml-2 w-4 h-4 transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`,
+                                        className: `ml-2 w-4 h-4 transition-transform ${dropdownOpen ? 'rotate-180' : ''}`,
                                         fill: "none",
                                         stroke: "currentColor",
                                         viewBox: "0 0 24 24",
@@ -197,18 +184,18 @@ function AuthenticatedNavbar() {
                                             d: "M19 9l-7 7-7-7"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/navbar.tsx",
-                                            lineNumber: 104,
+                                            lineNumber: 90,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/verif/navbar.tsx",
-                                        lineNumber: 98,
+                                        lineNumber: 84,
                                         columnNumber: 13
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/verif/navbar.tsx",
-                                lineNumber: 85,
+                                lineNumber: 72,
                                 columnNumber: 11
                             }, this),
                             dropdownOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -217,103 +204,98 @@ function AuthenticatedNavbar() {
                                     className: "py-4 text-lg text-white",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            className: "px-6 py-3 hover:bg-gray-700 cursor-pointer transition-colors duration-200",
+                                            className: "px-6 py-3 hover:bg-gray-700 transition-colors",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                 href: "/verif/profile/team",
                                                 onClick: handleLinkClick,
-                                                className: "block w-full",
                                                 children: "Profil Team"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/navbar.tsx",
-                                                lineNumber: 112,
+                                                lineNumber: 98,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/navbar.tsx",
-                                            lineNumber: 111,
+                                            lineNumber: 97,
                                             columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                            className: "px-6 py-3 hover:bg-gray-700 cursor-pointer transition-colors duration-200",
+                                            className: "px-6 py-3 hover:bg-gray-700 transition-colors",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                 href: "/verif/profile/toko",
                                                 onClick: handleLinkClick,
-                                                className: "block w-full",
                                                 children: "Profil Toko"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/verif/navbar.tsx",
-                                                lineNumber: 117,
+                                                lineNumber: 101,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/navbar.tsx",
-                                            lineNumber: 116,
+                                            lineNumber: 100,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/verif/navbar.tsx",
-                                    lineNumber: 110,
+                                    lineNumber: 96,
                                     columnNumber: 15
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/navbar.tsx",
-                                lineNumber: 109,
+                                lineNumber: 95,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/verif/navbar.tsx",
-                        lineNumber: 84,
+                        lineNumber: 71,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                        className: "relative mr-16 cursor-pointer hover:text-[#E3CDA2] transition-colors duration-200",
+                        className: "mr-16 hover:text-[#E3CDA2]",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             href: "/verif/kontak",
-                            className: "block py-2",
                             children: "Kontak"
                         }, void 0, false, {
                             fileName: "[project]/src/app/verif/navbar.tsx",
-                            lineNumber: 127,
+                            lineNumber: 109,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/navbar.tsx",
-                        lineNumber: 126,
+                        lineNumber: 108,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                        className: "relative mr-16 cursor-pointer hover:text-[#E3CDA2] transition-colors duration-200",
+                        className: "mr-16 hover:text-[#E3CDA2]",
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                             href: "/verif/menu",
-                            className: "block py-2",
                             children: "Menu"
                         }, void 0, false, {
                             fileName: "[project]/src/app/verif/navbar.tsx",
-                            lineNumber: 131,
+                            lineNumber: 113,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/navbar.tsx",
-                        lineNumber: 130,
+                        lineNumber: 112,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                        className: "relative mr-16 cursor-pointer",
+                        className: "relative mr-16",
                         ref: profileRef,
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "bg-[#7b1e1e] px-6 py-2 rounded-l-full flex space-x-6 items-center",
+                            className: "bg-[#7b1e1e] px-6 py-2 rounded-l-full flex gap-6 items-center",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex flex-col items-center cursor-pointer hover:text-[#E3CDA2] transition-colors duration-200",
-                                    onClick: ()=>setIsCartOpen(true),
+                                    className: "flex flex-col items-center cursor-pointer hover:text-[#E3CDA2]",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$shopping$2d$cart$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__ShoppingCart$3e$__["ShoppingCart"], {
                                             size: 30
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/navbar.tsx",
-                                            lineNumber: 141,
+                                            lineNumber: 121,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -321,41 +303,32 @@ function AuthenticatedNavbar() {
                                             children: "Keranjang"
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/navbar.tsx",
-                                            lineNumber: 142,
+                                            lineNumber: 122,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/verif/navbar.tsx",
-                                    lineNumber: 137,
+                                    lineNumber: 120,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "flex flex-col items-center cursor-pointer hover:text-[#E3CDA2] transition-colors duration-200",
+                                    className: "flex flex-col items-center cursor-pointer hover:text-[#E3CDA2]",
+                                    onClick: ()=>setProfileOpen(!profileOpen),
                                     children: [
-                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            onClick: toggleProfile,
-                                            className: "flex flex-col items-center",
-                                            children: [
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$round$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserRound$3e$__["UserRound"], {
-                                                    size: 30
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/verif/navbar.tsx",
-                                                    lineNumber: 150,
-                                                    columnNumber: 17
-                                                }, this),
-                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "text-lg",
-                                                    children: "Profile"
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/verif/navbar.tsx",
-                                                    lineNumber: 151,
-                                                    columnNumber: 17
-                                                }, this)
-                                            ]
-                                        }, void 0, true, {
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2d$round$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__UserRound$3e$__["UserRound"], {
+                                            size: 30
+                                        }, void 0, false, {
                                             fileName: "[project]/src/app/verif/navbar.tsx",
-                                            lineNumber: 146,
+                                            lineNumber: 127,
+                                            columnNumber: 15
+                                        }, this),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-lg",
+                                            children: "Profile"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/app/verif/navbar.tsx",
+                                            lineNumber: 128,
                                             columnNumber: 15
                                         }, this),
                                         profileOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -364,72 +337,78 @@ function AuthenticatedNavbar() {
                                                 className: "py-2 text-white text-lg",
                                                 children: [
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                                        className: "px-4 py-2 hover:bg-gray-700 cursor-pointer transition-colors duration-200",
+                                                        className: "px-4 py-2 hover:bg-gray-700",
                                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                                             href: "/verif/akun",
                                                             onClick: handleLinkClick,
-                                                            className: "block w-full",
                                                             children: "Akun Saya"
                                                         }, void 0, false, {
                                                             fileName: "[project]/src/app/verif/navbar.tsx",
-                                                            lineNumber: 158,
+                                                            lineNumber: 134,
                                                             columnNumber: 23
                                                         }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/navbar.tsx",
-                                                        lineNumber: 157,
+                                                        lineNumber: 133,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("li", {
-                                                        className: "px-4 py-2 hover:bg-gray-700 cursor-pointer transition-colors duration-200",
+                                                        className: "px-4 py-2 hover:bg-gray-700",
                                                         onClick: ()=>{
                                                             handleLogout();
                                                             handleLinkClick();
                                                         },
-                                                        children: "Logout"
+                                                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
+                                                            href: "/auth/login",
+                                                            children: "Logout"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/src/app/verif/navbar.tsx",
+                                                            lineNumber: 137,
+                                                            columnNumber: 23
+                                                        }, this)
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/navbar.tsx",
-                                                        lineNumber: 166,
+                                                        lineNumber: 136,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/verif/navbar.tsx",
-                                                lineNumber: 156,
+                                                lineNumber: 132,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/verif/navbar.tsx",
-                                            lineNumber: 155,
+                                            lineNumber: 131,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/verif/navbar.tsx",
-                                    lineNumber: 145,
+                                    lineNumber: 126,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/verif/navbar.tsx",
-                            lineNumber: 136,
+                            lineNumber: 118,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/navbar.tsx",
-                        lineNumber: 135,
+                        lineNumber: 117,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/verif/navbar.tsx",
-                lineNumber: 78,
+                lineNumber: 65,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/verif/navbar.tsx",
-        lineNumber: 57,
+        lineNumber: 44,
         columnNumber: 5
     }, this);
 }
@@ -486,7 +465,7 @@ function Page() {
             role: "Pelajar",
             text: "Aku hanya mampir untuk secangkir kopi, tapi sekarangkan aku merasa seperti sedang mengikuti... apakah itu suara tangis, atau hanya suasana yang bikin merinding?",
             rating: 5,
-            avatar: "/image.png"
+            avatar: "/image1.png"
         },
         {
             name: "Siti Nurhaliza",
@@ -499,7 +478,7 @@ function Page() {
             name: "Budi Santoso",
             role: "Penggemar Misteri",
             text: "Suasana di sini benar-benar mendebarkan! Kopi hitamnya sangat enak, dan dekorasi horor membuat pengalaman minum kopi jadi tak terlupakan.",
-            rating: 5,
+            rating: 3,
             avatar: "/image3.jpg"
         },
         {
@@ -836,7 +815,7 @@ function Page() {
                     }, void 0, false, {
                         fileName: "[project]/src/app/verif/home/page.tsx",
                         lineNumber: 231,
-                        columnNumber: 11
+                        columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "jsx-a42b46dd9b538101" + " " + "relative w-full max-w-7xl mx-auto ",
@@ -846,7 +825,7 @@ function Page() {
                                 children: "❮"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/home/page.tsx",
-                                lineNumber: 238,
+                                lineNumber: 239,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -854,7 +833,7 @@ function Page() {
                                 children: "❯"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/home/page.tsx",
-                                lineNumber: 241,
+                                lineNumber: 242,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swiper$2f$swiper$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Swiper"], {
@@ -883,7 +862,7 @@ function Page() {
                                 className: "w-full max-w-6xl mx-auto",
                                 children: reviews.map((review, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$swiper$2f$swiper$2d$react$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SwiperSlide"], {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                            className: "jsx-a42b46dd9b538101" + " " + "bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm transition-transform duration-300",
+                                            className: "jsx-a42b46dd9b538101" + " " + "bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm min-h-[430px] flex flex-col justify-between transition-transform duration-300",
                                             children: [
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                     className: "jsx-a42b46dd9b538101" + " " + "flex justify-center mb-4",
@@ -895,12 +874,12 @@ function Page() {
                                                         alt: review.name
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/verif/home/page.tsx",
-                                                        lineNumber: 265,
+                                                        lineNumber: 266,
                                                         columnNumber: 19
                                                     }, this)
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/home/page.tsx",
-                                                    lineNumber: 264,
+                                                    lineNumber: 265,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -908,7 +887,7 @@ function Page() {
                                                     children: review.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/home/page.tsx",
-                                                    lineNumber: 273,
+                                                    lineNumber: 274,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -916,7 +895,7 @@ function Page() {
                                                     children: review.role
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/home/page.tsx",
-                                                    lineNumber: 276,
+                                                    lineNumber: 277,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -928,12 +907,12 @@ function Page() {
                                                             children: "★"
                                                         }, i, false, {
                                                             fileName: "[project]/src/app/verif/home/page.tsx",
-                                                            lineNumber: 281,
+                                                            lineNumber: 282,
                                                             columnNumber: 21
                                                         }, this))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/home/page.tsx",
-                                                    lineNumber: 279,
+                                                    lineNumber: 280,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -941,30 +920,30 @@ function Page() {
                                                     children: review.text
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/verif/home/page.tsx",
-                                                    lineNumber: 286,
+                                                    lineNumber: 287,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/src/app/verif/home/page.tsx",
-                                            lineNumber: 263,
-                                            columnNumber: 15
+                                            lineNumber: 264,
+                                            columnNumber: 1
                                         }, this)
                                     }, index, false, {
                                         fileName: "[project]/src/app/verif/home/page.tsx",
-                                        lineNumber: 262,
+                                        lineNumber: 263,
                                         columnNumber: 13
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/verif/home/page.tsx",
-                                lineNumber: 245,
-                                columnNumber: 9
+                                lineNumber: 246,
+                                columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/verif/home/page.tsx",
-                        lineNumber: 236,
-                        columnNumber: 11
+                        lineNumber: 237,
+                        columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {

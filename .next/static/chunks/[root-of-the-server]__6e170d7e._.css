@@ -1413,6 +1413,14 @@
     min-height: 80vh;
   }
 
+  .min-h-\[420px\] {
+    min-height: 420px;
+  }
+
+  .min-h-\[430px\] {
+    min-height: 430px;
+  }
+
   .min-h-screen {
     min-height: 100vh;
   }
