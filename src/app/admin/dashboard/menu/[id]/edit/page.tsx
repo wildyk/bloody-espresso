@@ -3,9 +3,16 @@ import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
 import { notFound } from 'next/navigation';
 
+// Definisikan tipe untuk produk
+type Produk = {
+  id_produk: number;
+  nama_produk: string;
+  harga_produk: number;
+} | null;
+
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const produk = await fetchProduk(id);
+  const produk: Produk = await fetchProduk(id);
 
   if (!produk) {
     notFound();

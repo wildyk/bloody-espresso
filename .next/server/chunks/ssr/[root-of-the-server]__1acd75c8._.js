@@ -61,10 +61,11 @@ module.exports = mod;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-/* __next_internal_action_entry_do_not_use__ [{"00b160cfec8183b6fecdb0a329db658221f1fe1b67":"getAllProducts","4007f2ed3316365d463f8f1a19871a414138b0ea1c":"createTransaksi","40403a14bc12d1b8a93066b32311ada5571ebc473b":"getProductById","404ef95b7438f1013121e5ba800680d7f6b289d8b1":"createMenu","4092bf8249b5cf83282f76425a4f104d078960b79c":"deleteMenu","602cf8d20e8baa474a749b763ff3d7e57d5c43fb59":"updateMenu"},"",""] */ __turbopack_context__.s({
+/* __next_internal_action_entry_do_not_use__ [{"00b160cfec8183b6fecdb0a329db658221f1fe1b67":"getAllProducts","4007f2ed3316365d463f8f1a19871a414138b0ea1c":"createTransaksi","401f176fbe798f3cdf8865ff3478fc394557fe4dcb":"deleteTransaksi","40403a14bc12d1b8a93066b32311ada5571ebc473b":"getProductById","404ef95b7438f1013121e5ba800680d7f6b289d8b1":"createMenu","4092bf8249b5cf83282f76425a4f104d078960b79c":"deleteMenu","602cf8d20e8baa474a749b763ff3d7e57d5c43fb59":"updateMenu"},"",""] */ __turbopack_context__.s({
     "createMenu": (()=>createMenu),
     "createTransaksi": (()=>createTransaksi),
     "deleteMenu": (()=>deleteMenu),
+    "deleteTransaksi": (()=>deleteTransaksi),
     "getAllProducts": (()=>getAllProducts),
     "getProductById": (()=>getProductById),
     "updateMenu": (()=>updateMenu)
@@ -107,33 +108,54 @@ const UpdateMenu = MenuSchema.omit({
     id: true
 });
 async function createMenu(formData) {
-    const { nama_produk, harga_produk } = CreateMenu.parse({
-        nama_produk: formData.get('nama_produk'),
-        harga_produk: Number(formData.get('harga_produk'))
-    });
-    await sql`
-    INSERT INTO produk (nama_produk, harga_produk)
-    VALUES (${nama_produk}, ${harga_produk})
-  `;
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/menu');
+    try {
+        const { nama_produk, harga_produk } = CreateMenu.parse({
+            nama_produk: formData.get('nama_produk'),
+            harga_produk: Number(formData.get('harga_produk'))
+        });
+        await sql`
+      INSERT INTO produk (nama_produk, harga_produk)
+      VALUES (${nama_produk}, ${harga_produk})
+    `;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/menu');
+    } catch (error) {
+        console.error("Gagal membuat menu:", error);
+        throw error;
+    }
 }
 async function updateMenu(id, formData) {
-    const { nama_produk, harga_produk } = UpdateMenu.parse({
-        nama_produk: formData.get('nama_produk'),
-        harga_produk: Number(formData.get('harga_produk'))
-    });
-    await sql`
-    UPDATE produk
-    SET nama_produk = ${nama_produk}, harga_produk = ${harga_produk}
-    WHERE id_produk = ${id}
-  `;
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/menu');
+    try {
+        if (!id || typeof id !== 'string') {
+            throw new Error('ID produk tidak valid');
+        }
+        const { nama_produk, harga_produk } = UpdateMenu.parse({
+            nama_produk: formData.get('nama_produk'),
+            harga_produk: Number(formData.get('harga_produk'))
+        });
+        await sql`
+      UPDATE produk
+      SET nama_produk = ${nama_produk}, harga_produk = ${harga_produk}
+      WHERE id_produk = ${id}
+    `;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/menu');
+    } catch (error) {
+        console.error("Gagal memperbarui menu:", error);
+        throw error;
+    }
 }
 async function deleteMenu(id) {
-    await sql`DELETE FROM produk WHERE id_produk = ${id}`;
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
+    try {
+        if (!id || typeof id !== 'string') {
+            throw new Error('ID produk tidak valid');
+        }
+        await sql`DELETE FROM produk WHERE id_produk = ${id}`;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
+    } catch (error) {
+        console.error("Gagal menghapus menu:", error);
+        throw error;
+    }
 }
 async function getProductById(id) {
     try {
@@ -151,8 +173,8 @@ async function getProductById(id) {
             harga_produk: Number(result[0].harga_produk)
         };
     } catch (error) {
-        console.error('Database Error:', error);
-        throw new Error('Failed to fetch product data.');
+        console.error("Gagal mendapatkan produk:", error);
+        throw error;
     }
 }
 async function getAllProducts() {
@@ -168,41 +190,53 @@ async function getAllProducts() {
                 harga_produk: Number(row.harga_produk)
             }));
     } catch (error) {
-        console.error('Database Error:', error);
-        throw new Error('Failed to fetch products.');
+        console.error("Gagal mendapatkan semua produk:", error);
+        throw error;
     }
 }
 async function createTransaksi(formData) {
-    const id_produk = formData.get('id_produk');
-    const nama_pembeli = formData.get('nama_pembeli');
-    const total_harga = Number(formData.get('total_harga'));
-    const quantity = Number(formData.get('quantity')) || 1;
-    const tanggal_transaksi = formData.get('tanggal_transaksi') || new Date().toISOString().split('T')[0];
-    const CreateTransaksiWithQuantity = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
-        id_produk: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
-        nama_pembeli: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
-        total_harga: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number(),
-        quantity: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().min(1),
-        tanggal_transaksi: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string()
-    });
-    const validatedData = CreateTransaksiWithQuantity.parse({
-        id_produk,
-        nama_pembeli,
-        total_harga,
-        quantity,
-        tanggal_transaksi
-    });
     try {
+        const id_produk = formData.get('id_produk');
+        const nama_pembeli = formData.get('nama_pembeli');
+        const total_harga = Number(formData.get('total_harga'));
+        const quantity = Number(formData.get('quantity')) || 1;
+        const tanggal_transaksi = formData.get('tanggal_transaksi') || new Date().toISOString().split('T')[0];
+        const CreateTransaksiWithQuantity = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
+            id_produk: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
+            nama_pembeli: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
+            total_harga: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number(),
+            quantity: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().min(1),
+            tanggal_transaksi: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string()
+        });
+        const validatedData = CreateTransaksiWithQuantity.parse({
+            id_produk,
+            nama_pembeli,
+            total_harga,
+            quantity,
+            tanggal_transaksi
+        });
         await sql`
       INSERT INTO transaksi (id_produk, nama_pembeli, total_harga, tanggal_transaksi, quantity)
       VALUES (${validatedData.id_produk}, ${validatedData.nama_pembeli}, ${validatedData.total_harga}, ${validatedData.tanggal_transaksi}, ${validatedData.quantity})
     `;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/transaksi');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/transaksi');
     } catch (error) {
-        console.error('Database Error:', error);
-        throw new Error('Failed to create transaksi.');
+        console.error("Gagal membuat transaksi:", error);
+        throw error;
     }
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/transaksi');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/transaksi');
+}
+async function deleteTransaksi(id) {
+    try {
+        if (!id || typeof id !== 'string') {
+            throw new Error('ID transaksi tidak valid');
+        }
+        await sql`DELETE FROM transaksi WHERE id_transaksi = ${id}`;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/transaksi');
+    } catch (error) {
+        console.error("Gagal menghapus transaksi:", error);
+        throw error;
+    }
 }
 ;
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ensureServerEntryExports"])([
@@ -211,7 +245,8 @@ async function createTransaksi(formData) {
     deleteMenu,
     getProductById,
     getAllProducts,
-    createTransaksi
+    createTransaksi,
+    deleteTransaksi
 ]);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createMenu, "404ef95b7438f1013121e5ba800680d7f6b289d8b1", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateMenu, "602cf8d20e8baa474a749b763ff3d7e57d5c43fb59", null);
@@ -219,6 +254,7 @@ async function createTransaksi(formData) {
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getProductById, "40403a14bc12d1b8a93066b32311ada5571ebc473b", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllProducts, "00b160cfec8183b6fecdb0a329db658221f1fe1b67", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createTransaksi, "4007f2ed3316365d463f8f1a19871a414138b0ea1c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteTransaksi, "401f176fbe798f3cdf8865ff3478fc394557fe4dcb", null);
 }}),
 "[project]/.next-internal/server/app/admin/dashboard/menu/[id]/edit/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/lib/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>": ((__turbopack_context__) => {
 "use strict";
@@ -452,13 +488,17 @@ const sql = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$
 });
 async function fetchProduk(id) {
     try {
+        const numericId = Number(id); // Konversi id dari string ke number
+        if (isNaN(numericId)) {
+            throw new Error('Invalid ID format.');
+        }
         const result = await sql`
       SELECT id_produk, nama_produk, harga_produk 
       FROM produk 
-      WHERE id_produk = ${id}
+      WHERE id_produk = ${numericId}
       LIMIT 1
     `;
-        return result[0];
+        return result[0] || null; // Kembalikan null jika tidak ada data
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch produk by ID.');
@@ -478,13 +518,12 @@ async function fetchAllProduk() {
     }
 }
 async function fetchTransaksi() {
-    await new Promise((r)=>setTimeout(r, 1500));
     try {
         const transaksi = await sql`
-  SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
-  FROM transaksi
-  ORDER BY tanggal_transaksi ASC
-`;
+      SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
+      FROM transaksi
+      ORDER BY tanggal_transaksi ASC
+    `;
         return transaksi;
     } catch (error) {
         console.error('Database Error:', error);
@@ -492,15 +531,14 @@ async function fetchTransaksi() {
     }
 }
 async function fetchAnalytics() {
-    await new Promise((resolve)=>setTimeout(resolve, 1500));
     try {
         // Query 1: total produk
-        const totalProdukRes = await sql`SELECT COUNT(*) FROM produk`;
+        const totalProdukRes = await sql`SELECT COUNT(*) AS count FROM produk`;
         const totalProduk = Number(totalProdukRes[0].count);
-        // Query 2: total revenue (jumlah total_harga dari transaksi)
-        const totalRevenueRes = await sql`SELECT SUM(total_harga) FROM transaksi`;
+        // Query 2: total revenue
+        const totalRevenueRes = await sql`SELECT SUM(total_harga) AS sum FROM transaksi`;
         const totalRevenue = Number(totalRevenueRes[0].sum || 0);
-        // Query 3: produk paling sering muncul di transaksi
+        // Query 3: produk paling sering muncul
         const mostSoldRes = await sql`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
       FROM transaksi t
@@ -522,7 +560,6 @@ async function fetchAnalytics() {
     }
 }
 async function fetchPenjualanProduk() {
-    await new Promise((resolve)=>setTimeout(resolve, 2000));
     try {
         const data = await sql`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
@@ -538,8 +575,13 @@ async function fetchPenjualanProduk() {
     }
 }
 async function fetchProdukWithFoto() {
-    const produk = await sql`SELECT * FROM menu ORDER BY id_produk ASC`;
-    return produk;
+    try {
+        const produk = await sql`SELECT * FROM produk ORDER BY id_produk ASC`; // Ganti 'menu' dengan 'produk' jika sesuai
+        return produk;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch produk with foto.');
+    }
 }
 async function addToCart(cartData) {
     try {
@@ -548,7 +590,7 @@ async function addToCart(cartData) {
       VALUES (${cartData.id_produk}, ${cartData.nama_produk}, ${cartData.quantity}, ${cartData.harga_produk}, ${cartData.total_harga}, NOW())
       RETURNING *
     `;
-        return result[0];
+        return result[0] || null; // Kembalikan null jika tidak ada hasil
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to add to cart');
@@ -561,7 +603,7 @@ async function createTransaksi(transaksiData) {
       VALUES (${transaksiData.id_produk}, ${transaksiData.nama_pembeli}, NOW(), ${transaksiData.total_harga}, ${transaksiData.quantity})
       RETURNING *
     `;
-        return result[0];
+        return result[0] || null;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to create transaction');
@@ -623,20 +665,20 @@ async function Page({ params }) {
                 ]
             }, void 0, false, {
                 fileName: "[project]/src/app/admin/dashboard/menu/[id]/edit/page.tsx",
-                lineNumber: 16,
+                lineNumber: 23,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$menu$2f$editform$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
                 produk: produk
             }, void 0, false, {
                 fileName: "[project]/src/app/admin/dashboard/menu/[id]/edit/page.tsx",
-                lineNumber: 26,
+                lineNumber: 33,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/dashboard/menu/[id]/edit/page.tsx",
-        lineNumber: 15,
+        lineNumber: 22,
         columnNumber: 5
     }, this);
 }
