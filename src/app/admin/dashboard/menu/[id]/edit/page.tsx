@@ -6,14 +6,7 @@ import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
 import { Produk } from '@/app/lib/definitions';
 
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
-
-// LANGSUNG jadikan Page async function
-export default async function Page({ params }: PageProps) {
+export default async function Page({ params }: { params: { id: string } }) {
   const produk: Produk | null = await fetchProduk(params.id);
 
   if (!produk) {
