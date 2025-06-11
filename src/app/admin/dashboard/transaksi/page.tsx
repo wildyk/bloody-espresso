@@ -9,6 +9,7 @@ interface Props {
 }
 
 export default function TransaksiPage({ searchParams }: Props) {
+  // Akses searchParams secara langsung
   const query = (searchParams?.query as string) || '';
   const currentPage = Number(searchParams?.page) || 1;
 

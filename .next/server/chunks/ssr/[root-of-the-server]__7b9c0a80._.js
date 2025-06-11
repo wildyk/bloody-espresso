@@ -337,13 +337,17 @@ const sql = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$
 });
 async function fetchProduk(id) {
     try {
+        const numericId = Number(id);
+        if (isNaN(numericId)) {
+            throw new Error('Invalid ID format.');
+        }
         const result = await sql`
       SELECT id_produk, nama_produk, harga_produk 
       FROM produk 
-      WHERE id_produk = ${id}
+      WHERE id_produk = ${numericId}
       LIMIT 1
     `;
-        return result[0];
+        return result[0] || null;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to fetch produk by ID.');
@@ -363,13 +367,12 @@ async function fetchAllProduk() {
     }
 }
 async function fetchTransaksi() {
-    await new Promise((r)=>setTimeout(r, 1500));
     try {
         const transaksi = await sql`
-  SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
-  FROM transaksi
-  ORDER BY tanggal_transaksi ASC
-`;
+      SELECT id_transaksi, id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity
+      FROM transaksi
+      ORDER BY tanggal_transaksi ASC
+    `;
         return transaksi;
     } catch (error) {
         console.error('Database Error:', error);
@@ -377,15 +380,14 @@ async function fetchTransaksi() {
     }
 }
 async function fetchAnalytics() {
-    await new Promise((resolve)=>setTimeout(resolve, 1500));
     try {
         // Query 1: total produk
-        const totalProdukRes = await sql`SELECT COUNT(*) FROM produk`;
+        const totalProdukRes = await sql`SELECT COUNT(*) AS count FROM produk`;
         const totalProduk = Number(totalProdukRes[0].count);
-        // Query 2: total revenue (jumlah total_harga dari transaksi)
-        const totalRevenueRes = await sql`SELECT SUM(total_harga) FROM transaksi`;
+        // Query 2: total revenue
+        const totalRevenueRes = await sql`SELECT SUM(total_harga) AS sum FROM transaksi`;
         const totalRevenue = Number(totalRevenueRes[0].sum || 0);
-        // Query 3: produk paling sering muncul di transaksi
+        // Query 3: produk paling sering muncul
         const mostSoldRes = await sql`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
       FROM transaksi t
@@ -407,7 +409,6 @@ async function fetchAnalytics() {
     }
 }
 async function fetchPenjualanProduk() {
-    await new Promise((resolve)=>setTimeout(resolve, 2000));
     try {
         const data = await sql`
       SELECT p.nama_produk, COUNT(t.id_produk) AS jumlah_terjual
@@ -423,8 +424,13 @@ async function fetchPenjualanProduk() {
     }
 }
 async function fetchProdukWithFoto() {
-    const produk = await sql`SELECT * FROM menu ORDER BY id_produk ASC`;
-    return produk;
+    try {
+        const produk = await sql`SELECT * FROM produk ORDER BY id_produk ASC`;
+        return produk;
+    } catch (error) {
+        console.error('Database Error:', error);
+        throw new Error('Failed to fetch produk with foto.');
+    }
 }
 async function addToCart(cartData) {
     try {
@@ -433,7 +439,7 @@ async function addToCart(cartData) {
       VALUES (${cartData.id_produk}, ${cartData.nama_produk}, ${cartData.quantity}, ${cartData.harga_produk}, ${cartData.total_harga}, NOW())
       RETURNING *
     `;
-        return result[0];
+        return result[0] || null;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to add to cart');
@@ -446,7 +452,7 @@ async function createTransaksi(transaksiData) {
       VALUES (${transaksiData.id_produk}, ${transaksiData.nama_pembeli}, NOW(), ${transaksiData.total_harga}, ${transaksiData.quantity})
       RETURNING *
     `;
-        return result[0];
+        return result[0] || null;
     } catch (error) {
         console.error('Database Error:', error);
         throw new Error('Failed to create transaction');
@@ -455,9 +461,9 @@ async function createTransaksi(transaksiData) {
 async function fetchCartItems() {
     try {
         const result = await sql`
-      SELECT c.*, m.nama_produk, m.foto 
+      SELECT c.*, p.nama_produk, p.foto 
       FROM cart c
-      JOIN menu m ON c.id_produk = m.id_produk
+      JOIN produk p ON c.id_produk = p.id_produk
       ORDER BY c.created_at DESC
     `;
         return result;
@@ -1084,6 +1090,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$transaks
 ;
 ;
 function TransaksiPage({ searchParams }) {
+    // Akses searchParams secara langsung
     const query = searchParams?.query || '';
     const currentPage = Number(searchParams?.page) || 1;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1099,7 +1106,7 @@ function TransaksiPage({ searchParams }) {
                                 children: "Kelola Transaksi"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 19,
+                                lineNumber: 20,
                                 columnNumber: 11
                             }, this),
                             query && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1111,13 +1118,13 @@ function TransaksiPage({ searchParams }) {
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 21,
+                                lineNumber: 22,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                        lineNumber: 18,
+                        lineNumber: 19,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1129,53 +1136,53 @@ function TransaksiPage({ searchParams }) {
                                     placeholder: "Cari transaksi..."
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                    lineNumber: 29,
+                                    lineNumber: 30,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 28,
+                                lineNumber: 29,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$transaksi$2f$buttons$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["CreateTransaksi"], {}, void 0, false, {
                                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                                lineNumber: 31,
+                                lineNumber: 32,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                        lineNumber: 27,
+                        lineNumber: 28,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                lineNumber: 17,
+                lineNumber: 18,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Suspense"], {
                 fallback: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$admin$2f$dashboard$2f$transaksi$2f$transaksiskeleton$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {}, void 0, false, {
                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                    lineNumber: 35,
+                    lineNumber: 36,
                     columnNumber: 27
                 }, void 0),
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$admin$2f$dashboard$2f$transaksi$2f$transaksitablewrapper$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
                     searchParams: searchParams
                 }, void 0, false, {
                     fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                    lineNumber: 36,
+                    lineNumber: 37,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-                lineNumber: 35,
+                lineNumber: 36,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/admin/dashboard/transaksi/page.tsx",
-        lineNumber: 16,
+        lineNumber: 17,
         columnNumber: 5
     }, this);
 }

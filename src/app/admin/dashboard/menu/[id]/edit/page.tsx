@@ -5,13 +5,13 @@ import { fetchProduk } from '@/app/lib/data';
 import { Produk } from '@/app/lib/definitions';
 
 type Props = {
-  params: Promise<{
+  params: {
     id: string;
-  }>;
+  };
 };
 
 export default async function Page({ params }: Props) {
-  const { id } = await params;
+  const { id } = params;
 
   const produk: Produk | null = await fetchProduk(id);
 
