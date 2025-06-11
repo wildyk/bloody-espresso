@@ -13,6 +13,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useRouter } from "next/navigation";
 import { ShoppingCart, UserRound } from "lucide-react";
+import Navbar from "@/app/verif/navbar";
 
 interface MenuItem {
   name: string;
@@ -75,99 +76,7 @@ export default function Page() {
   };
   return (
     <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white relative overflow-y-auto">
-      {/* Navbar */}
-      <nav className="flex justify-between items-center p-6 text-[#FFF8E8] ml-7">
-        <Link href="/">
-          <Image
-            src="/logo.png"
-            alt="Bloody Espresso Logo"
-            width={80}
-            height={50}
-          />
-        </Link>
-
-        <ul
-          className={`${alegreya.className} flex gap-5 text-2xl font-bold items-center`}
-        >
-          <li className="relative mr-10 cursor-pointer hover:text-[#E3CDA2]">
-            <Link href="/verif/home">Beranda</Link>
-          </li>
-
-          {/* Tentang Kami */}
-          <li className="relative mr-16 cursor-pointer hover:text-[#E3CDA2]">
-            <span onClick={toggleDropdown} className="pb-1 select-none">
-              Tentang Kami
-            </span>
-
-            {dropdownOpen && (
-              <div className="absolute left-0 mt-2 w-60 bg-gray-800 rounded-lg shadow-lg transition-opacity duration-300 ease-in-out z-10">
-                <ul className="py-4 text-lg text-white">
-                  <li className="px-6 py-3 hover:bg-gray-700 cursor-pointer">
-                    <Link href="/verif/profile/team">Profil Team</Link>
-                  </li>
-                  <li className="px-6 py-3 hover:bg-gray-700 cursor-pointer">
-                    <Link href="/verif/profile/toko">Profil Toko</Link>
-                  </li>
-                </ul>
-              </div>
-            )}
-          </li>
-
-          {/* Kontak */}
-          <li className="relative mr-16 cursor-pointer hover:text-[#E3CDA2]">
-            <Link href="/verif/kontak">Kontak</Link>
-          </li>
-
-          <li className="relative mr-10 cursor-pointer hover:text-[#E3CDA2]">
-            <Link href="/verif/menu">Menu</Link>
-          </li>
-
-          <li className="bg-[#7b1e1e] px-6 py-2 rounded-l-full text-center flex space-x-6">
-            <div
-              className="flex flex-col items-center cursor-pointer"
-              onClick={() => setIsCartOpen(true)}
-            >
-              <ShoppingCart size={40} />
-              <span className="text-xl">Keranjang</span>
-            </div>
-            <div className="relative flex flex-col items-center cursor-pointer">
-              <div
-                onClick={() => setProfileOpen(!profileOpen)}
-                className="flex flex-col items-center"
-              >
-                <UserRound size={40} />
-                <span className="text-xl">Profile</span>
-              </div>
-
-              {profileOpen && (
-                <div className="absolute top-full mt-2 bg-gray-800 rounded-lg shadow-lg w-40 z-20">
-                  <ul className="py-2 text-white text-lg">
-                    <li className="px-4 py-2 hover:bg-gray-700 cursor-pointer">
-                      <Link
-                        href="/verif/akun"
-                        onClick={() => setProfileOpen(false)}
-                      >
-                        Akun Saya
-                      </Link>
-                    </li>
-                    <li
-                      className="px-4 py-2 hover:bg-gray-700 cursor-pointer"
-                      onClick={() => {
-                        handleLogout();
-                        setProfileOpen(false);
-                      }}
-                    >
-                      Logout
-                    </li>
-                  </ul>
-                </div>
-              )}
-            </div>
-          </li>
-        </ul>
-      </nav>
-
-      {/* Our Team Section */}
+              <Navbar />
       <section className="py-16 mb-24 flex flex-col items-center px-8 md:px-20 relative">
         <h1
           className={`${nosifer.className} text-7xl font-extrabold text-center mb-12 text-[#f5deb3] drop-shadow-md`}

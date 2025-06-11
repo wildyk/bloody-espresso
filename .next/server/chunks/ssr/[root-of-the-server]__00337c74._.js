@@ -61,10 +61,11 @@ module.exports = mod;
 
 var { g: global, __dirname } = __turbopack_context__;
 {
-/* __next_internal_action_entry_do_not_use__ [{"00b160cfec8183b6fecdb0a329db658221f1fe1b67":"getAllProducts","4007f2ed3316365d463f8f1a19871a414138b0ea1c":"createTransaksi","40403a14bc12d1b8a93066b32311ada5571ebc473b":"getProductById","404ef95b7438f1013121e5ba800680d7f6b289d8b1":"createMenu","4092bf8249b5cf83282f76425a4f104d078960b79c":"deleteMenu","602cf8d20e8baa474a749b763ff3d7e57d5c43fb59":"updateMenu"},"",""] */ __turbopack_context__.s({
+/* __next_internal_action_entry_do_not_use__ [{"00b160cfec8183b6fecdb0a329db658221f1fe1b67":"getAllProducts","4007f2ed3316365d463f8f1a19871a414138b0ea1c":"createTransaksi","401f176fbe798f3cdf8865ff3478fc394557fe4dcb":"deleteTransaksi","40403a14bc12d1b8a93066b32311ada5571ebc473b":"getProductById","404ef95b7438f1013121e5ba800680d7f6b289d8b1":"createMenu","4092bf8249b5cf83282f76425a4f104d078960b79c":"deleteMenu","602cf8d20e8baa474a749b763ff3d7e57d5c43fb59":"updateMenu"},"",""] */ __turbopack_context__.s({
     "createMenu": (()=>createMenu),
     "createTransaksi": (()=>createTransaksi),
     "deleteMenu": (()=>deleteMenu),
+    "deleteTransaksi": (()=>deleteTransaksi),
     "getAllProducts": (()=>getAllProducts),
     "getProductById": (()=>getProductById),
     "updateMenu": (()=>updateMenu)
@@ -107,33 +108,54 @@ const UpdateMenu = MenuSchema.omit({
     id: true
 });
 async function createMenu(formData) {
-    const { nama_produk, harga_produk } = CreateMenu.parse({
-        nama_produk: formData.get('nama_produk'),
-        harga_produk: Number(formData.get('harga_produk'))
-    });
-    await sql`
-    INSERT INTO produk (nama_produk, harga_produk)
-    VALUES (${nama_produk}, ${harga_produk})
-  `;
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/menu');
+    try {
+        const { nama_produk, harga_produk } = CreateMenu.parse({
+            nama_produk: formData.get('nama_produk'),
+            harga_produk: Number(formData.get('harga_produk'))
+        });
+        await sql`
+      INSERT INTO produk (nama_produk, harga_produk)
+      VALUES (${nama_produk}, ${harga_produk})
+    `;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/menu');
+    } catch (error) {
+        console.error("Gagal membuat menu:", error);
+        throw error;
+    }
 }
 async function updateMenu(id, formData) {
-    const { nama_produk, harga_produk } = UpdateMenu.parse({
-        nama_produk: formData.get('nama_produk'),
-        harga_produk: Number(formData.get('harga_produk'))
-    });
-    await sql`
-    UPDATE produk
-    SET nama_produk = ${nama_produk}, harga_produk = ${harga_produk}
-    WHERE id_produk = ${id}
-  `;
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/menu');
+    try {
+        if (!id || typeof id !== 'string') {
+            throw new Error('ID produk tidak valid');
+        }
+        const { nama_produk, harga_produk } = UpdateMenu.parse({
+            nama_produk: formData.get('nama_produk'),
+            harga_produk: Number(formData.get('harga_produk'))
+        });
+        await sql`
+      UPDATE produk
+      SET nama_produk = ${nama_produk}, harga_produk = ${harga_produk}
+      WHERE id_produk = ${id}
+    `;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/menu');
+    } catch (error) {
+        console.error("Gagal memperbarui menu:", error);
+        throw error;
+    }
 }
 async function deleteMenu(id) {
-    await sql`DELETE FROM produk WHERE id_produk = ${id}`;
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
+    try {
+        if (!id || typeof id !== 'string') {
+            throw new Error('ID produk tidak valid');
+        }
+        await sql`DELETE FROM produk WHERE id_produk = ${id}`;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/menu');
+    } catch (error) {
+        console.error("Gagal menghapus menu:", error);
+        throw error;
+    }
 }
 async function getProductById(id) {
     try {
@@ -151,8 +173,8 @@ async function getProductById(id) {
             harga_produk: Number(result[0].harga_produk)
         };
     } catch (error) {
-        console.error('Database Error:', error);
-        throw new Error('Failed to fetch product data.');
+        console.error("Gagal mendapatkan produk:", error);
+        throw error;
     }
 }
 async function getAllProducts() {
@@ -168,41 +190,53 @@ async function getAllProducts() {
                 harga_produk: Number(row.harga_produk)
             }));
     } catch (error) {
-        console.error('Database Error:', error);
-        throw new Error('Failed to fetch products.');
+        console.error("Gagal mendapatkan semua produk:", error);
+        throw error;
     }
 }
 async function createTransaksi(formData) {
-    const id_produk = formData.get('id_produk');
-    const nama_pembeli = formData.get('nama_pembeli');
-    const total_harga = Number(formData.get('total_harga'));
-    const quantity = Number(formData.get('quantity')) || 1;
-    const tanggal_transaksi = formData.get('tanggal_transaksi') || new Date().toISOString().split('T')[0];
-    const CreateTransaksiWithQuantity = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
-        id_produk: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
-        nama_pembeli: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
-        total_harga: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number(),
-        quantity: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().min(1),
-        tanggal_transaksi: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string()
-    });
-    const validatedData = CreateTransaksiWithQuantity.parse({
-        id_produk,
-        nama_pembeli,
-        total_harga,
-        quantity,
-        tanggal_transaksi
-    });
     try {
+        const id_produk = formData.get('id_produk');
+        const nama_pembeli = formData.get('nama_pembeli');
+        const total_harga = Number(formData.get('total_harga'));
+        const quantity = Number(formData.get('quantity')) || 1;
+        const tanggal_transaksi = formData.get('tanggal_transaksi') || new Date().toISOString().split('T')[0];
+        const CreateTransaksiWithQuantity = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].object({
+            id_produk: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
+            nama_pembeli: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string(),
+            total_harga: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number(),
+            quantity: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].number().min(1),
+            tanggal_transaksi: __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$zod$2f$dist$2f$esm$2f$v3$2f$external$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__$3c$export__$2a$__as__z$3e$__["z"].string()
+        });
+        const validatedData = CreateTransaksiWithQuantity.parse({
+            id_produk,
+            nama_pembeli,
+            total_harga,
+            quantity,
+            tanggal_transaksi
+        });
         await sql`
       INSERT INTO transaksi (id_produk, nama_pembeli, total_harga, tanggal_transaksi, quantity)
       VALUES (${validatedData.id_produk}, ${validatedData.nama_pembeli}, ${validatedData.total_harga}, ${validatedData.tanggal_transaksi}, ${validatedData.quantity})
     `;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/transaksi');
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/transaksi');
     } catch (error) {
-        console.error('Database Error:', error);
-        throw new Error('Failed to create transaksi.');
+        console.error("Gagal membuat transaksi:", error);
+        throw error;
     }
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/transaksi');
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["redirect"])('/admin/dashboard/transaksi');
+}
+async function deleteTransaksi(id) {
+    try {
+        if (!id || typeof id !== 'string') {
+            throw new Error('ID transaksi tidak valid');
+        }
+        await sql`DELETE FROM transaksi WHERE id_transaksi = ${id}`;
+        (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["revalidatePath"])('/admin/dashboard/transaksi');
+    } catch (error) {
+        console.error("Gagal menghapus transaksi:", error);
+        throw error;
+    }
 }
 ;
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$action$2d$validate$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ensureServerEntryExports"])([
@@ -211,7 +245,8 @@ async function createTransaksi(formData) {
     deleteMenu,
     getProductById,
     getAllProducts,
-    createTransaksi
+    createTransaksi,
+    deleteTransaksi
 ]);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createMenu, "404ef95b7438f1013121e5ba800680d7f6b289d8b1", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(updateMenu, "602cf8d20e8baa474a749b763ff3d7e57d5c43fb59", null);
@@ -219,6 +254,7 @@ async function createTransaksi(formData) {
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getProductById, "40403a14bc12d1b8a93066b32311ada5571ebc473b", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(getAllProducts, "00b160cfec8183b6fecdb0a329db658221f1fe1b67", null);
 (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(createTransaksi, "4007f2ed3316365d463f8f1a19871a414138b0ea1c", null);
+(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$build$2f$webpack$2f$loaders$2f$next$2d$flight$2d$loader$2f$server$2d$reference$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["registerServerReference"])(deleteTransaksi, "401f176fbe798f3cdf8865ff3478fc394557fe4dcb", null);
 }}),
 "[project]/.next-internal/server/app/admin/dashboard/menu/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/app/lib/actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript) <locals>": ((__turbopack_context__) => {
 "use strict";
@@ -960,7 +996,6 @@ const dynamic = 'force-dynamic';
 async function ProdukTableWrapper({ searchParams }) {
     const produkList = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$lib$2f$data$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["fetchAllProduk"])();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$ui$2f$menu$2f$table$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["default"], {
-        data: produkList,
         searchParams: searchParams
     }, void 0, false, {
         fileName: "[project]/src/app/admin/dashboard/menu/produktablewrapper.tsx",

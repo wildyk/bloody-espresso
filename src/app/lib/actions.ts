@@ -1,4 +1,5 @@
 'use server';
+
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import postgres from 'postgres';
@@ -26,39 +27,62 @@ const UpdateMenu = MenuSchema.omit({ id: true });
 
 // MENU FUNCTIONS
 export async function createMenu(formData: FormData) {
-  const { nama_produk, harga_produk } = CreateMenu.parse({
-    nama_produk: formData.get('nama_produk'),
-    harga_produk: Number(formData.get('harga_produk')),
-  });
+  try {
+    const { nama_produk, harga_produk } = CreateMenu.parse({
+      nama_produk: formData.get('nama_produk'),
+      harga_produk: Number(formData.get('harga_produk')),
+    });
 
-  await sql`
-    INSERT INTO produk (nama_produk, harga_produk)
-    VALUES (${nama_produk}, ${harga_produk})
-  `;
+    await sql`
+      INSERT INTO produk (nama_produk, harga_produk)
+      VALUES (${nama_produk}, ${harga_produk})
+    `;
 
-  revalidatePath('/admin/dashboard/menu');
-  redirect('/admin/dashboard/menu');
+    revalidatePath('/admin/dashboard/menu');
+    redirect('/admin/dashboard/menu');
+  } catch (error) {
+    console.error("Gagal membuat menu:", error);
+    throw error;
+  }
 }
 
 export async function updateMenu(id: string, formData: FormData) {
-  const { nama_produk, harga_produk } = UpdateMenu.parse({
-    nama_produk: formData.get('nama_produk'),
-    harga_produk: Number(formData.get('harga_produk')),
-  });
+  try {
+    if (!id || typeof id !== 'string') {
+      throw new Error('ID produk tidak valid');
+    }
 
-  await sql`
-    UPDATE produk
-    SET nama_produk = ${nama_produk}, harga_produk = ${harga_produk}
-    WHERE id_produk = ${id}
-  `;
+    const { nama_produk, harga_produk } = UpdateMenu.parse({
+      nama_produk: formData.get('nama_produk'),
+      harga_produk: Number(formData.get('harga_produk')),
+    });
 
-  revalidatePath('/admin/dashboard/menu');
-  redirect('/admin/dashboard/menu');
+    await sql`
+      UPDATE produk
+      SET nama_produk = ${nama_produk}, harga_produk = ${harga_produk}
+      WHERE id_produk = ${id}
+    `;
+
+    revalidatePath('/admin/dashboard/menu');
+    redirect('/admin/dashboard/menu');
+  } catch (error) {
+    console.error("Gagal memperbarui menu:", error);
+    throw error;
+  }
 }
 
 export async function deleteMenu(id: string) {
-  await sql`DELETE FROM produk WHERE id_produk = ${id}`;
-  revalidatePath('/admin/dashboard/menu');
+  try {
+    if (!id || typeof id !== 'string') {
+      throw new Error('ID produk tidak valid');
+    }
+
+    await sql`DELETE FROM produk WHERE id_produk = ${id}`;
+    revalidatePath('/admin/dashboard/menu');
+  } catch (error) {
+    console.error("Gagal menghapus menu:", error);
+    throw error;
+  }
 }
 
 export async function getProductById(id: number) {
@@ -79,12 +103,11 @@ export async function getProductById(id: number) {
       harga_produk: Number(result[0].harga_produk)
     };
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch product data.');
+    console.error("Gagal mendapatkan produk:", error);
+    throw error;
   }
 }
 
-// NEW FUNCTION: Get all products for dropdown
 export async function getAllProducts() {
   try {
     const result = await sql`
@@ -99,44 +122,58 @@ export async function getAllProducts() {
       harga_produk: Number(row.harga_produk)
     }));
   } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to fetch products.');
+    console.error("Gagal mendapatkan semua produk:", error);
+    throw error;
   }
 }
 
 export async function createTransaksi(formData: FormData) {
-  const id_produk = formData.get('id_produk');
-  const nama_pembeli = formData.get('nama_pembeli');
-  const total_harga = Number(formData.get('total_harga'));
-  const quantity = Number(formData.get('quantity')) || 1;
-  const tanggal_transaksi = formData.get('tanggal_transaksi') || new Date().toISOString().split('T')[0];
-
-  const CreateTransaksiWithQuantity = z.object({
-    id_produk: z.string(),
-    nama_pembeli: z.string(),
-    total_harga: z.number(),
-    quantity: z.number().min(1),
-    tanggal_transaksi: z.string(),
-  });
-
-  const validatedData = CreateTransaksiWithQuantity.parse({
-    id_produk,
-    nama_pembeli,
-    total_harga,
-    quantity,
-    tanggal_transaksi,
-  });
-
   try {
+    const id_produk = formData.get('id_produk');
+    const nama_pembeli = formData.get('nama_pembeli');
+    const total_harga = Number(formData.get('total_harga'));
+    const quantity = Number(formData.get('quantity')) || 1;
+    const tanggal_transaksi = formData.get('tanggal_transaksi') || new Date().toISOString().split('T')[0];
+
+    const CreateTransaksiWithQuantity = z.object({
+      id_produk: z.string(),
+      nama_pembeli: z.string(),
+      total_harga: z.number(),
+      quantity: z.number().min(1),
+      tanggal_transaksi: z.string(),
+    });
+
+    const validatedData = CreateTransaksiWithQuantity.parse({
+      id_produk,
+      nama_pembeli,
+      total_harga,
+      quantity,
+      tanggal_transaksi,
+    });
+
     await sql`
       INSERT INTO transaksi (id_produk, nama_pembeli, total_harga, tanggal_transaksi, quantity)
       VALUES (${validatedData.id_produk}, ${validatedData.nama_pembeli}, ${validatedData.total_harga}, ${validatedData.tanggal_transaksi}, ${validatedData.quantity})
     `;
-  } catch (error) {
-    console.error('Database Error:', error);
-    throw new Error('Failed to create transaksi.');
-  }
 
-  revalidatePath('/admin/dashboard/transaksi');
-  redirect('/admin/dashboard/transaksi');
+    revalidatePath('/admin/dashboard/transaksi');
+    redirect('/admin/dashboard/transaksi');
+  } catch (error) {
+    console.error("Gagal membuat transaksi:", error);
+    throw error;
+  }
+}
+
+export async function deleteTransaksi(id: string) {
+  try {
+    if (!id || typeof id !== 'string') {
+      throw new Error('ID transaksi tidak valid');
+    }
+
+    await sql`DELETE FROM transaksi WHERE id_transaksi = ${id}`;
+    revalidatePath('/admin/dashboard/transaksi');
+  } catch (error) {
+    console.error("Gagal menghapus transaksi:", error);
+    throw error;
+  }
 }

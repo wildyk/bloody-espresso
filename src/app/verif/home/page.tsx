@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react"
 import { alegreya, nosifer } from "@/app/ui/fonts";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,17 +10,8 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import { Instagram, Facebook, Twitter } from "lucide-react";
-import { ShoppingCart, UserRound } from "lucide-react";
-import { useRouter } from "next/navigation";
+import Navbar from "@/app/verif/navbar";
 
-interface MenuItem {
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  qty?: number;
-}
 export default function Page() {
   const reviews = [
     {
@@ -28,7 +19,7 @@ export default function Page() {
       role: "Pelajar",
       text: "Aku hanya mampir untuk secangkir kopi, tapi sekarangkan aku merasa seperti sedang mengikuti... apakah itu suara tangis, atau hanya suasana yang bikin merinding?",
       rating: 5,
-      avatar: "/image1.png",
+      avatar: "/image.png",
     },
     {
       name: "Siti Nurhaliza",
@@ -53,41 +44,21 @@ export default function Page() {
     },
   ];
 
-  const [cart, setCart] = useState<MenuItem[]>([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [isPaying, setIsPaying] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
-  const router = useRouter();
-
-  const handleAddToCart = (item: MenuItem) => {
-    setCart((prevCart) => {
-      const existingItem = prevCart.find(
-        (cartItem) => cartItem.name === item.name
-      );
-      if (existingItem) {
-        return prevCart.map((cartItem) =>
-          cartItem.name === item.name
-            ? { ...cartItem, qty: (cartItem.qty || 1) + 1 }
-            : cartItem
-        );
-      } else {
-        return [...prevCart, { ...item, qty: 1 }];
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const nextButton = document.querySelector(".swiper-button-next-custom");
+      const prevButton = document.querySelector(".swiper-button-prev-custom");
+      if (nextButton && prevButton) {
+        nextButton.classList.remove("swiper-button-disabled");
+        prevButton.classList.remove("swiper-button-disabled");
       }
-    });
-    setIsCartOpen(true);
-  };
-  const toggleDropdown = () => {
-    setDropdownOpen((prev) => !prev);
-  };
-  const handleLogout = () => {
-    localStorage.removeItem("token"); 
-    router.push("/auth/login");
-  };
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white relative overflow-y-auto">
-
+      <Navbar />
       {/* Hero Section */}
       <section className="mt-7 flex flex-col md:flex-row items-center px-6 md:px-20">
         <div className="flex flex-col justify-center gap-6 text-center md:text-left md:w-2/5">
@@ -104,7 +75,7 @@ export default function Page() {
           </p>
           <div className="mt-6 flex justify-center md:justify-start">
             <Link
-              href="/verif/menu"
+              href="/menu"
               className="flex items-center gap-4 rounded-full border-4 border-[#F8E4BE] px-10 py-4 text-4xl font-bold text-[#F8E4BE] transition-all duration-300 bg-transparent hover:bg-red-900 hover:text-yellow-300 hover:scale-105 hover:shadow-lg md:text-2xl"
             >
               Jelajahi
@@ -257,13 +228,12 @@ export default function Page() {
 
       {/* Ulasan Section */}
       <section className="relative py-8 px-6 md:px-20 bg-gradient-to-r from-red-950 to-black mb-10">
-        <h2
-          className={`${nosifer.className} text-7xl w-full text-center font-bold text-[#F5D29D] p-10 mb-10 dripping-text`}
-        >
-          Ulasan Pelanggan
-        </h2>
-
-        <div className="relative w-full max-w-7xl mx-auto ">
+          <h2
+            className={`${nosifer.className} text-7xl w-full text-center font-bold text-[#F5D29D] p-10 mb-10 dripping-text`}>
+            Ulasan Pelanggan
+          </h2>
+        
+          <div className="relative w-full max-w-7xl mx-auto ">
           {/* Navigation Buttons - outside swiper */}
           <div className="absolute -left-12 top-[50%] -translate-y-1/2 z-10 text-[#f5deb3] cursor-pointer text-5xl font-bold hover:scale-125 transition swiper-button-prev-custom">
             ❮
@@ -271,117 +241,57 @@ export default function Page() {
           <div className="absolute -right-12 top-[50%] -translate-y-1/2 z-10 text-[#f5deb3] cursor-pointer text-5xl font-bold hover:scale-125 transition swiper-button-next-custom">
             ❯
           </div>
-          {/* Swiper Container */}
-          <Swiper
-            loop={true}
-            spaceBetween={30}
-            slidesPerView={1}
-            navigation={{
-              nextEl: ".swiper-button-next-custom",
-              prevEl: ".swiper-button-prev-custom",
-            }}
-            pagination={{ clickable: true }}
-            modules={[Navigation, Pagination]}
-            breakpoints={{
-              768: { slidesPerView: 2 },
-              1024: { slidesPerView: 3 },
-            }}
-            className="w-full max-w-6xl mx-auto"
-          >
-            {reviews.map((review, index) => (
-              <SwiperSlide key={index}>
-                <div className="bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm transition-transform duration-300">
-                  <div className="flex justify-center mb-4">
-                    <Image
-                      src={review.avatar}
-                      width={80}
-                      height={80}
-                      className="rounded-full border-4 border-[#F8E4BE]"
-                      alt={review.name}
-                    />
-                  </div>
-                  <h3 className="text-2xl font-semibold text-center mb-2">
-                    {review.name}
-                  </h3>
-                  <p className="text-sm text-[#F7E5DA] text-center mb-4">
-                    {review.role}
-                  </p>
-                  <div className="flex justify-center mb-4">
-                    {[...Array(review.rating)].map((_, i) => (
-                      <span key={i} className="text-2xl text-[#F8E4BE]">
-                        ★
-                      </span>
-                    ))}
-                  </div>
-                  <p className="text-sm text-[#F7E5DA] text-center leading-relaxed mb-6">
-                    {review.text}
-                  </p>
+        {/* Swiper Container */}
+        <Swiper
+          loop={true}
+          spaceBetween={30}
+          slidesPerView={1}
+          navigation={{
+            nextEl: ".swiper-button-next-custom",
+            prevEl: ".swiper-button-prev-custom",
+          }}          
+          pagination={{ clickable: true }}
+          modules={[Navigation, Pagination]}
+          breakpoints={{
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="w-full max-w-6xl mx-auto"
+        >
+          {reviews.map((review, index) => (
+            <SwiperSlide key={index}>
+              <div className="bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm transition-transform duration-300">
+                <div className="flex justify-center mb-4">
+                  <Image
+                    src={review.avatar}
+                    width={80}
+                    height={80}
+                    className="rounded-full border-4 border-[#F8E4BE]"
+                    alt={review.name}
+                  />
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                <h3 className="text-2xl font-semibold text-center mb-2">
+                  {review.name}
+                </h3>
+                <p className="text-sm text-[#F7E5DA] text-center mb-4">
+                  {review.role}
+                </p>
+                <div className="flex justify-center mb-4">
+                  {[...Array(review.rating)].map((_, i) => (
+                    <span key={i} className="text-2xl text-[#F8E4BE]">
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="text-sm text-[#F7E5DA] text-center leading-relaxed mb-6">
+                  {review.text}
+                </p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
         </div>
       </section>
-      {isCartOpen && (
-  <div className="fixed top-0 right-0 w-full sm:w-[500px] h-full bg-[#5c0a0a] text-white z-50 p-6 overflow-y-auto">
-    <div className="mb-6 border-b border-white pb-4 relative">
-      <h2
-        className={`${nosifer.className} text-4xl font-bold text-center w-full text-[#f5deb3] drop-shadow-md my-4`}
-      >
-        KERANJANG
-      </h2>
-      <button
-        onClick={() => setIsCartOpen(false)}
-        className="absolute top-0 right-0 text-white text-2xl font-bold"
-      >
-        ✕
-      </button>
-    </div>
-    {cart.length > 0 ? (
-      <>
-        {cart.map((item) => (
-          <div
-            key={item.name}
-            className={`${alegreya.className} mb-6 border-b border-white pb-4`}
-          >
-            <Image
-              src={item.image}
-              alt={item.name}
-              width={150}
-              height={150}
-              className="rounded"
-            />
-            <h3 className="text-2xl font-bold mt-2">{item.name}</h3>
-            <p className="text-xl">Rp. {item.price.toLocaleString("id-ID")}</p>
-            <span className="text-xl">Jumlah: {item.qty}</span>
-          </div>
-        ))}
-
-        {/* Total Harga */}
-        <div
-          className={`${alegreya.className} text-xl font-bold bg-[#A8715C] text-[#1E1E1E] py-2 mb-4 rounded text-center`}
-        >
-          TOTAL ・ RP {cart.reduce((acc, item) => acc + item.price * (item.qty || 1), 0).toLocaleString("id-ID")}
-        </div>
-
-        {/* Tombol Bayar */}
-        <button
-          onClick={() => {
-            alert("Pembayaran berhasil! ☕");
-            setCart([]);
-            setIsCartOpen(false);
-          }}
-          className={`${alegreya.className} w-full py-4 bg-[#A8715C] text-xl text-[#1E1E1E] font-bold rounded shadow-lg hover:bg-yellow-800 transition cursor-pointer`}
-        >
-          BAYAR
-        </button>
-      </>
-    ) : (
-      <p className="text-center text-lg mt-10">Keranjang kosong ☕</p>
-    )}
-  </div>
-)}
-
     </main>
   );
 }

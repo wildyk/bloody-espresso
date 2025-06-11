@@ -9,5 +9,5 @@ export default async function ProdukTableWrapper({
 }) {
   const produkList = await fetchAllProduk();
 
-  return <ProdukTable data={produkList} searchParams={searchParams} />;
+  return <ProdukTable searchParams={searchParams} />;
 }
