@@ -6,11 +6,8 @@ import { signToken } from '@/app/lib/jwt';
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
-    
-    console.log('Login attempt:', { email }); // Debug log
-    
+
     const user = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
-    
     if (user.rows.length === 0) {
       return NextResponse.json({ message: 'Email tidak ditemukan' }, { status: 400 });
     }
@@ -20,12 +17,17 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Password salah' }, { status: 400 });
     }
 
-    const token = signToken({ id: user.rows[0].id, email: user.rows[0].email });
+    // Buat token lengkap dengan nama
+    const token = signToken({
+      id: user.rows[0].id,
+      email: user.rows[0].email,
+      name: user.rows[0].name // ← Penting untuk transaksi
+    });
 
     return NextResponse.json({ token }, { status: 200 });
-    
+
   } catch (error) {
-    console.error('Login error:', error); // Debug log
+    console.error('Login error:', error);
     const errorMessage = error instanceof Error ? error.message : String(error);
     return NextResponse.json({ message: 'Server error: ' + errorMessage }, { status: 500 });
   }

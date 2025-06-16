@@ -3,15 +3,11 @@ import Form from '@/app/ui/menu/editform';
 import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
 
-type PageProps = {
+export default async function Page({
+  params,
+}: {
   params: { id: string };
-};
-
-export async function generateStaticParams() {
-  return [];
-}
-
-export default async function Page({ params }: PageProps) {
+}) {
   const produk = await fetchProduk(params.id);
   if (!produk) notFound();
 

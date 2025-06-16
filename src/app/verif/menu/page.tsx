@@ -78,8 +78,6 @@ export default async function MenuPage({
           <MenuClient produkList={paginatedProdukList} />
         )}
 
-        {/* Pagination */}
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="mt-12 flex flex-col items-center justify-center">
             <div className="text-sm text-gray-200 mb-2">

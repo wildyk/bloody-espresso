@@ -133,12 +133,12 @@ export type ProdukWithFoto = {
   id_produk: number;
   nama_produk: string;
   harga_produk: number;
-  foto: string;
+  foto: Text;
 };
 
-export async function fetchProdukWithFoto(): Promise<ProdukWithFoto[]> {
+export async function fetchProdukWithFoto(id?: string): Promise<ProdukWithFoto[]> {
   try {
-    const produk = await sql<ProdukWithFoto[]>`SELECT * FROM produk ORDER BY id_produk ASC`;
+    const produk = await sql<ProdukWithFoto[]>`SELECT * FROM menu ORDER BY id_produk ASC`;
     return produk;
   } catch (error) {
     console.error('Database Error:', error);
@@ -217,3 +217,42 @@ export async function fetchCartItems(): Promise<CartItem[]> {
     throw new Error('Failed to fetch cart items');
   }
 }
+
+type CartCheckoutItem = {
+  id_produk: number;
+  quantity: number;
+  harga_produk: number;
+};
+
+export async function checkoutCart(nama_pembeli: string, produk_id: string, quantity: number, price: number, total: number) {
+  await sql`
+    INSERT INTO transaksi (nama_pembeli, produk_id, quantity, price, total)
+    VALUES (${nama_pembeli}, ${produk_id}, ${quantity}, ${price}, ${total})
+  `;
+}
+
+export async function checkoutCartToTransaksi(nama_pembeli: string): Promise<any> {
+  try {
+    const cartItems = await fetchCartItems();
+
+    if (cartItems.length === 0) {
+        throw new Error("Cart kosong.");
+      }
+
+      const cart = cartItems[0]; // hanya ambil 1 item
+
+      const result = await sql`
+        INSERT INTO transaksi (id_produk, nama_pembeli, tanggal_transaksi, total_harga, quantity)
+        VALUES (${cart.id_produk}, ${nama_pembeli}, NOW(), ${cart.total_harga}, ${cart.quantity})
+        RETURNING *
+      `;
+
+      // Kosongkan cart setelah transaksi berhasil
+      await sql`DELETE FROM cart WHERE id_produk = ${cart.id_produk}`;
+
+      return result[0];
+    } catch (error) {
+      console.error('Checkout Error:', error);
+      throw new Error('Gagal checkout dari cart ke transaksi.');
+    }
+  }

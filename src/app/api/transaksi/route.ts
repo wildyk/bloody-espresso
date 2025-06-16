@@ -1,20 +1,29 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createTransaksi } from '@/app/lib/data';
+import { verifyToken } from '@/app/lib/jwt';
 
 export async function POST(request: NextRequest) {
   try {
+    // Ambil token dari header
+    const authHeader = request.headers.get('authorization');
+    const token = authHeader?.split(' ')[1]; // Ambil bagian setelah "Bearer"
+
+    if (!token) {
+      return NextResponse.json({ message: 'Token tidak ditemukan' }, { status: 401 });
+    }
+
+    // Verifikasi token
+    const decoded = verifyToken(token);
+    if (!decoded) {
+      return NextResponse.json({ message: 'Token tidak valid' }, { status: 401 });
+    }
+
+    const nama_pembeli = decoded.name || decoded.email || "Guest"; // Ambil nama/email dari token
+
+    // Ambil data dari body
     const body = await request.json();
+    const { id_produk, quantity, total_harga } = body;
 
-    const {
-      id_produk,
-      nama_produk, // saat ini belum dipakai, bisa dihapus jika tidak digunakan
-      quantity,
-      harga_produk, // belum dipakai juga
-      total_harga,
-      nama_pembeli
-    } = body;
-
-    // Validasi input
     if (!id_produk || !quantity || !total_harga) {
       return NextResponse.json(
         { error: 'id_produk, quantity, dan total_harga wajib diisi' },
@@ -22,10 +31,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Buat transaksi baru
+    // Simpan transaksi
     const result = await createTransaksi({
       id_produk,
-      nama_pembeli: nama_pembeli || 'Guest',
+      nama_pembeli,
       quantity,
       total_harga
     });
@@ -38,20 +47,9 @@ export async function POST(request: NextRequest) {
       },
       { status: 201 }
     );
+
   } catch (error: any) {
-    // Jika error dari Prisma atau DB
-    const isKnownError =
-      typeof error === 'object' &&
-      (error.code || error.message || error.name);
-
-    console.error('Error creating transaction:', error);
-
-    return NextResponse.json(
-      {
-        error: 'Gagal membuat transaksi',
-        detail: isKnownError ? error.message || error.name : undefined
-      },
-      { status: 500 }
-    );
+    console.error('Error:', error);
+    return NextResponse.json({ message: 'Server error', detail: error.message }, { status: 500 });
   }
 }

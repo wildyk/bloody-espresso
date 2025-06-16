@@ -2,6 +2,9 @@ import { fetchProdukWithFoto } from "@/app/lib/data";
 import { alegreya, nosifer } from "@/app/ui/fonts";
 import Navbar from "@/app/ui/navbar";
 import MenuClient from "./menu-client";
+import { cookies } from "next/headers";
+import { verifyToken } from "@/app/lib/jwt";
+import { redirect } from "next/navigation";
 
 export default async function MenuPage({
   searchParams,
@@ -10,6 +13,14 @@ export default async function MenuPage({
 }) {
   let produkList: any[] = [];
   let error: string | null = null;
+
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  const user = token ? verifyToken(token) : null;
+
+  if (user?.email) {
+    redirect("/verif/menu");
+  }
 
   try {
     produkList = await fetchProdukWithFoto();
@@ -78,8 +89,6 @@ export default async function MenuPage({
           <MenuClient produkList={paginatedProdukList} />
         )}
 
-        {/* Pagination */}
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="mt-12 flex flex-col items-center justify-center">
             <div className="text-sm text-gray-200 mb-2">
