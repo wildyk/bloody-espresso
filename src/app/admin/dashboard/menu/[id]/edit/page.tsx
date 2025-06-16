@@ -2,7 +2,6 @@ import { notFound } from 'next/navigation';
 import Form from '@/app/ui/menu/editform';
 import Breadcrumbs from '@/app/ui/menu/breadcrumbs';
 import { fetchProduk } from '@/app/lib/data';
-import { Produk } from '@/app/lib/definitions';
 
 type PageProps = {
   params: {
