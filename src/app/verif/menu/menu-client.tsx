@@ -185,9 +185,9 @@ export default function MenuClient({ produkList }: MenuClientProps) {
               </div>
 
               <div className="border-t border-[#300000]/20 pt-6">
-                <div className="flex items-start justify-between gap-4 mb-6">
+                <div className="flex-col items-center text-center justify-between gap-4 mb-6">
                   <div>
-                    <p className="text-sm text-[#300000]/60 mb-1">Harga</p>
+                    <p className="text-3xl text-[#300000]/60 mb-1">Harga</p>
                     <p className="text-2xl sm:text-3xl font-bold text-[#300000]">
                       Rp. {selectedProduk.harga_produk?.toLocaleString("id-ID") || "0"}
                     </p>

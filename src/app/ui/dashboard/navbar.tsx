@@ -5,7 +5,6 @@ import Image from "next/image";
 
 interface UserProfile {
   name: string;
-  role: string;
   email: string;
   profileImage: string;
 }
@@ -18,7 +17,6 @@ export default function Navbar() {
   // State untuk profile user
   const [userProfile, setUserProfile] = useState<UserProfile>({
     name: "Elsa Dwita",
-    role: "Administrator",
     email: "elsa.dwita@example.com",
     profileImage: "/customers/evil-rabbit.png"
   });
@@ -26,7 +24,6 @@ export default function Navbar() {
   // State untuk form edit profile
   const [editForm, setEditForm] = useState<UserProfile>({
     name: userProfile.name,
-    role: userProfile.role,
     email: userProfile.email,
     profileImage: userProfile.profileImage
   });
@@ -105,7 +102,6 @@ export default function Navbar() {
             </div>
             <div className="hidden md:block leading-tight cursor-pointer" onClick={toggleEditProfile}>
               <p className="text-xl font-semibold">{userProfile.name}</p>
-              <p className="text-lg text-gray-300">{userProfile.role}</p>
             </div>
           </div>
         </div>
@@ -181,26 +177,6 @@ export default function Navbar() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
                 />
               </div>
-
-              {/* Role Field */}
-              <div>
-                <label htmlFor="role" className="block text-sm font-medium text-gray-700 mb-1">
-                  Jabatan
-                </label>
-                <select
-                  id="role"
-                  name="role"
-                  value={editForm.role}
-                  onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                >
-                  <option value="Administrator">Administrator</option>
-                  <option value="Manager">Manager</option>
-                  <option value="Staff">Staff</option>
-                  <option value="Kasir">Kasir</option>
-                </select>
-              </div>
-
               {/* Email Field */}
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">

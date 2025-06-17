@@ -1,15 +1,66 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { PlusIcon, TagIcon } from '@heroicons/react/24/outline';
 import { createMenu } from '@/app/lib/actions';
 import { Button } from '@/app/ui/button';
 import { alegreya } from '@/app/ui/fonts';
 
-
 export default function MenuForm() {
+  const [namaProduk, setNamaProduk] = useState('');
+  const [hargaProduk, setHargaProduk] = useState('');
+  const [errors, setErrors] = useState<{
+    nama_produk?: string;
+    harga_produk?: string;
+  }>({});
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // ⛔ stop reload
+
+    // Validasi frontend sebelum kirim ke server
+    if (!/^[a-zA-Z\s]+$/.test(namaProduk)) {
+      setErrors({ nama_produk: 'Nama produk hanya boleh huruf' });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('nama_produk', namaProduk);
+    formData.append('harga_produk', hargaProduk);
+
+    const result = await createMenu(formData);
+
+    if (result?.errors) {
+      setErrors(result.errors);
+    } else {
+      // ✅ Reset form jika sukses
+      setNamaProduk('');
+      setHargaProduk('');
+      setErrors({});
+    }
+  };
+
+  const handleNamaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+
+    // Deteksi angka dan tampilkan error secara live
+    if (/\d/.test(value)) {
+      setErrors((prev) => ({
+        ...prev,
+        nama_produk: 'Nama produk hanya boleh huruf',
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        nama_produk: undefined,
+      }));
+    }
+
+    setNamaProduk(value);
+  };
+
   return (
-    <form action={createMenu} className={alegreya.className}>
+    <form onSubmit={handleSubmit} className={alegreya.className}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         {/* Nama Produk */}
         <div className="mb-4">
@@ -21,12 +72,16 @@ export default function MenuForm() {
               id="nama_produk"
               name="nama_produk"
               type="text"
-              required
+              value={namaProduk}
+              onChange={handleNamaChange}
               placeholder="Masukkan nama produk"
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-base outline-2 placeholder:text-gray-500"
             />
             <TagIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
+          {errors.nama_produk && (
+            <p className="mt-1 text-sm text-red-600">{errors.nama_produk}</p>
+          )}
         </div>
 
         {/* Harga Produk */}
@@ -40,12 +95,16 @@ export default function MenuForm() {
               name="harga_produk"
               type="number"
               step="0.01"
-              required
+              value={hargaProduk}
+              onChange={(e) => setHargaProduk(e.target.value)}
               placeholder="Contoh: 12000"
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-base outline-2 placeholder:text-gray-500"
             />
             <PlusIcon className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500" />
           </div>
+          {errors.harga_produk && (
+            <p className="mt-1 text-sm text-red-600">{errors.harga_produk}</p>
+          )}
         </div>
       </div>
 

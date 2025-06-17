@@ -1,11 +1,62 @@
 "use client";
 
 import { alegreya, nosifer } from "@/app/ui/fonts";
+import { useState } from "react";
 
 export default function ContactPage() {
+  const [form, setForm] = useState({
+    nama: "",
+    email: "",
+    subjek: "",
+    pesan: "",
+  });
+
+  const [errors, setErrors] = useState({
+    nama: "",
+    email: "",
+    subjek: "",
+    pesan: "",
+  });
+
+  const validate = () => {
+    const newErrors = { nama: "", email: "", subjek: "", pesan: "" };
+
+    if (!form.nama.trim()) {
+      newErrors.nama = "Nama wajib diisi.";
+    } else if (!/[a-zA-Z]/.test(form.nama)) {
+      newErrors.nama = "Nama harus mengandung huruf.";
+    }
+
+    if (!form.email.trim()) {
+      newErrors.email = "Email wajib diisi.";
+    } else if (!/^\S+@\S+\.\S+$/.test(form.email)) {
+      newErrors.email = "Format email tidak valid.";
+    }
+
+    if (!form.subjek.trim()) {
+      newErrors.subjek = "Subjek wajib diisi.";
+    }
+
+    if (!form.pesan.trim()) {
+      newErrors.pesan = "Pesan wajib diisi.";
+    }
+
+    setErrors(newErrors);
+    return Object.values(newErrors).every((val) => val === "");
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (validate()) {
+      alert("Pesan berhasil dikirim!");
+      // Reset form setelah submit
+      setForm({ nama: "", email: "", subjek: "", pesan: "" });
+      setErrors({ nama: "", email: "", subjek: "", pesan: "" });
+    }
+  };
+
   return (
     <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white">
-      {/* Contact Section */}
       <section className="flex flex-col items-center justify-center py-20 px-6 md:px-20">
         <h2 className={`${nosifer.className} text-7xl font-extrabold tracking-wide text-[#F8E4BE] mb-10`}>
           Kontak
@@ -37,37 +88,57 @@ export default function ContactPage() {
           {/* Form */}
           <form 
             className="w-full lg:w-2/3 space-y-6"
-            onSubmit={(e) => e.preventDefault()}
+            onSubmit={handleSubmit}
           >
+            {/* Nama & Email */}
             <div className="flex flex-col md:flex-row gap-4">
+              <div className="w-full">
+                <input
+                  type="text"
+                  placeholder="Nama Anda"
+                  value={form.nama}
+                  onChange={(e) => setForm({ ...form, nama: e.target.value })}
+                  className="w-full p-4 rounded-lg bg-[#f5deb3]/10 border border-[#8b4513] placeholder-[#f5deb3]/70 text-[#f5deb3] focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
+                />
+                {errors.nama && <p className="text-red-400 text-sm mt-1">{errors.nama}</p>}
+              </div>
+
+              <div className="w-full">
+                <input
+                  type="email"
+                  placeholder="Email Anda"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="w-full p-4 rounded-lg bg-[#f5deb3]/10 border border-[#8b4513] placeholder-[#f5deb3]/70 text-[#f5deb3] focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
+                />
+                {errors.email && <p className="text-red-400 text-sm mt-1">{errors.email}</p>}
+              </div>
+            </div>
+
+            {/* Subjek */}
+            <div>
               <input
                 type="text"
-                placeholder="Nama Anda"
+                placeholder="Subjek"
+                value={form.subjek}
+                onChange={(e) => setForm({ ...form, subjek: e.target.value })}
                 className="w-full p-4 rounded-lg bg-[#f5deb3]/10 border border-[#8b4513] placeholder-[#f5deb3]/70 text-[#f5deb3] focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
-                required
               />
-              <input
-                type="email"
-                placeholder="Email Anda"
-                className="w-full p-4 rounded-lg bg-[#f5deb3]/10 border border-[#8b4513] placeholder-[#f5deb3]/70 text-[#f5deb3] focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
-                required
-              />
+              {errors.subjek && <p className="text-red-400 text-sm mt-1">{errors.subjek}</p>}
             </div>
-            
-            <input
-              type="text"
-              placeholder="Subjek"
-              className="w-full p-4 rounded-lg bg-[#f5deb3]/10 border border-[#8b4513] placeholder-[#f5deb3]/70 text-[#f5deb3] focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
-              required
-            />
-            
-            <textarea
-              placeholder="Tulis pesan Anda di sini"
-              rows={5}
-              className="w-full p-4 rounded-lg bg-[#f5deb3]/10 border border-[#8b4513] placeholder-[#f5deb3]/70 text-[#f5deb3] resize-none focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
-              required
-            />
-            
+
+            {/* Pesan */}
+            <div>
+              <textarea
+                placeholder="Tulis pesan Anda di sini"
+                rows={5}
+                value={form.pesan}
+                onChange={(e) => setForm({ ...form, pesan: e.target.value })}
+                className="w-full p-4 rounded-lg bg-[#f5deb3]/10 border border-[#8b4513] placeholder-[#f5deb3]/70 text-[#f5deb3] resize-none focus:outline-none focus:ring-2 focus:ring-[#8b4513]"
+              />
+              {errors.pesan && <p className="text-red-400 text-sm mt-1">{errors.pesan}</p>}
+            </div>
+
             <button
               type="submit"
               className="bg-[#8b4513] hover:bg-[#a0522d] text-white px-8 py-3 rounded-lg font-semibold shadow-lg transition-colors duration-200"
