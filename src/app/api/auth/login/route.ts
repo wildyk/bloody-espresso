@@ -17,14 +17,24 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ message: 'Password salah' }, { status: 400 });
     }
 
-    // Buat token lengkap dengan nama
     const token = signToken({
       id: user.rows[0].id,
       email: user.rows[0].email,
-      name: user.rows[0].name // ← Penting untuk transaksi
+      name: user.rows[0].name,
+      user: undefined
     });
 
-    return NextResponse.json({ token }, { status: 200 });
+    const response = NextResponse.json({ message: 'Login berhasil' });
+
+    response.cookies.set('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 60 * 60 * 24, // 1 hari
+    });
+
+    return response;
 
   } catch (error) {
     console.error('Login error:', error);
@@ -32,3 +42,4 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'Server error: ' + errorMessage }, { status: 500 });
   }
 }
+

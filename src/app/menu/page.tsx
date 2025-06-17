@@ -4,7 +4,6 @@ import Navbar from "@/app/ui/navbar";
 import MenuClient from "./menu-client";
 import { cookies } from "next/headers";
 import { verifyToken } from "@/app/lib/jwt";
-import { redirect } from "next/navigation";
 
 export default async function MenuPage({
   searchParams,
@@ -17,10 +16,6 @@ export default async function MenuPage({
   const cookieStore = await cookies();
   const token = cookieStore.get("token")?.value;
   const user = token ? verifyToken(token) : null;
-
-  if (user?.email) {
-    redirect("/verif/menu");
-  }
 
   try {
     produkList = await fetchProdukWithFoto();

@@ -75,7 +75,7 @@ export default function Page() {
           </p>
           <div className="mt-6 flex justify-center md:justify-start">
             <Link
-              href="/menu"
+              href="/verif/menu"
               className="flex items-center gap-4 rounded-full border-4 border-[#F8E4BE] px-10 py-4 text-4xl font-bold text-[#F8E4BE] transition-all duration-300 bg-transparent hover:bg-red-900 hover:text-yellow-300 hover:scale-105 hover:shadow-lg md:text-2xl"
             >
               Jelajahi
@@ -260,35 +260,35 @@ export default function Page() {
             className="w-full max-w-6xl mx-auto"
           >
             {reviews.map((review, index) => (
-            <SwiperSlide key={index}>
-<div className="bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm min-h-[430px] flex flex-col justify-between transition-transform duration-300">
-                <div className="flex justify-center mb-4">
-                  <Image
-                    src={review.avatar}
-                    width={80}
-                    height={80}
-                    className="rounded-full border-4 border-[#F8E4BE]"
-                    alt={review.name}
-                  />
+              <SwiperSlide key={index}>
+                <div className="bg-[#592424] text-[#E3CDA2] p-8 rounded-[35px] shadow-lg w-full max-w-sm min-h-[430px] flex flex-col justify-between transition-transform duration-300">
+                  <div className="flex justify-center mb-4">
+                    <Image
+                      src={review.avatar}
+                      width={80}
+                      height={80}
+                      className="rounded-full border-4 border-[#F8E4BE]"
+                      alt={review.name}
+                    />
+                  </div>
+                  <h3 className="text-2xl font-semibold text-center mb-2">
+                    {review.name}
+                  </h3>
+                  <p className="text-sm text-[#F7E5DA] text-center mb-4">
+                    {review.role}
+                  </p>
+                  <div className="flex justify-center mb-4">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <span key={i} className="text-2xl text-[#F8E4BE]">
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                  <p className="text-sm text-[#F7E5DA] text-center leading-relaxed mb-6">
+                    {review.text}
+                  </p>
                 </div>
-                <h3 className="text-2xl font-semibold text-center mb-2">
-                  {review.name}
-                </h3>
-                <p className="text-sm text-[#F7E5DA] text-center mb-4">
-                  {review.role}
-                </p>
-                <div className="flex justify-center mb-4">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <span key={i} className="text-2xl text-[#F8E4BE]">
-                      ★
-                    </span>
-                  ))}
-                </div>
-                <p className="text-sm text-[#F7E5DA] text-center leading-relaxed mb-6">
-                  {review.text}
-                </p>
-              </div>
-            </SwiperSlide>
+              </SwiperSlide>
             ))}
           </Swiper>
         </div>

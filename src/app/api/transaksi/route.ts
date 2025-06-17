@@ -4,23 +4,19 @@ import { verifyToken } from '@/app/lib/jwt';
 
 export async function POST(request: NextRequest) {
   try {
-    // Ambil token dari header
-    const authHeader = request.headers.get('authorization');
-    const token = authHeader?.split(' ')[1]; // Ambil bagian setelah "Bearer"
+    const token = request.cookies.get('token')?.value;
 
     if (!token) {
       return NextResponse.json({ message: 'Token tidak ditemukan' }, { status: 401 });
     }
 
-    // Verifikasi token
     const decoded = verifyToken(token);
     if (!decoded) {
       return NextResponse.json({ message: 'Token tidak valid' }, { status: 401 });
     }
 
-    const nama_pembeli = decoded.name || decoded.email || "Guest"; // Ambil nama/email dari token
+    const nama_pembeli = decoded.name || decoded.email || "Guest";
 
-    // Ambil data dari body
     const body = await request.json();
     const { id_produk, quantity, total_harga } = body;
 
@@ -31,7 +27,6 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Simpan transaksi
     const result = await createTransaksi({
       id_produk,
       nama_pembeli,

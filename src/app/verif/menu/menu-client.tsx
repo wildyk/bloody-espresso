@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useEffect } from "react";
 import { alegreya, nosifer } from "@/app/ui/fonts";
-import { useCart } from "@/app/ui/cartcontext"; // Tambahkan ini
+import { useCart } from "@/app/ui/cartcontext";
 
 interface MenuItem {
   id_produk: number;
@@ -18,25 +18,21 @@ interface MenuClientProps {
 export default function MenuClient({ produkList }: MenuClientProps) {
   const [selectedProduk, setSelectedProduk] = useState<MenuItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const { addToCart } = useCart();
 
   const openModal = useCallback((produk: MenuItem) => {
     setSelectedProduk(produk);
     setIsModalOpen(true);
-    setQuantity(1);
     document.body.style.overflow = "hidden";
   }, []);
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedProduk(null);
-    setQuantity(1);
     document.body.style.overflow = "unset";
   }, []);
 
-  // Handle escape key
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isModalOpen) {
@@ -62,14 +58,6 @@ export default function MenuClient({ produkList }: MenuClientProps) {
     [closeModal]
   );
 
-  const incrementQuantity = useCallback(() => {
-    setQuantity((prev) => Math.min(prev + 1, 99));
-  }, []);
-
-  const decrementQuantity = useCallback(() => {
-    setQuantity((prev) => Math.max(prev - 1, 1));
-  }, []);
-
   const handleAddToCart = useCallback(() => {
     if (!selectedProduk) return;
 
@@ -78,26 +66,24 @@ export default function MenuClient({ produkList }: MenuClientProps) {
       name: selectedProduk.nama_produk,
       price: selectedProduk.harga_produk,
       image: selectedProduk.foto,
-      quantity,
+      quantity: 1, // selalu 1
     });
 
-    alert(
-      `${quantity}x ${selectedProduk.nama_produk} berhasil ditambahkan ke keranjang!`
-    );
+    alert(`${selectedProduk.nama_produk} berhasil ditambahkan ke keranjang!`);
     closeModal();
-  }, [selectedProduk, quantity, addToCart, closeModal]);
+  }, [selectedProduk, addToCart, closeModal]);
 
-const handleOrder = useCallback((produk: MenuItem) => {
-  addToCart({
-    id: produk.id_produk.toString(),
-    name: produk.nama_produk,
-    price: produk.harga_produk,
-    image: produk.foto,
-    quantity: 1,
-  });
+  const handleOrder = useCallback((produk: MenuItem) => {
+    addToCart({
+      id: produk.id_produk.toString(),
+      name: produk.nama_produk,
+      price: produk.harga_produk,
+      image: produk.foto,
+      quantity: 1, // selalu 1
+    });
 
-  alert(`${produk.nama_produk} ditambahkan ke keranjang. Silakan lanjutkan ke pembayaran.`);
-}, [addToCart]);
+    alert(`${produk.nama_produk} ditambahkan ke keranjang. Silakan lanjutkan ke pembayaran.`);
+  }, [addToCart]);
 
   return (
     <>
@@ -131,17 +117,15 @@ const handleOrder = useCallback((produk: MenuItem) => {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => openModal(produk)}
-                  className="bg-[#6b5b95] text-white py-3 px-4 sm:px-6 rounded-full hover:bg-[#5a4a7a] focus:bg-[#5a4a7a] focus:outline-none focus:ring-2 focus:ring-[#6b5b95] transition-colors font-medium text-sm sm:text-lg flex-1"
-                  disabled={isLoading}
+                  className="bg-[#6b5b95] text-white py-3 px-4 sm:px-6 rounded-full hover:bg-[#5a4a7a] focus:bg-[#5a4a7a] transition-colors font-medium text-sm sm:text-lg flex-1"
                 >
                   DETAIL
                 </button>
                 <button
                   onClick={() => handleOrder(produk)}
-                  className="bg-[#9b684c] text-white py-3 px-4 sm:px-6 rounded-full hover:bg-[#7d543d] focus:bg-[#7d543d] focus:outline-none focus:ring-2 focus:ring-[#9b684c] transition-colors font-medium text-sm sm:text-lg flex-1 disabled:opacity-50"
-                  disabled={isLoading}
+                  className="bg-[#9b684c] text-white py-3 px-4 sm:px-6 rounded-full hover:bg-[#7d543d] focus:bg-[#7d543d] transition-colors font-medium text-sm sm:text-lg flex-1"
                 >
-                  {isLoading ? "LOADING..." : "ORDER"}
+                  ORDER
                 </button>
               </div>
             </div>
@@ -149,7 +133,6 @@ const handleOrder = useCallback((produk: MenuItem) => {
         ))}
       </div>
 
-      {/* Modal */}
       {isModalOpen && selectedProduk && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
@@ -174,9 +157,7 @@ const handleOrder = useCallback((produk: MenuItem) => {
             </div>
 
             <div className="p-6 sm:p-8">
-              <h2
-                className={`${nosifer.className} text-2xl sm:text-3xl font-bold text-[#300000] mb-4`}
-              >
+              <h2 className={`${nosifer.className} text-2xl sm:text-3xl font-bold text-[#300000] mb-4`}>
                 {selectedProduk.nama_produk}
               </h2>
 
@@ -186,21 +167,10 @@ const handleOrder = useCallback((produk: MenuItem) => {
                     Informasi Produk
                   </h3>
                   <div className="space-y-2 text-sm sm:text-base text-[#300000]/80">
-                    <p>
-                      <span className="font-medium">ID Produk:</span> #
-                      {selectedProduk.id_produk}
-                    </p>
-                    <p>
-                      <span className="font-medium">Kategori:</span> Kopi
-                      Premium
-                    </p>
-                    <p>
-                      <span className="font-medium">Ukuran:</span> Regular
-                      (350ml)
-                    </p>
-                    <p>
-                      <span className="font-medium">Status:</span> Tersedia
-                    </p>
+                    <p><span className="font-medium">ID Produk:</span> #{selectedProduk.id_produk}</p>
+                    <p><span className="font-medium">Kategori:</span> Kopi Premium</p>
+                    <p><span className="font-medium">Ukuran:</span> Regular (350ml)</p>
+                    <p><span className="font-medium">Status:</span> Tersedia</p>
                   </div>
                 </div>
 
@@ -209,69 +179,33 @@ const handleOrder = useCallback((produk: MenuItem) => {
                     Deskripsi
                   </h3>
                   <p className="text-[#300000]/80 text-sm leading-relaxed">
-                    Nikmati cita rasa kopi premium yang dipadukan dengan
-                    sempurna. Setiap tegukan memberikan pengalaman yang tak
-                    terlupakan dengan aroma yang menggugah selera dan rasa yang
-                    kaya. Diolah dengan bahan-bahan pilihan terbaik untuk
-                    memberikan kualitas terbaik.
+                    Nikmati cita rasa kopi premium yang dipadukan dengan sempurna. Setiap tegukan memberikan pengalaman yang tak terlupakan dengan aroma yang menggugah selera dan rasa yang kaya.
                   </p>
                 </div>
               </div>
 
               <div className="border-t border-[#300000]/20 pt-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                <div className="flex items-start justify-between gap-4 mb-6">
                   <div>
                     <p className="text-sm text-[#300000]/60 mb-1">Harga</p>
                     <p className="text-2xl sm:text-3xl font-bold text-[#300000]">
-                      Rp.{" "}
-                      {selectedProduk.harga_produk?.toLocaleString("id-ID") ||
-                        "0"}
+                      Rp. {selectedProduk.harga_produk?.toLocaleString("id-ID") || "0"}
                     </p>
-                    <p className="text-sm text-[#300000]/60 mt-1">
-                      Total: Rp.{" "}
-                      {(selectedProduk.harga_produk * quantity)?.toLocaleString(
-                        "id-ID"
-                      ) || "0"}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={decrementQuantity}
-                      disabled={quantity <= 1 || isLoading}
-                      className="bg-gray-200 text-[#300000] px-4 py-2 rounded-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      aria-label="Kurangi jumlah"
-                    >
-                      -
-                    </button>
-                    <span className="text-xl font-medium text-[#300000] px-4 min-w-[3rem] text-center">
-                      {quantity}
-                    </span>
-                    <button
-                      onClick={incrementQuantity}
-                      disabled={quantity >= 99 || isLoading}
-                      className="bg-gray-200 text-[#300000] px-4 py-2 rounded-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      aria-label="Tambah jumlah"
-                    >
-                      +
-                    </button>
                   </div>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={closeModal}
-                    className="bg-gray-400 text-white py-3 px-6 rounded-full hover:bg-gray-500 focus:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-colors duration-200 font-medium flex-1"
-                    disabled={isLoading}
+                    className="bg-gray-400 text-white py-3 px-6 rounded-full hover:bg-gray-500 focus:bg-gray-500 transition-colors font-medium flex-1"
                   >
                     TUTUP
                   </button>
                   <button
                     onClick={handleAddToCart}
-                    className="bg-[#9b684c] text-white py-3 px-6 rounded-full hover:bg-[#7d543d] focus:bg-[#7d543d] focus:outline-none focus:ring-2 focus:ring-[#9b684c] focus:ring-offset-2 transition-colors duration-200 font-medium sm:flex-[2] disabled:opacity-50"
-                    disabled={isLoading}
+                    className="bg-[#9b684c] text-white py-3 px-6 rounded-full hover:bg-[#7d543d] focus:bg-[#7d543d] transition-colors font-medium sm:flex-[2]"
                   >
-                    {isLoading ? "MENAMBAHKAN..." : "TAMBAH KE KERANJANG"}
+                    TAMBAH KE KERANJANG
                   </button>
                 </div>
               </div>

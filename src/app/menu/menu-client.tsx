@@ -19,7 +19,6 @@ interface MenuClientProps {
 export default function MenuClient({ produkList }: MenuClientProps) {
   const [selectedProduk, setSelectedProduk] = useState<MenuItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [quantity, setQuantity] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const router = useRouter();
@@ -31,18 +30,15 @@ export default function MenuClient({ produkList }: MenuClientProps) {
   const openModal = useCallback((produk: MenuItem) => {
     setSelectedProduk(produk);
     setIsModalOpen(true);
-    setQuantity(1);
     document.body.style.overflow = "hidden";
   }, []);
 
   const closeModal = useCallback(() => {
     setIsModalOpen(false);
     setSelectedProduk(null);
-    setQuantity(1);
     document.body.style.overflow = "unset";
   }, []);
 
-  // Handle escape key
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" && isModalOpen) {
@@ -68,14 +64,6 @@ export default function MenuClient({ produkList }: MenuClientProps) {
     [closeModal]
   );
 
-  const incrementQuantity = useCallback(() => {
-    setQuantity((prev) => Math.min(prev + 1, 99));
-  }, []);
-
-  const decrementQuantity = useCallback(() => {
-    setQuantity((prev) => Math.max(prev - 1, 1));
-  }, []);
-
   const handleAddToCart = useCallback(async () => {
     if (!selectedProduk) return;
     setIsLoading(true);
@@ -86,15 +74,15 @@ export default function MenuClient({ produkList }: MenuClientProps) {
         body: JSON.stringify({
           id_produk: selectedProduk.id_produk,
           nama_produk: selectedProduk.nama_produk,
-          quantity,
+          quantity: 1,
           harga_produk: selectedProduk.harga_produk,
-          total_harga: selectedProduk.harga_produk * quantity,
+          total_harga: selectedProduk.harga_produk,
         }),
       });
       const result = await response.json();
       if (response.ok) {
         alert(
-          `${quantity}x ${selectedProduk.nama_produk} berhasil ditambahkan ke keranjang!`
+          `${selectedProduk.nama_produk} berhasil ditambahkan ke keranjang!`
         );
         closeModal();
       } else throw new Error(result.error || "Gagal menambahkan ke keranjang");
@@ -104,7 +92,7 @@ export default function MenuClient({ produkList }: MenuClientProps) {
     } finally {
       setIsLoading(false);
     }
-  }, [quantity, selectedProduk, closeModal]);
+  }, [selectedProduk, closeModal]);
 
   const handleOrder = useCallback(async (produk: MenuItem) => {
     setIsLoading(true);
@@ -164,7 +152,7 @@ export default function MenuClient({ produkList }: MenuClientProps) {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   onClick={() => openModal(produk)}
-                  className="bg-[#6b5b95] text-white py-3 px-4 sm:px-6 rounded-full hover:bg-[#5a4a7a] focus:bg-[#5a4a7a] focus:outline-none focus:ring-2 focus:ring-[#6b5b95] transition-colors font-medium text-sm sm:text-lg flex-1"
+                  className="bg-[#6b5b95] text-white py-3 px-4 sm:px-6 rounded-full hover:bg-[#5a4a7a] transition-colors font-medium flex-1"
                   disabled={isLoading}
                 >
                   DETAIL
@@ -173,12 +161,12 @@ export default function MenuClient({ produkList }: MenuClientProps) {
                   onClick={() => {
                     if (!isLoggedIn) {
                       alert("Silakan login terlebih dahulu untuk memesan.");
-                      router.push("/auth/login"); // redirect opsional
+                      router.push("/auth/login");
                       return;
                     }
                     handleOrder(produk);
                   }}
-                  className="bg-[#9b684c] text-white py-3 px-4 sm:px-6 rounded-full hover:bg-[#7d543d] focus:bg-[#7d543d] focus:outline-none focus:ring-2 focus:ring-[#9b684c] transition-colors font-medium text-sm sm:text-lg flex-1 disabled:opacity-50"
+                  className="bg-[#9b684c] text-white py-3 px-4 sm:px-6 rounded-full hover:bg-[#7d543d] transition-colors font-medium flex-1"
                   disabled={isLoading}
                 >
                   {isLoading ? "LOADING..." : "ORDER"}
@@ -222,21 +210,19 @@ export default function MenuClient({ produkList }: MenuClientProps) {
 
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-[#300000] mb-2">
+                  <h3 className="text-lg font-semibold text-[#300000] mb-2">
                     Informasi Produk
                   </h3>
-                  <div className="space-y-2 text-sm sm:text-base text-[#300000]/80">
+                  <div className="space-y-2 text-sm text-[#300000]/80">
                     <p>
                       <span className="font-medium">ID Produk:</span> #
                       {selectedProduk.id_produk}
                     </p>
                     <p>
-                      <span className="font-medium">Kategori:</span> Kopi
-                      Premium
+                      <span className="font-medium">Kategori:</span> Kopi Premium
                     </p>
                     <p>
-                      <span className="font-medium">Ukuran:</span> Regular
-                      (350ml)
+                      <span className="font-medium">Ukuran:</span> Regular (350ml)
                     </p>
                     <p>
                       <span className="font-medium">Status:</span> Tersedia
@@ -245,63 +231,30 @@ export default function MenuClient({ produkList }: MenuClientProps) {
                 </div>
 
                 <div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-[#300000] mb-2">
+                  <h3 className="text-lg font-semibold text-[#300000] mb-2">
                     Deskripsi
                   </h3>
                   <p className="text-[#300000]/80 text-sm leading-relaxed">
-                    Nikmati cita rasa kopi premium yang dipadukan dengan
-                    sempurna. Setiap tegukan memberikan pengalaman yang tak
-                    terlupakan dengan aroma yang menggugah selera dan rasa yang
-                    kaya. Diolah dengan bahan-bahan pilihan terbaik untuk
-                    memberikan kualitas terbaik.
+                    Nikmati cita rasa kopi premium yang dipadukan dengan sempurna...
                   </p>
                 </div>
               </div>
 
               <div className="border-t border-[#300000]/20 pt-6">
-                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
-                  <div>
-                    <p className="text-sm text-[#300000]/60 mb-1">Harga</p>
-                    <p className="text-2xl sm:text-3xl font-bold text-[#300000]">
-                      Rp.{" "}
-                      {selectedProduk.harga_produk?.toLocaleString("id-ID") ||
-                        "0"}
-                    </p>
-                    <p className="text-sm text-[#300000]/60 mt-1">
-                      Total: Rp.{" "}
-                      {(selectedProduk.harga_produk * quantity)?.toLocaleString(
-                        "id-ID"
-                      ) || "0"}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <button
-                      onClick={decrementQuantity}
-                      disabled={quantity <= 1 || isLoading}
-                      className="bg-gray-200 text-[#300000] px-4 py-2 rounded-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      aria-label="Kurangi jumlah"
-                    >
-                      -
-                    </button>
-                    <span className="text-xl font-medium text-[#300000] px-4 min-w-[3rem] text-center">
-                      {quantity}
-                    </span>
-                    <button
-                      onClick={incrementQuantity}
-                      disabled={quantity >= 99 || isLoading}
-                      className="bg-gray-200 text-[#300000] px-4 py-2 rounded-full hover:bg-gray-300 focus:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                      aria-label="Tambah jumlah"
-                    >
-                      +
-                    </button>
-                  </div>
+                <div className="mb-6">
+                  <p className="text-sm text-[#300000]/60 mb-1">Harga</p>
+                  <p className="text-2xl font-bold text-[#300000]">
+                    Rp. {selectedProduk.harga_produk?.toLocaleString("id-ID") || "0"}
+                  </p>
+                  <p className="text-sm text-[#300000]/60 mt-1">
+                    Total: Rp. {selectedProduk.harga_produk?.toLocaleString("id-ID") || "0"}
+                  </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <button
                     onClick={closeModal}
-                    className="bg-gray-400 text-white py-3 px-6 rounded-full hover:bg-gray-500 focus:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-colors duration-200 font-medium flex-1"
+                    className="bg-gray-400 text-white py-3 px-6 rounded-full hover:bg-gray-500 flex-1"
                     disabled={isLoading}
                   >
                     TUTUP
@@ -309,15 +262,13 @@ export default function MenuClient({ produkList }: MenuClientProps) {
                   <button
                     onClick={() => {
                       if (!isLoggedIn) {
-                        alert(
-                          "Silakan login terlebih dahulu untuk menambahkan ke keranjang."
-                        );
-                        router.push("/auth/login"); 
+                        alert("Silakan login terlebih dahulu untuk menambahkan ke keranjang.");
+                        router.push("/auth/login");
                         return;
                       }
                       handleAddToCart();
                     }}
-                    className="bg-[#9b684c] text-white py-3 px-6 rounded-full hover:bg-[#7d543d] focus:bg-[#7d543d] focus:outline-none focus:ring-2 focus:ring-[#9b684c] focus:ring-offset-2 transition-colors duration-200 font-medium sm:flex-[2] disabled:opacity-50"
+                    className="bg-[#9b684c] text-white py-3 px-6 rounded-full hover:bg-[#7d543d] flex-1"
                     disabled={isLoading}
                   >
                     {isLoading ? "MENAMBAHKAN..." : "TAMBAH KE KERANJANG"}

@@ -17,40 +17,41 @@ export default function CartClient() {
     return <p className="text-gray-400">Keranjang Anda kosong.</p>;
   }
 
- const handleCheckout = async () => {
-  try {
-    if (cartItems.length === 0) {
-      alert("Keranjang kosong");
-      return;
+  const handleCheckout = async () => {
+    try {
+      if (cartItems.length === 0) {
+        alert("Keranjang kosong");
+        return;
+      }
+
+      const item = cartItems[0]; 
+
+      const response = await fetch("/api/transaksi", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id_produk: item.id,
+          quantity: item.quantity,
+          total_harga: item.price * item.quantity,
+        }),
+      });
+
+      const result = await response.json();
+      console.log("Checkout result:", result);
+
+      if (response.ok) {
+        alert("Checkout berhasil!");
+        clearCart();
+      } else {
+        throw new Error(result.error || "Checkout gagal");
+      }
+    } catch (error) {
+      console.error("Error saat checkout:", error);
+      alert("Terjadi kesalahan saat checkout.");
     }
-
-    const item = cartItems[0];
-
-    const response = await fetch("/api/transaksi", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nama_pembeli: "",
-        produk_id: item.id,
-        quantity: item.quantity,
-        price: item.price,
-        total: item.price * item.quantity,
-      }),
-    });
-
-    const result = await response.json();
-    if (response.ok) {
-      alert("Checkout berhasil!");
-      clearCart();
-    } else {
-      throw new Error(result.error || "Checkout gagal");
-    }
-  } catch (error) {
-    console.error("Error saat checkout:", error);
-    alert("Terjadi kesalahan saat checkout.");
-  }
-};
-
+  };
 
   return (
     <div className="space-y-6">
