@@ -16,11 +16,26 @@ export default function MenuForm() {
   }>({});
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // ⛔ stop reload
+    e.preventDefault();
 
-    // Validasi frontend sebelum kirim ke server
-    if (!/^[a-zA-Z\s]+$/.test(namaProduk)) {
-      setErrors({ nama_produk: 'Nama produk hanya boleh huruf' });
+    const newErrors: { nama_produk?: string; harga_produk?: string } = {};
+
+    // Validasi nama produk
+    if (!namaProduk.trim()) {
+      newErrors.nama_produk = 'Nama produk wajib diisi';
+    } else if (!/^[a-zA-Z\s]+$/.test(namaProduk)) {
+      newErrors.nama_produk = 'Nama produk hanya boleh huruf';
+    }
+
+    // Validasi harga produk
+    if (!hargaProduk.trim()) {
+      newErrors.harga_produk = 'Harga produk wajib diisi';
+    } else if (isNaN(Number(hargaProduk)) || Number(hargaProduk) <= 0) {
+      newErrors.harga_produk = 'Harga produk harus berupa angka positif';
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
@@ -33,7 +48,6 @@ export default function MenuForm() {
     if (result?.errors) {
       setErrors(result.errors);
     } else {
-      // ✅ Reset form jika sukses
       setNamaProduk('');
       setHargaProduk('');
       setErrors({});
@@ -42,8 +56,8 @@ export default function MenuForm() {
 
   const handleNamaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    setNamaProduk(value);
 
-    // Deteksi angka dan tampilkan error secara live
     if (/\d/.test(value)) {
       setErrors((prev) => ({
         ...prev,
@@ -55,8 +69,28 @@ export default function MenuForm() {
         nama_produk: undefined,
       }));
     }
+  };
 
-    setNamaProduk(value);
+  const handleHargaChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setHargaProduk(value);
+
+    if (!value.trim()) {
+      setErrors((prev) => ({
+        ...prev,
+        harga_produk: 'Harga produk wajib diisi',
+      }));
+    } else if (isNaN(Number(value)) || Number(value) <= 0) {
+      setErrors((prev) => ({
+        ...prev,
+        harga_produk: 'Harga produk harus berupa angka positif',
+      }));
+    } else {
+      setErrors((prev) => ({
+        ...prev,
+        harga_produk: undefined,
+      }));
+    }
   };
 
   return (
@@ -96,7 +130,7 @@ export default function MenuForm() {
               type="number"
               step="0.01"
               value={hargaProduk}
-              onChange={(e) => setHargaProduk(e.target.value)}
+              onChange={handleHargaChange}
               placeholder="Contoh: 12000"
               className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-base outline-2 placeholder:text-gray-500"
             />

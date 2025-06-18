@@ -1,67 +1,68 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import Navbar from "@/app/verif/navbar";
-
-interface MenuItem {
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  qty?: number;
-}
-
-interface DecodedToken {
-  id: string;
-  email: string;
-  name?: string;
-}
+import { nosifer, alegreya } from "@/app/ui/fonts";
 
 export default function AkunPage() {
-  const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("Loading...");
   const [email, setEmail] = useState("Loading...");
-  const router = useRouter();
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (token) {
     const fetchProfile = async () => {
-      const res = await fetch("/api/profile", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      setName(data.name);
-      setEmail(data.email);
+      try {
+        const res = await fetch("/api/profile", {
+          credentials: "include",
+        });
+
+        if (!res.ok) {
+          console.error("Fetch failed:", res.status);
+          return;
+        }
+
+        const data = await res.json();
+        setName(data.name || "");
+        setEmail(data.email || "");
+      } catch (error) {
+        console.error("Error fetching profile:", error);
+      }
     };
+
     fetchProfile();
-  }
-}, []);
-const handleSave = async () => {
-  const token = localStorage.getItem("token");
-  if (!token) return;
+  }, []);
 
-  await fetch("/api/profile", {
-    method: "PUT", // atau POST tergantung implementasi backend
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ name, email }),
-  });
+  const handleSave = async () => {
+    try {
+      const res = await fetch("/api/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ name, email }),
+      });
 
-  setIsEditing(false);
-};
+      if (!res.ok) {
+        console.error("Update failed:", res.status);
+        return;
+      }
 
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Update error:", error);
+    }
+  };
 
   return (
-    <main className="min-h-screen bg-gradient-to-r from-red-950 to-black text-white relative overflow-y-auto">
+    <main
+      className={`min-h-screen bg-gradient-to-r from-red-950 to-black text-white ${alegreya.className}`}
+    >
       <Navbar />
-      <div className="flex flex-col items-center justify-center mt-16 px-4 mb-65">
-        <h1 className="text-6xl font-extrabold mb-10 text-[#F8E4BE] drop-shadow-lg">
+      <div className="flex flex-col items-center justify-center px-8 py-20">
+        <h1
+          className={`text-6xl mb-10 text-[#F8E4BE] drop-shadow-lg ${nosifer.className}`}
+        >
           Akun Saya
         </h1>
         <div className="bg-[#3B0A0A] p-12 rounded-2xl shadow-2xl w-full max-w-xl text-xl space-y-8">
@@ -72,7 +73,7 @@ const handleSave = async () => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="bg-transparent border-b text-right"
+                className="bg-transparent border-b text-right outline-none"
               />
             ) : (
               <span>{name}</span>
@@ -85,7 +86,7 @@ const handleSave = async () => {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="bg-transparent border-b text-right"
+                className="bg-transparent border-b text-right outline-none"
               />
             ) : (
               <span>{email}</span>
@@ -93,7 +94,7 @@ const handleSave = async () => {
           </div>
           <button
             onClick={isEditing ? handleSave : () => setIsEditing(true)}
-            className="w-full mt-6 bg-[#A8715C] text-[#1E1E1E] hover:bg-yellow-800 cursor-pointer py-3 rounded-2xl text-xl font-bold transition"
+            className="w-full mt-6 bg-[#A8715C] text-[#1E1E1E] hover:bg-yellow-800 py-3 rounded-2xl text-xl font-bold transition"
           >
             {isEditing ? "Simpan" : "Edit Profil"}
           </button>
